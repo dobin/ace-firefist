@@ -54,16 +54,19 @@ def serve(routes: List[AceRoute]):
     """Start a webserver which serves the `routes`"""
     app = Flask(__name__)
 
+    print("")
+    print("Routes:")
     for route in routes:
         if isinstance(route.data, (AceStr, AceBytes)):
-            print("Route: {}   Serving: {}    Donload: {} {}".format(route.url, route.data.index, route.download, route.downloadName))
+            print("  {}   ({})    Download: {} {}".format(route.url, route.data.index, route.download, route.downloadName))
         else:
-            print("Route: {}   Donload: {} {}".format(route.url, route.download, route.downloadName))
+            print("  {}           Donload: {} {}".format(route.url, route.download, route.downloadName))
 
         if route.download:
             app.add_url_rule(route.url, route.url, create_view_func2(route))
         else:
             app.add_url_rule(route.url, route.url, create_view_func(route))
 
+    print("")
     app.run()
 
