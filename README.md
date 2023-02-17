@@ -1,4 +1,4 @@
-# ACE Fire First 
+# ACE Fire Fist 
 
 Attack Chain Emulator. Like pwntools, but for initial execution. 
 

