@@ -1,3 +1,5 @@
+import logging
+
 from make.htmlsmuggling.htmlsmuggling import makeHtmlSmuggling
 from make.lnk.lnk import makeLnk
 from make.iso.iso import makeIso
@@ -7,6 +9,8 @@ from make.zip.zip import makeZip
 from helpers import readFileContent, saveAceFile, makeAceFile
 from model import AceFile, AceRoute, PluginDecorator, enableOut
 from web import serve
+
+logging.basicConfig(level=logging.INFO)
 
 
 def main():
@@ -27,13 +31,13 @@ def main():
     lnkFile: AceFile = makeAceFile('clickme.lnk', lnkData)
 
     # Pack DLL and LNK into ISO
-    container: bytes = makeZip(
+    container: bytes = makeIso(
         files = [
             dllFile,
             lnkFile,
         ],
     )
-    containerFile: AceFile = makeAceFile('test2.zip', container)
+    containerFile: AceFile = makeAceFile('test2.iso', container)
 
     # HTML to serve ISO
     html: str = makeHtmlSmuggling(

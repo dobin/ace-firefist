@@ -1,6 +1,7 @@
 from model import AceFile, PluginDecorator
 
 
+@PluginDecorator
 def readFileContent(filename) -> bytes:
     f = open(filename, 'rb')
     data = f.read()
