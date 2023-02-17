@@ -2,22 +2,25 @@ import argparse
 from jinja2 import Template
 from pathlib import Path
 from base64 import b64encode
-from model import AceFile
+from model import AceFile, PluginDecorator, disableOut
 
 
-def makeHtmlSmuggling(file):
+@PluginDecorator
+def makeHtmlSmuggling(file) -> bytes:
     data = b64encode(file.data).decode()
 
     with open('make/htmlsmuggling/standard.html') as f:
         template = Template(f.read())
     
-    return template.render(
+    out = template.render(
         data=data,
         filename=file.name,
     )
+    return bytes(out, 'utf-8')
 
 
 def main():
+    disableOut()
     parser = argparse.ArgumentParser()
     parser.add_argument("--filename", help="")
     parser.add_argument("--payload_data", help="")

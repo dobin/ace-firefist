@@ -7,10 +7,11 @@ import pycdlib
 
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from model import AceFile
+from model import AceFile, PluginDecorator, disableOut
 
 
-def makeIso(files: List[AceFile]):
+@PluginDecorator
+def makeIso(files: List[AceFile]) -> bytes:
     # https://clalancette.github.io/pycdlib/example-creating-joliet-iso.html
     iso = pycdlib.PyCdlib()
     iso.new(joliet=3)
@@ -28,7 +29,7 @@ def makeIso(files: List[AceFile]):
 
 def main():
     # python3 -m make.iso.iso --iso-name new.iso --file_name test.txt --file_data 'testing'
-
+    disableOut()
     parser = argparse.ArgumentParser()
     parser.add_argument('--iso-name', help='')
     parser.add_argument('--file_name', help='')
