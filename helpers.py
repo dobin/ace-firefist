@@ -1,3 +1,5 @@
+import logging
+
 from model import AceFile, PluginDecorator
 
 
@@ -13,6 +15,7 @@ def saveAceFile(file: AceFile):
     f = open(file.name, 'wb')
     f.write(file.data)
     f.close()
+    logging.info("Written file: {}".format(file.name))
 
 
 @PluginDecorator

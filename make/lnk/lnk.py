@@ -10,8 +10,14 @@ from model import AceFile, PluginDecorator
 
 
 @PluginDecorator
-def makeLnk(name: str, target: str, arguments: str) -> bytes:
-    lnk = lib.pylnk3.helpers.for_file(target, lnk_name=name, arguments=arguments, is_file=True)
+def makeLnk(name: str, target: str, arguments: str, window_mode='Minimized') -> bytes:
+    """Make a .lnk file with `name` pointing to `target` having `arguments` as arguments"""
+    lnk = lib.pylnk3.helpers.for_file(
+        target, 
+        lnk_name=name, 
+        arguments=arguments, 
+        window_mode=window_mode,
+        is_file=True)
     lnkFileData = io.BytesIO()
     lnk.write(lnkFileData)
     return lnkFileData.getvalue()
