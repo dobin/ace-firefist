@@ -7,7 +7,7 @@ import zipfile
 
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from model import AceFile, PluginDecorator
+from model import *
 
 
 @PluginDecorator
@@ -20,7 +20,7 @@ def makeZip(files: List[AceFile]) -> bytes:
         for file in files:
             zip_file.writestr(file.name, file.data)
 
-    return zipData.getvalue()
+    return AceBytes(zipData.getvalue())
 
 
 def main():

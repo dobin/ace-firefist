@@ -2,8 +2,13 @@ import argparse
 from jinja2 import Template
 from pathlib import Path
 from base64 import b64encode
-from model import AceFile, PluginDecorator
 from pathlib import Path
+import os
+import sys
+
+# necessary to make it possible to execute this file from this directory
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from model import *
 
 
 @PluginDecorator
@@ -25,7 +30,7 @@ def makeHtmlSmuggling(file, template='autodownload.html') -> str:
         data=data,
         filename=file.name,
     )
-    return renderedHtml
+    return AceStr(renderedHtml)
 
 
 def main():

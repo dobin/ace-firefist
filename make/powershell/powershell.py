@@ -4,8 +4,7 @@ from jinja2 import Template
 
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-
-from model import AceFile, PluginDecorator
+from model import *
 
 # Notes:
 # Use powershell.exe argument '-noexit' for testing
@@ -14,7 +13,7 @@ from model import AceFile, PluginDecorator
 @PluginDecorator
 def makePowershellDownloadAndExecuteBinary(url: str, path: str):
     templateFile = 'download_exec_file.ps1'
-    return ''
+    return AceStr('')
 
 
 @PluginDecorator
@@ -27,7 +26,7 @@ def makePowershellDownloadAndExecuteMemPs1(url: str) -> str:
     )
     renderedHtml = renderedHtml.replace('\r', '')
     renderedHtml = renderedHtml.replace('\n', '')
-    return renderedHtml
+    return AceStr(renderedHtml)
 
 
 @PluginDecorator
@@ -38,14 +37,14 @@ def makePowershellMessageBox() -> str:
     renderedHtml = template.render()
     renderedHtml = renderedHtml.replace('\r', '')
     renderedHtml = renderedHtml.replace('\n', '')
-    return renderedHtml
+    return AceStr(renderedHtml)
 
 
 @PluginDecorator
 def makePowershellCommand(input: str) -> str:
     """For use with 'PowerShell.exe -Command {}'"""
     ret = "{}".format(input)
-    return ret
+    return AceStr(ret)
 
 
 @PluginDecorator
@@ -55,4 +54,4 @@ def makePowershellEncodedCommand(input: str) -> str:
     # https://stackoverflow.com/questions/71642299/how-to-use-python-to-represent-the-powershell-tobase64string-function
     text = bytearray(text, 'utf-16-le')
     b64 = b64encode(text).decode() # bytearray to str
-    return b64
+    return AceStr(b64)

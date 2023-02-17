@@ -2,12 +2,11 @@ import argparse
 import io
 import os, sys
 from typing import List
-
 import pycdlib
 
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from model import AceFile, PluginDecorator
+from model import *
 
 
 @PluginDecorator
@@ -24,7 +23,7 @@ def makeIso(files: List[AceFile]) -> bytes:
     iso._write_fp(isoFileData, 32768, None, None)
     iso.close()
 
-    return isoFileData.getvalue()
+    return AceBytes(isoFileData.getvalue())
 
 
 def main():

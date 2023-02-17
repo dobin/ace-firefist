@@ -3,24 +3,73 @@ import logging
 
 COUNTER = None
 
-def enableOut():
-    global COUNTER
-    COUNTER = 0
+
+class AceStr(str):
+    def __new__(cls, value):
+        obj = str.__new__(cls, value)
+        global COUNTER
+        obj.index = COUNTER
+        return obj
+
+
+class AceBytes(bytes):
+    def __new__(cls, value):    
+        obj = bytes.__new__(cls, value)
+        global COUNTER
+        obj.index = COUNTER
+        return obj
+
+
+
+def prePrint(arg):
+    s = []
+    if isinstance(arg, (AceBytes, AceStr)):
+        s.append(str(arg.index))
+    elif isinstance(arg, AceFile):
+        s.append(str(arg.data.index))
+    elif isinstance(arg, list):
+        for file in arg:
+            s.append(str(file.data.index))
+    #else:
+    #    s += ', '
+    return ', '.join(s)
 
 
 def PluginDecorator(func):
     def wrapper(*args, **kwargs):
         global COUNTER
 
-        logging.info("--[ {}: {}".format(COUNTER, func.__name__))
-
+        COUNTER += 1
+        s = ''
+        for arg in args:
+            s += prePrint(arg)
+        for key, arg in kwargs.items():
+            s += prePrint(arg)
+                
         ret = func(*args, **kwargs)
+
+        if isinstance(ret, (AceBytes, AceStr)):
+            logging.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, ret.index))
+        elif isinstance(ret, AceFile):
+            logging.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, ret.data.index))
+        elif isinstance(ret, list[AceFile]):
+            for file in ret:
+                logging.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, file.data.index))
+        else:
+            logging.info("--[ {}: {}".format(COUNTER, func.__name__))
 
         if COUNTER is None:
             return ret
         
         filename = None
         filedata = None
+
+        if isinstance(ret, AceBytes):
+            filename = "out/out_{}_{}.bin".format(COUNTER, func.__name__)
+            filedata = ret
+        elif isinstance(ret, AceStr):
+            filename = "out/out_{}_{}.txt".format(COUNTER, func.__name__)
+            filedata = bytes(ret, 'utf-8')
 
         if isinstance(ret, (bytes, bytearray)):
             filename = "out/out_{}_{}.bin".format(COUNTER, func.__name__)
@@ -42,8 +91,6 @@ def PluginDecorator(func):
         f.write(filedata)
         f.close()
 
-        COUNTER += 1
-        
         return ret
     return wrapper
 
@@ -54,6 +101,11 @@ class AceRoute():
         self.data = data
         self.download = download
         self.downloadName = downloadName
+
+
+def enableOut():
+    global COUNTER
+    COUNTER = 0
 
 
 class AceFile():

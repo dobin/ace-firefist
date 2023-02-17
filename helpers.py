@@ -1,6 +1,6 @@
 import logging
 
-from model import AceFile, PluginDecorator
+from model import *
 
 
 @PluginDecorator
@@ -8,7 +8,7 @@ def readFileContent(filename) -> bytes:
     f = open(filename, 'rb')
     data = f.read()
     f.close()
-    return data
+    return AceBytes(data)
 
 
 def saveAceFile(file: AceFile):

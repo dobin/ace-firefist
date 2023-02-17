@@ -4,9 +4,8 @@ import os, sys
 
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-
 import lib.pylnk3.helpers
-from model import AceFile, PluginDecorator
+from model import *
 
 
 @PluginDecorator
@@ -20,7 +19,7 @@ def makeLnk(name: str, target: str, arguments: str, window_mode='Minimized') -> 
         is_file=True)
     lnkFileData = io.BytesIO()
     lnk.write(lnkFileData)
-    return lnkFileData.getvalue()
+    return AceBytes(lnkFileData.getvalue())
 
 
 def main():

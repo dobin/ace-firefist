@@ -7,36 +7,36 @@ Attack Chain Emulator. Like pwntools, but for initial execution.
 rm out/*; ./ace.py ...
 ```
 
-# Recepies
+# Recipes
 
-## Recepi 1: 
+## recipe 1: 
 
 HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 
 ```
-python3 ace.py --recepi 1
+python3 ace.py --recipe 1
 ```
 
 URL: http://localhost:5000/test
 
 
-## Recepi 2
+## recipe 2
 
 ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
 
 ```
-python3 ace.py --recepi 2
+python3 ace.py --recipe 2
 ```
 
 URL: http://localhost:5000/test.zip
 
 
-## Recepi 3
+## recipe 3
 
 MSHTA -> Powershell:MessageBox
 
 ```
-python3 ace.py --recepi 3
+python3 ace.py --recipe 3
 ```
 
 URL: http://localhost:5000/test.hta
