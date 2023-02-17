@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Image Bypasser</title>
+  </head>
+  <body>
+    <h1>Image Bypasser</h1>
+    <img id="myData" alt="Not-Malware(tm)" src="data:image/png;base64,{{data}}" height=200 width=200>
+    <script>
+      var myImg = document.getElementById("myData")
+      myImg.onclick = function () {
+        console.log("Preparing download...");
+        var fileContent = myImg.src;
+        const linkSource = fileContent;
+        const downloadLink = document.createElement("a");
+        document.body.appendChild(downloadLink);
+        downloadLink.href = linkSource;
+        downloadLink.target = "_self";
+        downloadLink.download = "{{filename}}";
+        console.log("Downloading...");
+        downloadLink.click();
+        console.log("Done.");
+      }
+   </script>
+  </body>
+</html>
