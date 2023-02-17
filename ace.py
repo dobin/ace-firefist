@@ -42,6 +42,7 @@ def main():
     # HTML to serve ISO
     html: str = makeHtmlSmuggling(
         containerFile,
+        template='autodownload.html',
     )
 
     # serve HTML

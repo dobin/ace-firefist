@@ -3,20 +3,29 @@ from jinja2 import Template
 from pathlib import Path
 from base64 import b64encode
 from model import AceFile, PluginDecorator
+from pathlib import Path
 
 
 @PluginDecorator
-def makeHtmlSmuggling(file) -> str:
-    data = b64encode(file.data).decode()
+def makeHtmlSmuggling(file, template='autodownload.html') -> str:
+    """Make a HTML site from template from which the file can be downloaded"""
+    path = 'make/htmlsmuggling/' + template
+    p = Path(path)
+    if not p.is_file():
+        raise FileNotFoundError
 
-    with open('make/htmlsmuggling/standard.html') as f:
+    with open(path) as f:
         template = Template(f.read())
     
-    out = template.render(
+    # Arguments for the template:
+    # - data: is file base64 encoded
+    # - filename: the filename
+    data = b64encode(file.data).decode()
+    renderedHtml = template.render(
         data=data,
         filename=file.name,
     )
-    return out
+    return renderedHtml
 
 
 def main():
