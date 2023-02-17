@@ -31,6 +31,9 @@ def PluginDecorator(func):
         elif isinstance(ret, AceFile):
             filename = "out/out_{}_file_{}".format(COUNTER, ret.name)
             filedata = ret.data
+
+            if isinstance(filedata, str):
+                filedata = bytes(filedata, 'utf-8')
         else:
             print("Wrong return type: {}".format(type(ret)))
             return ret
@@ -46,9 +49,11 @@ def PluginDecorator(func):
 
 
 class AceRoute():
-    def __init__(self, url: str, data: bytes):
+    def __init__(self, url: str, data: bytes, download: bool=False, downloadName=''):
         self.url = url
         self.data = data
+        self.download = download
+        self.downloadName = downloadName
 
 
 class AceFile():
