@@ -28,9 +28,9 @@ def makeIso(files: List[AceFile]) -> bytes:
 
 
 def main():
-    # python3 -m make.iso.iso --iso-name new.iso --file_name test.txt --file_data 'testing'
+    # python3 -m make.iso.iso --iso_name new.iso --file_name test.txt --file_data 'testing'
     parser = argparse.ArgumentParser()
-    parser.add_argument('--iso-name', help='')
+    parser.add_argument('--iso_name', help='')
     parser.add_argument('--file_name', help='')
     parser.add_argument('--file_data', help='')
     args = parser.parse_args()

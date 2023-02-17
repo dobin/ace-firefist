@@ -21,6 +21,9 @@ def PluginDecorator(func):
         if isinstance(ret, (bytes, bytearray)):
             filename = "out/out_{}.bin".format(COUNTER)
             filedata = ret
+        elif isinstance(ret, str):
+            filename = "out/out_{}.txt".format(COUNTER)
+            filedata = bytes(ret, 'utf-8')
         elif isinstance(ret, AceFile):
             filename = "out/out_{}.{}".format(COUNTER, ret.name)
             filedata = ret.data

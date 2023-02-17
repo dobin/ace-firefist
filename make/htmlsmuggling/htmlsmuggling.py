@@ -6,7 +6,7 @@ from model import AceFile, PluginDecorator
 
 
 @PluginDecorator
-def makeHtmlSmuggling(file) -> bytes:
+def makeHtmlSmuggling(file) -> str:
     data = b64encode(file.data).decode()
 
     with open('make/htmlsmuggling/standard.html') as f:
@@ -16,7 +16,7 @@ def makeHtmlSmuggling(file) -> bytes:
         data=data,
         filename=file.name,
     )
-    return bytes(out, 'utf-8')
+    return out
 
 
 def main():
