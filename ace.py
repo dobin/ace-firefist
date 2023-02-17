@@ -4,9 +4,8 @@ from make.iso.iso import makeIso
 from make.powershell.powershell import makePowershell
 
 from helpers import readFileContent, saveAceFile, makeAceFile
-from model import AceFile, AceRoute, PluginDecorator
+from model import AceFile, AceRoute, PluginDecorator, enableOut
 from web import serve
-
 
 
 def main():
@@ -47,4 +46,5 @@ def main():
 
 
 if __name__ == "__main__":
+    enableOut()
     main()

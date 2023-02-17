@@ -2,7 +2,7 @@ import argparse
 from jinja2 import Template
 from pathlib import Path
 from base64 import b64encode
-from model import AceFile, PluginDecorator, disableOut
+from model import AceFile, PluginDecorator
 
 
 @PluginDecorator
@@ -20,7 +20,6 @@ def makeHtmlSmuggling(file) -> bytes:
 
 
 def main():
-    disableOut()
     parser = argparse.ArgumentParser()
     parser.add_argument("--filename", help="")
     parser.add_argument("--payload_data", help="")

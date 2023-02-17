@@ -6,7 +6,7 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 import lib.pylnk3.helpers
-from model import AceFile, PluginDecorator, disableOut
+from model import AceFile, PluginDecorator
 
 
 @PluginDecorator
@@ -18,7 +18,6 @@ def makeLnk(name: str, target: str, arguments: str) -> bytes:
 
 
 def main():
-    disableOut()
     parser = argparse.ArgumentParser()
     parser.add_argument('--target', help='target path')
     parser.add_argument('--arguments', help='arguments')

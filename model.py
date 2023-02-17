@@ -1,8 +1,9 @@
 
-COUNTER = 0
+COUNTER = None
 
-def disableOut():
-    COUNTER = None
+def enableOut():
+    global COUNTER
+    COUNTER = 0
 
 
 def PluginDecorator(func):
