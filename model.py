@@ -1,7 +1,8 @@
 import logging
 
 
-COUNTER = None
+COUNTER = 0
+ENABLE_SAVING = False
 
 
 class AceStr(str):
@@ -18,7 +19,6 @@ class AceBytes(bytes):
         global COUNTER
         obj.index = COUNTER
         return obj
-
 
 
 def prePrint(arg):
@@ -58,7 +58,7 @@ def PluginDecorator(func):
         else:
             logging.info("--[ {}: {}".format(COUNTER, func.__name__))
 
-        if COUNTER is None:
+        if not ENABLE_SAVING:
             return ret
         
         filename = None
@@ -104,8 +104,8 @@ class AceRoute():
 
 
 def enableOut():
-    global COUNTER
-    COUNTER = 0
+    global ENABLE_SAVING
+    ENABLE_SAVING = True
 
 
 class AceFile():
