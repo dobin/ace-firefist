@@ -2,8 +2,8 @@ from make.htmlsmuggling.htmlsmuggling import makeHtmlSmuggling
 from make.lnk.lnk import makeLnk
 from make.iso.iso import makeIso
 
-from model import AceFile
-
+from model import AceFile, AceRoute
+from web import serve
 
 def readFile(filename):
     data = b'readFile.dll'
@@ -48,13 +48,9 @@ def main():
         containerFile,
     )
 
-    #serveHtml = serve(
-    #    file=html,
-    #    path="/test"
-    #)
+    serveHtml = AceRoute('/test', html)
+    serve([serveHtml])
 
-    #server(serveHtml)
-
-    print(html)
+    #print(html)
 
 main()
