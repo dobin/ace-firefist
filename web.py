@@ -10,9 +10,13 @@ def serveData(route):
 
 def serveDownload(route):
     #filename = os.path.basename(urlparse(route.url).path)
+    # TODO necessary?
+    data = route.data
+    if isinstance(data, str):
+        data = bytes(data, 'utf-8')
 
     return send_file(
-                io.BytesIO(route.data),
+                io.BytesIO(data),
                 attachment_filename=route.downloadName,
 #                mimetype='image/jpg'
         )
@@ -27,11 +31,18 @@ def create_view_func(route):
 
 def create_view_func2(route):
     def view_func():
-        return send_file(
-            io.BytesIO(route.data),
+        # TODO necessary?
+        data = route.data
+        if isinstance(data, str):
+            data = bytes(data, 'utf-8')
+
+        ret = send_file(
+            io.BytesIO(data),
             attachment_filename=route.downloadName,
 #                mimetype='image/jpg'
         )
+    
+        return ret
     return view_func
 
 

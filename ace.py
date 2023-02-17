@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 def main():
-    recepi_1()
+    recepi_3()
 
 if __name__ == "__main__":
     enableOut()
