@@ -2,14 +2,54 @@
 
 Attack Chain Emulator. Like pwntools, but for initial execution. 
 
+## Example (recipe 3)
 
+Source:
+```py
+# MSHTA -> Powershell:MessageBox
+def recipe_3():
+    ps1msgbox = makePowershellMessageBox()
+    ps1msgbox = makePowershellEncodedCommand(ps1msgbox)
+
+    cmd = AceStr("powershell.exe -EncodedCommand {}".format(ps1msgbox))
+    mshta = makeMshtaJscriptExec(cmd)
+
+    containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
+    serve(containerServe)
 ```
-rm out/*; ./ace.py ...
+
+Execute:
+```sh
+$ rm out/*; python3 ace.py --recipe 3
+INFO:basic_logger:--[ 1: makePowershellMessageBox() -> 1
+INFO:basic_logger:--[ 2: makePowershellEncodedCommand(1) -> 2
+INFO:basic_logger:--[ 3: makeMshtaJscriptExec(2) -> 3
+
+Routes:
+  /            Recipe overview
+  /test.hta   (3)    Download: True test.hta
+
+ * Serving Flask app 'web' (lazy loading)
 ```
 
-# Recipes
+Files:
+```
+$ ls -1 out/
+out_1_makePowershellMessageBox.txt
+out_2_makePowershellEncodedCommand.txt
+out_3_makeMshtaJscriptExec.txt
+```
 
-## recipe 1: 
+Video: 
+```
+<tbd>
+```
+
+
+
+## Recipes
+
+### recipe 1: 
 
 HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 
@@ -17,10 +57,10 @@ HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 python3 ace.py --recipe 1
 ```
 
-URL: http://localhost:5000/test
+Entry URL: http://localhost:5000/test
 
 
-## recipe 2
+### recipe 2
 
 ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
 
@@ -28,10 +68,10 @@ ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
 python3 ace.py --recipe 2
 ```
 
-URL: http://localhost:5000/test.zip
+Entry URL: http://localhost:5000/test.zip
 
 
-## recipe 3
+### recipe 3
 
 MSHTA -> Powershell:MessageBox
 
@@ -39,10 +79,10 @@ MSHTA -> Powershell:MessageBox
 python3 ace.py --recipe 3
 ```
 
-URL: http://localhost:5000/test.hta
+Entry URL: http://localhost:5000/test.hta
 
 
-# Example 
+## Example 
 
 All artefacts get logged in `out/`:
 ```
@@ -56,7 +96,14 @@ out_6_makeHtmlSmuggling.txt
 ```
 
 
-# Libraries
+## Notes
+
+```
+rm out/*; ./ace.py ...
+```
+
+
+## Libraries
 
 * libs/pylnk3: pylnk3-dev, as it has an important bugfix. No deps. 
 
