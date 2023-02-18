@@ -1,5 +1,7 @@
 import logging
 
+logger = logging.getLogger('basic_logger')
+
 
 COUNTER = 0
 ENABLE_SAVING = False
@@ -49,14 +51,14 @@ def PluginDecorator(func):
         ret = func(*args, **kwargs)
 
         if isinstance(ret, (AceBytes, AceStr)):
-            logging.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, ret.index))
+            logger.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, ret.index))
         elif isinstance(ret, AceFile):
-            logging.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, ret.data.index))
+            logger.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, ret.data.index))
         elif isinstance(ret, list[AceFile]):
             for file in ret:
-                logging.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, file.data.index))
+                logger.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, file.data.index))
         else:
-            logging.info("--[ {}: {}".format(COUNTER, func.__name__))
+            logger.info("--[ {}: {}".format(COUNTER, func.__name__))
 
         if not ENABLE_SAVING:
             return ret

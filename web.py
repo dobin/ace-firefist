@@ -5,6 +5,7 @@ import os
 from typing import List
 import glob
 
+import log
 from model import *
 
 
@@ -60,12 +61,11 @@ def viewRouteDownload(route):
 def viewIndex(routes):
     def view_func():
         files = sorted(glob.glob("out/out_*.*"))
-        res = []
-
         return render_template(
             'index.html', 
             files=files,
-            routes=routes)
+            routes=routes,
+            log=log.GlobalLog.getvalue())
 
     return view_func
 

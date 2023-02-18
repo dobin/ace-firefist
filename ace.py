@@ -1,15 +1,17 @@
 #!/usr/bin/python3
 
-import logging
+import io
+
 import argparse
 
 from model import enableOut
 from recipes import *
-
-logging.basicConfig(level=logging.INFO)
+from log import setupLogging
 
 
 def main():
+    setupLogging()
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--recipe', type=int, help='')
     args = parser.parse_args()
