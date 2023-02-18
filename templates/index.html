@@ -1,0 +1,16 @@
+<h1>ACE - Fire Fist</h1>
+
+Routes: 
+
+<ul>
+    {% for route in routes %}
+    <li><a href="{{route.url}}">{{route.url}}</a></li>
+    {% endfor %}
+</ul>
+
+Generated files:
+<ul>
+    {% for file in files %}
+    <li><a href="{{file}}">{{file}}</a></li>
+    {% endfor %}
+</ul>
