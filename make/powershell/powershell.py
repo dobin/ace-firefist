@@ -11,13 +11,13 @@ from model import *
 
 
 @PluginDecorator
-def makePowershellDownloadAndExecuteBinary(url: str, path: str):
+def makePowershellDownloadAndExecuteBinary(url: str, path: str) -> AceStr:
     templateFile = 'download_exec_file.ps1'
     return AceStr('')
 
 
 @PluginDecorator
-def makePowershellDownloadAndExecuteMemPs1(url: str) -> str:
+def makePowershellDownloadAndExecuteMemPs1(url: str) -> AceStr:
     templateFile = 'download_exec_ps_enc_mem.ps1'
     with open('make/powershell/' + templateFile) as f:
         template = Template(f.read())
@@ -30,7 +30,7 @@ def makePowershellDownloadAndExecuteMemPs1(url: str) -> str:
 
 
 @PluginDecorator
-def makePowershellMessageBox() -> str: 
+def makePowershellMessageBox() -> AceStr: 
     templateFile = 'messagebox.ps1'
     with open('make/powershell/' + templateFile) as f:
         template = Template(f.read())
@@ -41,14 +41,14 @@ def makePowershellMessageBox() -> str:
 
 
 @PluginDecorator
-def makePowershellCommand(input: str) -> str:
+def makePowershellCommand(input: str) -> AceStr:
     """For use with 'PowerShell.exe -Command {}'"""
     ret = "{}".format(input)
     return AceStr(ret)
 
 
 @PluginDecorator
-def makePowershellEncodedCommand(input: str) -> str:
+def makePowershellEncodedCommand(input: str) -> AceStr:
     """For use with 'PowerShell.exe -EncodedCommand {}'"""
     text = "{}".format(input)
     # https://stackoverflow.com/questions/71642299/how-to-use-python-to-represent-the-powershell-tobase64string-function

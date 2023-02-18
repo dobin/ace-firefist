@@ -9,7 +9,7 @@ from model import *
 
 
 @PluginDecorator
-def makeLnk(name: str, target: str, arguments: str, window_mode='Minimized') -> bytes:
+def makeLnk(name: str, target: str, arguments: str, window_mode='Minimized') -> AceBytes:
     """Make a .lnk file with `name` pointing to `target` having `arguments` as arguments"""
     lnk = lib.pylnk3.helpers.for_file(
         target, 

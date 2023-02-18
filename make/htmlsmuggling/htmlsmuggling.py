@@ -12,7 +12,7 @@ from model import *
 
 
 @PluginDecorator
-def makeHtmlSmuggling(file, template='autodownload.html') -> str:
+def makeHtmlSmuggling(file: AceFile, template='autodownload.html') -> AceStr:
     """Make a HTML site from template from which the file can be downloaded"""
     path = 'make/htmlsmuggling/' + template
     p = Path(path)

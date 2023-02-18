@@ -10,7 +10,7 @@ from model import *
 
 
 @PluginDecorator
-def makeIso(files: List[AceFile]) -> bytes:
+def makeIso(files: List[AceFile]) -> AceBytes:
     # https://clalancette.github.io/pycdlib/example-creating-joliet-iso.html
     iso = pycdlib.PyCdlib()
     iso.new(joliet=3)

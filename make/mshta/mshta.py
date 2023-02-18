@@ -8,14 +8,14 @@ from model import *
 
 
 @PluginDecorator
-def makeMshtaJscriptExec(data: str) -> str:
+def makeMshtaJscriptExec(commandline: str) -> AceStr:
     templateFile = 'hta-jscript-exec.hta'
 
-    data = data.replace('\r', '')
-    data = data.replace('\n', '')
+    commandline = commandline.replace('\r', '')
+    commandline = commandline.replace('\n', '')
     with open('make/mshta/' + templateFile) as f:
         template = Template(f.read())
     renderedHtml = template.render(
-        data=data
+        data=commandline
     )
     return AceStr(renderedHtml)

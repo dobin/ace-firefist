@@ -11,7 +11,7 @@ from model import *
 
 
 @PluginDecorator
-def makeZip(files: List[AceFile]) -> bytes:
+def makeZip(files: List[AceFile]) -> AceBytes:
     zipData = io.BytesIO()
 
     with zipfile.ZipFile(zipData, "a",

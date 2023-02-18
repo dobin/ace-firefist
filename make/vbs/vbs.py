@@ -8,14 +8,14 @@ from model import *
 
 
 @PluginDecorator
-def makeVbsExecEncPs1(data: str) -> str:
+def makeVbsExecEncPs1(commandline: str) -> AceStr:
     templateFile = 'exec-enc-powershell.vbs'
 
-    data = data.replace('\r', '')
-    data = data.replace('\n', '')
+    commandline = commandline.replace('\r', '')
+    commandline = commandline.replace('\n', '')
     with open('make/vbs/' + templateFile) as f:
         template = Template(f.read())
     renderedHtml = template.render(
-        data=data
+        data=commandline
     )
     return AceStr(renderedHtml)
