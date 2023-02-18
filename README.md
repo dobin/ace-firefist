@@ -27,8 +27,10 @@ INFO:basic_logger:--[ 2: makePowershellEncodedCommand(1) -> 2
 INFO:basic_logger:--[ 3: makeMshtaJscriptExec(2) -> 3
 
 Routes:
-  /            Recipe overview
-  /test.hta   (3)    Download: True test.hta
+  /                      Recipe overview
+  /out/<filename>        out/ files
+  /static/<filename>     static/ files
+  /test.hta              (3)    Download: True test.hta
 
  * Serving Flask app 'web' (lazy loading)
 ```
@@ -55,7 +57,7 @@ Video:
 
 ## Recipes
 
-### recipe 1: 
+### Recipe 1
 
 HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 
@@ -66,7 +68,7 @@ python3 ace.py --recipe 1
 Entry URL: http://localhost:5000/test
 
 
-### recipe 2
+### Recipe 2
 
 ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
 
@@ -77,7 +79,7 @@ python3 ace.py --recipe 2
 Entry URL: http://localhost:5000/test.zip
 
 
-### recipe 3
+### Recipe 3
 
 MSHTA -> Powershell:MessageBox
 
