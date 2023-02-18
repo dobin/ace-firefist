@@ -1,7 +1,9 @@
 import logging
 import io
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(levelname)s: %(message)s")
 GlobalLog = None
 
 def setupLogging():
@@ -12,5 +14,4 @@ def setupLogging():
     GlobalLog = io.StringIO()
     ch = logging.StreamHandler(GlobalLog)
     ch.setLevel(logging.INFO)
-
     logger.addHandler(ch)
