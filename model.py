@@ -1,25 +1,20 @@
 import logging
+import config
 
 logger = logging.getLogger('basic_logger')
-
-
-COUNTER = 0
-ENABLE_SAVING = False
 
 
 class AceStr(str):
     def __new__(cls, value):
         obj = str.__new__(cls, value)
-        global COUNTER
-        obj.index = COUNTER
+        obj.index = config.COUNTER
         return obj
 
 
 class AceBytes(bytes):
     def __new__(cls, value):    
         obj = bytes.__new__(cls, value)
-        global COUNTER
-        obj.index = COUNTER
+        obj.index = config.COUNTER
         return obj
 
 
@@ -39,8 +34,7 @@ def prePrint(arg):
 
 def PluginDecorator(func):
     def wrapper(*args, **kwargs):
-        global COUNTER
-        COUNTER += 1
+        config.COUNTER += 1
                 
         ret = func(*args, **kwargs)
 
@@ -52,36 +46,36 @@ def PluginDecorator(func):
         for _, arg in kwargs.items():
             s += prePrint(arg)
         if isinstance(ret, (AceBytes, AceStr)):
-            logger.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, ret.index))
+            logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, ret.index))
         elif isinstance(ret, AceFile):
-            logger.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, ret.data.index))
+            logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, ret.data.index))
         elif isinstance(ret, list[AceFile]):
             for file in ret:
-                logger.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, file.data.index))
+                logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, file.data.index))
         else:
-            logger.info("--[ {}: {}".format(COUNTER, func.__name__))
+            logger.info("--[ {}: {}".format(config.COUNTER, func.__name__))
 
         # Dump content to files
-        if not ENABLE_SAVING:
+        if not config.ENABLE_SAVING:
             return ret
         
         filename = None
         filedata = None
 
         if isinstance(ret, AceBytes):
-            filename = "out/out_{}_{}.bin".format(COUNTER, func.__name__)
+            filename = "out/out_{}_{}.bin".format(config.COUNTER, func.__name__)
             filedata = ret
         elif isinstance(ret, AceStr):
-            filename = "out/out_{}_{}.txt".format(COUNTER, func.__name__)
+            filename = "out/out_{}_{}.txt".format(config.COUNTER, func.__name__)
             filedata = bytes(ret, 'utf-8')
         elif isinstance(ret, (bytes, bytearray)):
-            filename = "out/out_{}_{}.bin".format(COUNTER, func.__name__)
+            filename = "out/out_{}_{}.bin".format(config.COUNTER, func.__name__)
             filedata = ret
         elif isinstance(ret, str):
-            filename = "out/out_{}_{}.txt".format(COUNTER, func.__name__)
+            filename = "out/out_{}_{}.txt".format(config.COUNTER, func.__name__)
             filedata = bytes(ret, 'utf-8')
         elif isinstance(ret, AceFile):
-            filename = "out/out_{}_file_{}".format(COUNTER, ret.name)
+            filename = "out/out_{}_file_{}".format(config.COUNTER, ret.name)
             filedata = ret.data
             if isinstance(filedata, str):
                 filedata = bytes(filedata, 'utf-8')
@@ -107,8 +101,11 @@ class AceRoute():
 
 
 def enableOut():
-    global ENABLE_SAVING
-    ENABLE_SAVING = True
+    config.ENABLE_SAVING = True
+
+
+def enableScanning(server):
+    config.ENABLE_SCANNING = server
 
 
 class AceFile():

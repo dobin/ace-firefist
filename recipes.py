@@ -24,6 +24,8 @@ def recipe_3():
     cmd = AceStr("powershell.exe -EncodedCommand {}".format(ps1msgbox))
     mshta: AceStr = makeMshtaJscriptExec(cmd)
 
+    mshtaFile: AceFile = makeAceFile("test.hta", mshta)
+
     containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
     routes.append(containerServe)
 
