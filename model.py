@@ -40,16 +40,17 @@ def prePrint(arg):
 def PluginDecorator(func):
     def wrapper(*args, **kwargs):
         global COUNTER
-
         COUNTER += 1
-        s = ''
-        for arg in args:
-            s += prePrint(arg)
-        for key, arg in kwargs.items():
-            s += prePrint(arg)
                 
         ret = func(*args, **kwargs)
 
+        # What follows: Try to print ACE information of args+ret
+        # This is SLOW
+        s = ''
+        for arg in args:
+            s += prePrint(arg)
+        for _, arg in kwargs.items():
+            s += prePrint(arg)
         if isinstance(ret, (AceBytes, AceStr)):
             logger.info("--[ {}: {}({}) -> {}".format(COUNTER, func.__name__, s, ret.index))
         elif isinstance(ret, AceFile):
@@ -60,6 +61,7 @@ def PluginDecorator(func):
         else:
             logger.info("--[ {}: {}".format(COUNTER, func.__name__))
 
+        # Dump content to files
         if not ENABLE_SAVING:
             return ret
         
@@ -72,8 +74,7 @@ def PluginDecorator(func):
         elif isinstance(ret, AceStr):
             filename = "out/out_{}_{}.txt".format(COUNTER, func.__name__)
             filedata = bytes(ret, 'utf-8')
-
-        if isinstance(ret, (bytes, bytearray)):
+        elif isinstance(ret, (bytes, bytearray)):
             filename = "out/out_{}_{}.bin".format(COUNTER, func.__name__)
             filedata = ret
         elif isinstance(ret, str):
@@ -82,7 +83,6 @@ def PluginDecorator(func):
         elif isinstance(ret, AceFile):
             filename = "out/out_{}_file_{}".format(COUNTER, ret.name)
             filedata = ret.data
-
             if isinstance(filedata, str):
                 filedata = bytes(filedata, 'utf-8')
         else:
@@ -98,11 +98,12 @@ def PluginDecorator(func):
 
 
 class AceRoute():
-    def __init__(self, url: str, data: bytes, download: bool=False, downloadName=''):
+    def __init__(self, url: str, data: bytes, download: bool=False, downloadName: str='', downloadMime: str=None):
         self.url = url
         self.data = data
         self.download = download
         self.downloadName = downloadName
+        self.downloadMime = downloadMime
 
 
 def enableOut():
