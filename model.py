@@ -49,7 +49,7 @@ def PluginDecorator(func):
             logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, ret.index))
         elif isinstance(ret, AceFile):
             logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, ret.data.index))
-        elif isinstance(ret, list[AceFile]):
+        elif isinstance(ret, list) and isinstance(ret, list[AceFile]):  # necessary?
             for file in ret:
                 logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, file.data.index))
         else:
