@@ -17,7 +17,10 @@ def serve(routes: List[AceRoute]):
     print("Routes:")
     app.add_url_rule('/', 'index', viewIndex(routes))
     app.add_url_rule('/out/<filename>', 'out', view_out)
-    print("  /            Recipe overview")
+    
+    print("  /                      Recipe overview")
+    print("  /out/<filename>        out/ files")
+    print("  /static/<filename>     static/ files")
 
     for route in routes:
         if isinstance(route.data, (AceStr, AceBytes)):
@@ -73,5 +76,3 @@ def viewIndex(routes):
 # View for file in out/ directory
 def view_out(filename):
     return send_from_directory('out/', filename, as_attachment=False)
-
-

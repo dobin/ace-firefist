@@ -2,6 +2,7 @@
 
 Attack Chain Emulator. Like pwntools, but for initial execution. 
 
+
 ## Example (recipe 3)
 
 Source:
@@ -45,6 +46,11 @@ Video:
 <tbd>
 ```
 
+## Directories
+
+* `out/`: generated artefacts
+* `static/`: files served in web server under `static/`
+* `payload/`: files used as payloads (not served via web)
 
 
 ## Recipes
