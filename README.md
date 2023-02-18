@@ -82,20 +82,6 @@ python3 ace.py --recipe 3
 Entry URL: http://localhost:5000/test.hta
 
 
-## Example 
-
-All artefacts get logged in `out/`:
-```
-out_0_file_evil.dll
-out_1_makePowershell.txt
-out_2_makeLnk.bin
-out_3_file_clickme.lnk
-out_4_makeIso.bin
-out_5_file_test2.iso
-out_6_makeHtmlSmuggling.txt
-```
-
-
 ## Notes
 
 ```
