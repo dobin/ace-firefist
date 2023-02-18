@@ -5,6 +5,9 @@ Attack Chain Emulator. Like pwntools, but for initial execution.
 
 ## Example (recipe 3)
 
+Generate a HTA file based on a template which executes powershell code (displaying a messge box),
+and make it available via HTTP at `http://localhost:5001/test.hta`. 
+
 Source:
 ```py
 # MSHTA -> Powershell:MessageBox
@@ -14,28 +17,33 @@ def recipe_3():
 
     cmd = AceStr("powershell.exe -EncodedCommand {}".format(ps1msgbox))
     mshta = makeMshtaJscriptExec(cmd)
+    mshtaFile: AceFile = makeAceFile("test.hta", mshta)
 
     containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
     serve(containerServe)
 ```
 
-Execute:
+Generate the artefacts and start the web server:
 ```sh
 $ rm out/*; python3 ace.py --recipe 3
-INFO:basic_logger:--[ 1: makePowershellMessageBox() -> 1
-INFO:basic_logger:--[ 2: makePowershellEncodedCommand(1) -> 2
-INFO:basic_logger:--[ 3: makeMshtaJscriptExec(2) -> 3
+INFO: --[ 1: makePowershellMessageBox() -> 1
+INFO: --[ 2: makePowershellEncodedCommand(1) -> 2
+INFO: --[ 3: makeMshtaJscriptExec(2) -> 3
+INFO: ---[ Generating AceFile test.hta, detected: False
+INFO: --[ 4: makeAceFile(3) -> 3
 
 Routes:
-  /                      Recipe overview
-  /out/<filename>        out/ files
-  /static/<filename>     static/ files
-  /test.hta              (3)    Download: True test.hta
+  /                       Recipe overview
+  /out/<filename>         out/ files
+  /static/<filename>      static/ files
+  /test.hta          (3)  Download: True test.hta
 
  * Serving Flask app 'web' (lazy loading)
 ```
 
-Files:
+Go to `http://localhost:5001` for a overview page with all above information.
+
+Generated files:
 ```
 $ ls -1 out/
 out_1_makePowershellMessageBox.txt
