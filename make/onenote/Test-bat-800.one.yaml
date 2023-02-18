@@ -1,0 +1,8 @@
+---
+  title: "OneNote Page .one with clickable test.bat batch file"
+  author: "Dobin"
+  date: 20220218
+  description: "Simple OneNote test document which includes a .bat file with 800 spaces"
+  howtouse: "Replace whitepace*800 in the binary file with your .bat code"
+  input: ".bat batch code"
+  invalid: []

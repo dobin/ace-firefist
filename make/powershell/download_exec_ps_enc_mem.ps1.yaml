@@ -1,0 +1,8 @@
+---
+  title: "Powershell download and execute powershell"
+  author: "Dobin"
+  date: 20220218
+  description: "Simple powershell download (with proxy creds), and execute"
+  howtouse: "Host one line powershell command at url which gets executed with powershell.c \"command\""
+  input: "powershell command"
+  invalid: [ "\"" ]

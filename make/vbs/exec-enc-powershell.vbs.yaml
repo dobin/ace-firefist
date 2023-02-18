@@ -1,0 +1,8 @@
+---
+  title: "VBS Template using WScript.Shell to execute powershell"
+  author: "Dobin"
+  date: 20220218
+  description: "Simple VBS script"
+  howtouse: "Data for the command: powershell.exe -EncodedCommand \"data\""
+  input: "PowershellEncoded command"
+  invalid: [ "\"" ]
