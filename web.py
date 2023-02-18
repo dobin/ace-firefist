@@ -13,11 +13,11 @@ def serve(routes: List[AceRoute]):
     """Start a webserver which serves the `routes`, and additional files like index.html and out/"""
     app = Flask(__name__)
 
-    print("")
-    print("Routes:")
     app.add_url_rule('/', 'index', viewIndex(routes))
     app.add_url_rule('/out/<filename>', 'out', view_out)
-    
+
+    print("")
+    print("Routes:")
     print("  /                      Recipe overview")
     print("  /out/<filename>        out/ files")
     print("  /static/<filename>     static/ files")
@@ -51,12 +51,20 @@ def viewRouteDownload(route):
         data = route.data
         if isinstance(data, str):
             data = bytes(data, 'utf-8')
-        ret = send_file(
-            io.BytesIO(data),
-            attachment_filename=route.downloadName,
-            # mimetype='image/jpg'
-        )
-        return ret
+
+        if route.downloadMime is not None:
+            ret = send_file(
+                io.BytesIO(data),
+                attachment_filename=route.downloadName,
+                mimetype=route.downloadMime
+            )
+            return ret
+        else:
+            ret = send_file(
+                io.BytesIO(data),
+                attachment_filename=route.downloadName,
+            )
+            return ret
     return view_func
 
 
