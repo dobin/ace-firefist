@@ -49,6 +49,7 @@ $ ls -1 out/
 out_1_makePowershellMessageBox.txt
 out_2_makePowershellEncodedCommand.txt
 out_3_makeMshtaJscriptExec.txt
+out_4_file_test.hta
 ```
 
 Video: 
