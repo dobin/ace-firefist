@@ -108,6 +108,10 @@ def enableScanning(server):
     config.ENABLE_SCANNING = server
 
 
+def setListenIp(ip):
+    config.LISTEN_IP = ip
+    
+
 class AceFile():
     def __init__(self, name: str, data: bytes):
         self.name = name

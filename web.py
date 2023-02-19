@@ -34,7 +34,7 @@ def serve(routes: List[AceRoute]):
             app.add_url_rule(route.url, route.url, viewRoutePlain(route))
 
     print("")
-    app.run()
+    app.run(host=config.LISTEN_IP)
 
 
 # View for normal (text) files/route

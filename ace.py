@@ -15,10 +15,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--recipe', type=int, help='')
     parser.add_argument('--scan', type=str, help='')
+    parser.add_argument('--listenip', type=str, help='')
     args = parser.parse_args()
 
     if args.scan:
         enableScanning(args.scan)
+
+    if args.listenip:
+        setListenIp(args.listenip)
 
     if args.recipe == 1:
         recipe_1()
