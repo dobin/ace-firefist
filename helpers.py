@@ -33,6 +33,9 @@ def scanAv(aceFile: AceFile) -> bool:
     filename = aceFile.name
     params = { 'filename': filename }
 
+    if config.ENABLE_SCANNING is False:
+        return False
+
     url = config.ENABLE_SCANNING
     res = req.post(f"{url}/scan", params=params, data=data)
     jsonRes = res.json()
@@ -40,6 +43,7 @@ def scanAv(aceFile: AceFile) -> bool:
     if res.status_code != 200:
         print("Err: " + str(res.status_code))
         print("Err: " + str(res.text))
+        return False
     
     ret_value = jsonRes['detected']
 
