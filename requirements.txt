@@ -1,3 +1,4 @@
 pycdlib
+requests
+jinja2
 flask
-zipfile
