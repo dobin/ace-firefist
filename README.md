@@ -185,12 +185,11 @@ Example:
 INFO: --[ 1: makePowershellMessageBox() -> 1
 INFO: --[ 2: makePowershellEncodedCommand(1) -> 2
 INFO: --[ 3: makeMshtaJscriptExec(2) -> 3
-INFO: ---[ Generating AceFile test.hta, detected: False
 INFO: --[ 4: makeAceFile(3) -> 3
 ```
 
 To gain advantages of data tracking, use Ace data structures, and 
-decorate your maker with `@DataTracker`. 
+decorate your maker with `@DataTracker`:
 
 ```py
 @DataTracker
@@ -228,7 +227,7 @@ Example: `make/thing/thing-template.txt`
 The stuff: {{stuff}}
 ```
 
-And use it in the corresponding function. 
+And use it in its corresponding function. 
 
 Example: `make/thing/thing.py`:
 
@@ -270,5 +269,5 @@ rm out/*; ./ace.py ...
 
 ## Libraries
 
-* libs/pylnk3: pylnk3-dev, as it has an important bugfix. No deps. 
+* libs/pylnk3: pylnk3-dev, as it has an important bugfix. No deps. GPL3
 
