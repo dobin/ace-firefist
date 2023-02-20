@@ -3,6 +3,6 @@
   author: "Dobin"
   date: 20220218
   description: "Powershell code which shows a dialog box, for testing purposes"
-  howtouse: "Execute and wait a bit"
-  input: ""
-  invalid: []
+  howtouse: "Powershell -c \"\""
+  input: "None"
+  invalid: [ '' ]

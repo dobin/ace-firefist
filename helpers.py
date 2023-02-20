@@ -1,11 +1,54 @@
 import logging
 import requests as req
+from jinja2 import Template
+from pathlib import Path
+import yaml
+import os
 
 from model import *
 import config
 
+logger = logging.getLogger('basic_logger')
 
-@PluginDecorator
+
+def yamlHelp(file):
+    file = file + ".yaml"
+
+    p = Path(file)
+    if not p.is_file():
+        return
+
+    with open(file) as f:
+        yamlData = yaml.safe_load(f)
+
+    #if not 'invalid' in yamlData:
+    #    return
+    #if not isinstance(yamlData['invalid'], list):
+    #    return
+    #exceptions = yamlData['invalid']
+    #for exception in exceptions: 
+    #print("Exceptions: " + str(exceptions))
+
+    logger.info("--( Template {}:".format(file))
+    entries = [ 'title', 'description', 'howtouse', 'input', 'invalid' ]
+    for key in entries:
+        if key in yamlData:
+            logger.info("    {}: {}".format(key, yamlData[key]))
+
+
+def getTemplate(directory: str, name: str) -> Template:
+    path = os.path.join(directory, name)
+
+    with open(path) as f:
+        template = Template(f.read())
+
+    if config.SHOW_TEMPLATE_INFO:
+        yamlHelp(path)
+
+    return template
+
+
+@DataTracker
 def readFileContent(filename) -> AceBytes:
     f = open(filename, 'rb')
     data = f.read()
@@ -20,7 +63,7 @@ def saveAceFile(file: AceFile):
     logging.info("Written file: {}".format(file.name))
 
 
-@PluginDecorator
+@DataTracker
 def makeAceFile(name: str, data: bytes) -> AceFile:
     aceFile = AceFile(name, data)
     if config.ENABLE_SCANNING is not None:

@@ -44,7 +44,6 @@ def recipe_1():
     # HTML to serve ISO
     html: AceStr = makeHtmlSmuggling(
         containerFile,
-        template='autodownload.html',
     )
 
     # serve HTML

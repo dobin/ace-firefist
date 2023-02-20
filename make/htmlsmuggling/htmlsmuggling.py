@@ -9,18 +9,14 @@ import sys
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from model import *
+from helpers import getTemplate
 
 
-@PluginDecorator
-def makeHtmlSmuggling(file: AceFile, template='autodownload.html') -> AceStr:
+@DataTracker
+def makeHtmlSmuggling(file: AceFile) -> AceStr:
     """Make a HTML site from template from which the file can be downloaded"""
-    path = 'make/htmlsmuggling/' + template
-    p = Path(path)
-    if not p.is_file():
-        raise FileNotFoundError
-
-    with open(path) as f:
-        template = Template(f.read())
+    templateFile = 'autodownload.html'
+    template = getTemplate('make/htmlsmuggling/', templateFile)
     
     # Arguments for the template:
     # - data: is file base64 encoded

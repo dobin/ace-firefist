@@ -6,45 +6,45 @@ import logging
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from model import *
+from helpers import getTemplate
+
 
 # Notes:
 # Use "powershell.exe -noexit" for testing
 
 
-@PluginDecorator
+@DataTracker
 def makePowershellDownloadAndExecuteBinary(url: str, path: str) -> AceStr:
     templateFile = 'download_exec_file.ps1'
     return AceStr('')
 
 
-@PluginDecorator
+@DataTracker
 def makePowershellDownloadAndExecuteMemPs1(url: str) -> AceStr:
     templateFile = 'download_exec_ps_enc_mem.ps1'
-    with open('make/powershell/' + templateFile) as f:
-        template = Template(f.read())
+    template = getTemplate('make/powershell/', templateFile)
     script = template.render(
         url=url
     )
     return AceStr(script)
 
 
-@PluginDecorator
+@DataTracker
 def makePowershellMessageBox() -> AceStr: 
     templateFile = 'messagebox.ps1'
-    with open('make/powershell/' + templateFile) as f:
-        template = Template(f.read())
+    template = getTemplate('make/powershell/', templateFile)
     script = template.render()
     return AceStr(script)
 
 
-@PluginDecorator
+@DataTracker
 def makePowershellCommand(input: str) -> AceStr:
     """For use with 'PowerShell.exe -Command {}'"""
     ret = toPowershellLine(input)
     return AceStr(ret)
 
 
-@PluginDecorator
+@DataTracker
 def makePowershellEncodedCommand(input: str) -> AceStr:
     """For use with 'PowerShell.exe -EncodedCommand {}'"""
     text = toPowershellLine(input)

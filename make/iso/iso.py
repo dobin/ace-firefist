@@ -9,7 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from model import *
 
 
-@PluginDecorator
+@DataTracker
 def makeIso(files: List[AceFile]) -> AceBytes:
     # https://clalancette.github.io/pycdlib/example-creating-joliet-iso.html
     iso = pycdlib.PyCdlib()

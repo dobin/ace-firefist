@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from model import *
 
 
-@PluginDecorator
+@DataTracker
 def makeZip(files: List[AceFile]) -> AceBytes:
     zipData = io.BytesIO()
 

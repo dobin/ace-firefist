@@ -12,7 +12,7 @@ from model import *
 # - windows will not show more than 260 chars of the lnk argument - but they still exist
 
 
-@PluginDecorator
+@DataTracker
 def makeLnk(name: str, target: str, arguments: str, window_mode='Minimized') -> AceBytes:
     """Make a .lnk file with `name` pointing to `target` having `arguments` as arguments"""
     lnk = lib.pylnk3.helpers.for_file(

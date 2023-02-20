@@ -19,6 +19,7 @@ def main():
     parser.add_argument('--scan', type=str, help='')
     parser.add_argument('--listenip', type=str, help='')
     parser.add_argument('--listenport', type=int, help='')
+    parser.add_argument('--templateinfo', action='store_true', help='')
     args = parser.parse_args()
 
     if args.scan:
@@ -27,6 +28,8 @@ def main():
         setListenIp(args.listenip)
     if args.listenport:
         setListenPort(args.listenport)
+    if args.templateinfo:
+        enableTemplateInfo()
 
     # From ChatGPT
     recipeMethod = None 

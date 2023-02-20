@@ -1,5 +1,7 @@
 import logging
 import config
+from pathlib import Path
+import inspect 
 
 logger = logging.getLogger('basic_logger')
 
@@ -32,10 +34,10 @@ def prePrint(arg):
     return ', '.join(s)
 
 
-def PluginDecorator(func):
+def DataTracker(func):
     def wrapper(*args, **kwargs):
         config.COUNTER += 1
-                
+
         ret = func(*args, **kwargs)
 
         # What follows: Try to print ACE information of args+ret
@@ -112,6 +114,8 @@ def setListenIp(ip):
     config.LISTEN_IP = ip
 def setListenPort(port):
     config.LISTEN_PORT = port
+def enableTemplateInfo():
+    config.SHOW_TEMPLATE_INFO = True
 
 class AceFile():
     def __init__(self, name: str, data: bytes):

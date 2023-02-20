@@ -9,7 +9,7 @@ from model import *
 
 logger = logging.getLogger()
 
-@PluginDecorator
+@DataTracker
 def makeOnenoteBat(input: AceStr) -> AceBytes:
     template = 'make/onenote/Test-bat-800.one'
     placeholderLen = 700  # even tho we stored 800 spaces, it only works with a bit less

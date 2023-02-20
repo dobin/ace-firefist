@@ -2,3 +2,4 @@ pycdlib
 requests
 jinja2
 flask
+pyyaml
