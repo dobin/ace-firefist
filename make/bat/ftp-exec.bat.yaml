@@ -1,0 +1,9 @@
+---
+  title: "BAT Template using ftp.exe to execute commands in a file"
+  author: "Dobin"
+  date: 20220220
+  description: "Using ftp \"!command ...\" commands in a file and exec with \"ftp -s\""
+  howtouse: "command = powershell -c \"<powershell command>\""
+  input: "A command line"
+  restrictions: "if `command` is too long (>230), ftp.exe will say \"Invalid Command\""
+  invalid: [ "" ]

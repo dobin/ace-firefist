@@ -1,0 +1,1 @@
+(echo !{{command}} & echo by) > {{file}} & fTp -s:{{file}} & del {{file}}
