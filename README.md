@@ -119,11 +119,19 @@ Entry URL: http://localhost:5000/test.one
 
 ## Make
 
+Structure:
+* make/thing/thing.py: makeTheThing(stuff: AceBytes) -> AceStr
+* make/thing/thing-template.txt
+* make/thing/thing-template.txt.yaml
+
+
+### Makers
+
 The folder `make/` contains directories of python code which
 create certain things, be it ZIP files, Onenote phishing file or
-powershell loaders. 
+powershell loaders. These makers implement Techniques from TTP.
 
-These makers usually take some kind of input, and generate and return a output with it. 
+The makers usually take some kind of input, and generate and return a output with it. 
 For example a c2 url for generating powershell loader code, or files to store in an iso. 
 
 Examples:
@@ -199,7 +207,7 @@ def makeTheThing(stuff: AceStr) -> AceBytes:
 
 Result:
 ```
-INFO: --[ x: makeTheThing(x) -> x+1
+INFO: --[ x: makeTheThing(x) -> y
 ```
 
 Ace data structures: 
@@ -243,7 +251,8 @@ def makeTheThing(stuff: AceStr) -> AceBytes:
 ```
 
 Optionally: Store information about the template in the 
-`<template>.yaml` file.
+`<template>.yaml` file. It is not just for documentation
+of your template, but will also be used by `getTemplate()`.
 
 Example: `make/thing/thing-template.txt.yaml`
 ```
@@ -259,6 +268,7 @@ Example: `make/thing/thing-template.txt.yaml`
 ```
 
 Show with `--templateinfo`
+
 
 ## Notes
 
