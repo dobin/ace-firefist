@@ -78,20 +78,6 @@ Video:
 <tbd>
 ```
 
-## Directories
-
-* `out/`: generated artefacts
-* `static/`: files served in web server under `static/`
-* `payload/`: files used as payloads (not served via web)
-
-
-## Standalone example
-
-See `example.py` for a standalone script recipe. 
-
-Get inspiration from recipes from folder `recipes/`
-
-
 ## Recipes
 
 ### Recipe 1
@@ -138,7 +124,25 @@ python3 ace.py --recipe recipe_4
 Entry URL: http://localhost:5000/test.one
 
 
+## Standalone example
+
+See `example.py` for a standalone script recipe. 
+
+Get inspiration from recipes from folder `recipes/`
+
+
+## Directories
+
+* `out/`: generated artefacts
+* `static/`: files served in web server under `static/`
+* `payload/`: files used as payloads (not served via web)
+
+
 ## Make
+
+The folder `make/` contains directories of python code which
+create certain things, be it ZIP files, Onenote phishing file or
+powershell loaders. These makers implement Techniques from TTP.
 
 Structure:
 * make/thing/thing.py: makeTheThing(stuff: AceBytes) -> AceStr
@@ -147,10 +151,6 @@ Structure:
 
 
 ### Makers
-
-The folder `make/` contains directories of python code which
-create certain things, be it ZIP files, Onenote phishing file or
-powershell loaders. These makers implement Techniques from TTP.
 
 The makers usually take some kind of input, and generate and return a output with it. 
 For example a c2 url for generating powershell loader code, or files to store in an iso. 
@@ -178,7 +178,8 @@ Create a recipe like the `example.py` recipe,
 and combine it there with the other makers. 
 More examples are in `recipes/`.
 
-### Routes
+
+### URL Routes
 
 Serve any data at a URL with `AceRoute()`. 
 Use `serve()` to start a webserver serving them.
