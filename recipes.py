@@ -22,9 +22,9 @@ def recipe_4():
     ps1msgbox = makePowershellCommand(ps1msgbox)
     cmdline = AceStr("powershell -c \"{}\"".format(ps1msgbox))
 
-    # BAT
-    bat = makeBatFtpExec(cmdline)
-    #batFile: AceFile = makeAceFile("test.bat", bat)  # for debugging
+    # BAT, for Debugging
+    # bat = makeBatFtpExec(cmdline)
+    # batFile: AceFile = makeAceFile("test.bat", bat)
 
     # OneNote
     onenote = makeOnenoteBat(cmdline)
