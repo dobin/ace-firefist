@@ -177,7 +177,7 @@ class AceRoute():
 Ace can track your data. It observes the data structures
 `AceStr`, `AceBytes` and `AceFile` into makers decorated
 with `DataTracker`. For example which powershell script
-you insert into which execter, which files in a zip etc. 
+you insert into which executor, which files in a zip etc. 
 These are indexed by numbers.
 
 Example: 
@@ -200,7 +200,7 @@ def makeTheThing(stuff: AceStr) -> AceBytes:
 
 Result:
 ```
-INFO: --[ x: makeTheThing(x) -> y
+INFO: --[ x: makeTheThing(x) -> x+1
 ```
 
 Ace data structures: 
@@ -217,9 +217,9 @@ class AceFile():
 
 ### Templates
 
-Use templates whenever posisble when using text files.
-The templates are one of the main assets of ACE. Each
-is used to generate a specific with by the maker (`makeThing()`)
+Use templates whenever possible when using text files.
+The templates are one of the main assets of an ace. Each
+is used to generate a specific thing together with its maker (`makeThing()`)
 Prepare a file where
 jinja2 can replace with placeholder `{{}}`.
 
