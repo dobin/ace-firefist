@@ -1,0 +1,9 @@
+---
+  title: "HTML Template using HTML Smuggling (JavaScript) to automatically download a file"
+  author: "Dobin"
+  date: 20220220
+  description: "Using HTML link as download source. Will download on open."
+  howtouse: "Data is the file to be downloaded. Try keep it small, like <10mb."
+  input: "A file"
+  restrictions: ""
+  invalid: [ "" ]

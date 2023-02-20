@@ -1,0 +1,9 @@
+---
+  title: "HTA Template using WScript.Shell to execute a command"
+  author: "Dobin"
+  date: 20220220
+  description: "Using ActiveXObject WScript.Shell.run() to execute a command"
+  howtouse: "data = powershell -c \"<powershell command>\""
+  input: "A command line"
+  restrictions: ""
+  invalid: [ "<" ]

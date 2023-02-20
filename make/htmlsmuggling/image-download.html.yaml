@@ -1,0 +1,9 @@
+---
+  title: "HTML Template using HTML Smuggling (JavaScript) to download a file on click"
+  author: "Dobin"
+  date: 20220220
+  description: "Using HTML image as download source. Need to click the broken image" 
+  howtouse: "Data is the file to be downloaded. Try keep it small, like <10mb."
+  input: "A file"
+  restrictions: ""
+  invalid: [ "" ]
