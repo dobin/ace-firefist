@@ -2,11 +2,25 @@
 
 Attack Chain Emulator. Like pwntools, but for initial execution. 
 
+It can generate artefacts to implement Techniques in recipes. 
 
-## Example (recipe 3)
+Makers:
+* makePowershell*
+* makeBat
+* makeIso
+* makeZip
+* makeLnk
+* makeOnenote
+* makeVbs
+* makeHta
+
+These can be freely combined to perform complex multi-stage attack chains.
+
+
+## Example recipe: MSTHA with powershell code
 
 Generate a HTA file based on a template which executes powershell code (displaying a messge box),
-and make it available via HTTP at `http://localhost:5000/test.hta`. 
+and make it available via HTTP at `http://localhost:5000/test.hta`. Available as recipe 3. 
 
 Source:
 ```py
@@ -22,6 +36,13 @@ def recipe_3():
     containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
     serve(containerServe)
 ```
+
+While the packing flows forward, to see what the victim
+is executing, look at it from bottom upwards:
+* Access a website with the `test.hta` file and download it
+* Execute the `test.hta` file by double clicking it
+* The HTA file executes powershell code by invoking `powershell -encodedcommand ...`, which shows a message box
+
 
 Generate the artefacts and start the web server:
 ```sh
