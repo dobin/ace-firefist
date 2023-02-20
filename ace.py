@@ -30,6 +30,8 @@ def main():
         recipe_2()
     elif args.recipe == 3:
         recipe_3()
+    elif args.recipe == 4:
+        recipe_4()
     else:
         print("Unkown recipe: {}".format(args.recipe))
 

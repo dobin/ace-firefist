@@ -3,6 +3,6 @@
   author: "Dobin"
   date: 20220218
   description: "Simple OneNote test document which includes a .bat file with 800 spaces"
-  howtouse: "Replace whitepace*800 in the binary file with your .bat code"
-  input: ".bat batch code"
+  howtouse: "Replace whitepace*700 in the binary file with your .bat code. Close Section in onenote , and use new filename for each test (or it will do magic sync things)"
+  input: ".bat batch code. Will be filled with whitespaces at the end"
   invalid: []

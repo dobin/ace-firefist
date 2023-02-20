@@ -9,8 +9,7 @@ from model import *
 
 @PluginDecorator
 def makeOnenoteBat(input: AceStr) -> AceBytes:
-    #template = 'make/onenote/Test-bat-800.one'
-    template = 'Test-bat-800.one'
+    template = 'make/onenote/Test-bat-800.one'
     placeholderLen = 700  # even tho we stored 800 spaces, it only works with a bit less
     placeholder = b" " * placeholderLen
     exchange = input + " " * (placeholderLen - len(input))
