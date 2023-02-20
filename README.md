@@ -6,7 +6,7 @@ Attack Chain Emulator. Like pwntools, but for initial execution.
 ## Example (recipe 3)
 
 Generate a HTA file based on a template which executes powershell code (displaying a messge box),
-and make it available via HTTP at `http://localhost:5001/test.hta`. 
+and make it available via HTTP at `http://localhost:5000/test.hta`. 
 
 Source:
 ```py
@@ -41,7 +41,7 @@ Routes:
  * Serving Flask app 'web' (lazy loading)
 ```
 
-Go to `http://localhost:5001` for a overview page with all above information.
+Go to `http://localhost:5000` for a overview page with all above information.
 
 Generated files:
 ```

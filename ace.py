@@ -16,6 +16,7 @@ def main():
     parser.add_argument('--recipe', type=int, help='')
     parser.add_argument('--scan', type=str, help='')
     parser.add_argument('--listenip', type=str, help='')
+    parser.add_argument('--listenport', type=int, help='')
     args = parser.parse_args()
 
     if args.scan:
@@ -23,6 +24,8 @@ def main():
 
     if args.listenip:
         setListenIp(args.listenip)
+    if args.listenport:
+        setListenPort(args.listenport)
 
     if args.recipe == 1:
         recipe_1()

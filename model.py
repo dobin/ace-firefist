@@ -110,7 +110,8 @@ def enableScanning(server):
 
 def setListenIp(ip):
     config.LISTEN_IP = ip
-    
+def setListenPort(port):
+    config.LISTEN_PORT = port
 
 class AceFile():
     def __init__(self, name: str, data: bytes):
