@@ -1,11 +1,13 @@
 import argparse
 import io
 import os, sys
+import logging
 
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from model import *
 
+logger = logging.getLogger()
 
 @PluginDecorator
 def makeOnenoteBat(input: AceStr) -> AceBytes:
@@ -14,6 +16,8 @@ def makeOnenoteBat(input: AceStr) -> AceBytes:
     placeholder = b" " * placeholderLen
     exchange = input + " " * (placeholderLen - len(input))
     exchangeBytes = bytes(exchange, 'ascii')
+    if len(placeholder) != len(exchangeBytes):
+        logging.error("makeOnenoteBat: len not equal, something went wrong: {} {}".format(len(placeholder), len(exchangeBytes)))
 
     # open original onenote
     file = open(template, 'rb')
