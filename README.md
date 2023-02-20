@@ -145,31 +145,23 @@ def makeTheThing(stuff: str) -> bytes:
   return b"The stuff: " + stuff
 ```
 
-And combine it with the other makers. Examples are in `recipes/`.
+Create a recipe like the `example.py` recipe, 
+and combine it there with the other makers. 
+More examples are in `recipes/`.
 
+### Routes
 
-### Make Better
-
-To gain advantages of data tracking, use Ace data structures, and 
-decorate your maker with `@DataTracker`: 
+Serve any data at a URL with `AceRoute()`. 
+Use `serve()` to start a webserver serving them.
 
 ```py
-@DataTracker
-def makeTheThing(stuff: AceStr) -> AceBytes:
-  return AceBytes("The stuff: " + stuff)
+thething: AceStr = ...
+thingFile: AceRoute = AceRoute('/thething', thething)
+serve([ thingFile ])
 ```
 
-Ace data structures: 
-* str -> AceStr
-* bytes -> AceBytes
-
-And:
+AceRoute:
 ```py
-class AceFile():
-    def __init__(self, name: str, data: bytes):
-        self.name = name
-        self.data = data
-
 class AceRoute():
     def __init__(self, url: str, data: bytes, download: bool=False, downloadName: str='', downloadMime: str=None):
         self.url = url
@@ -177,6 +169,50 @@ class AceRoute():
         self.download = download
         self.downloadName = downloadName
         self.downloadMime = downloadMime
+```
+
+
+### Make Better
+
+Ace can track your data. It observes the data structures
+`AceStr`, `AceBytes` and `AceFile` into makers decorated
+with `DataTracker`. For example which powershell script
+you insert into which execter, which files in a zip etc. 
+These are indexed by numbers.
+
+Example: 
+```
+INFO: --[ 1: makePowershellMessageBox() -> 1
+INFO: --[ 2: makePowershellEncodedCommand(1) -> 2
+INFO: --[ 3: makeMshtaJscriptExec(2) -> 3
+INFO: ---[ Generating AceFile test.hta, detected: False
+INFO: --[ 4: makeAceFile(3) -> 3
+```
+
+To gain advantages of data tracking, use Ace data structures, and 
+decorate your maker with `@DataTracker`. 
+
+```py
+@DataTracker
+def makeTheThing(stuff: AceStr) -> AceBytes:
+  return AceBytes("The stuff: " + stuff)
+```
+
+Result:
+```
+INFO: --[ x: makeTheThing(x) -> y
+```
+
+Ace data structures: 
+* str -> AceStr
+* bytes -> AceBytes
+
+And also:
+```py
+class AceFile():
+    def __init__(self, name: str, data: bytes):
+        self.name = name
+        self.data = data
 ```
 
 ### Templates
