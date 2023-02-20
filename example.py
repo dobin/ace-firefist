@@ -13,26 +13,18 @@ from model import AceFile, AceRoute
 from web import serve
 
 
-def recipe_3():
+def recepi():
     # MSHTA -> Powershell:MessageBox
     routes = []
 
-    # PS-A
     ps1msgbox: AceStr = makePowershellMessageBox()
     ps1msgbox: AceStr = makePowershellEncodedCommand(ps1msgbox)
-
-    # MSHTA
     cmd: AceStr = AceStr("powershell.exe -EncodedCommand {}".format(ps1msgbox))
     mshta: AceStr = makeMshtaJscriptExec(cmd)
-
-    mshtaFile: AceFile = makeAceFile("test.hta", mshta)
-
     containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
     routes.append(containerServe)
-
-    # start
     serve(routes)
 
 
-
-
+if __name__ == "__main__":
+    recepi()

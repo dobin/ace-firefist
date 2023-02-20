@@ -12,6 +12,7 @@ from log import setupLogging
 
 
 def main():
+    enableOut()
     setupLogging()
 
     parser = argparse.ArgumentParser()
@@ -50,5 +51,4 @@ def main():
 
 
 if __name__ == "__main__":
-    enableOut()
     main()
