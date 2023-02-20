@@ -14,13 +14,13 @@ Makers:
 * makeVbs
 * makeHta
 
-These can be freely combined to perform complex multi-stage attack chains.
+These can be freely combined to perform complex multi-stage attack chains. This can be used for PurpleTeaming, EDR Usecase verifications. PoC's and RedTeam attacks development.
 
 
 ## Example recipe: MSTHA with powershell code
 
 Generate a HTA file based on a template which executes powershell code (displaying a messge box),
-and make it available via HTTP at `http://localhost:5000/test.hta`. Available as recipe 3. 
+and make it available via HTTP at http://localhost:5000/test.hta. Available as recipe 3. 
 
 Source:
 ```py
@@ -39,7 +39,7 @@ def recipe_3():
 
 While the packing flows forward, to see what the victim
 is executing, look at it from bottom upwards:
-* Access a website with the `test.hta` file and download it
+* Access a URL `/test.hta` with the `test.hta` file and download it
 * Execute the `test.hta` file by double clicking it
 * The HTA file executes powershell code by invoking `powershell -encodedcommand ...`, which shows a message box
 
@@ -62,7 +62,7 @@ Routes:
  * Serving Flask app 'web' (lazy loading)
 ```
 
-Go to `http://localhost:5000` for a overview page with all above information.
+Go to `http://localhost:5000` for a overview page with all above information. Open http://localhost:5000/test.hta to start the attach chain.
 
 Generated files:
 ```
