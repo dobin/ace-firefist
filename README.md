@@ -25,7 +25,7 @@ def recipe_3():
 
 Generate the artefacts and start the web server:
 ```sh
-$ rm out/*; python3 ace.py --recipe 3
+$ rm out/*; python3 ace.py --recipe recipe_3
 INFO: --[ 1: makePowershellMessageBox() -> 1
 INFO: --[ 2: makePowershellEncodedCommand(1) -> 2
 INFO: --[ 3: makeMshtaJscriptExec(2) -> 3
@@ -71,7 +71,7 @@ Video:
 HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 
 ```
-python3 ace.py --recipe 1
+python3 ace.py --recipe recipe_1
 ```
 
 Entry URL: http://localhost:5000/test
@@ -82,7 +82,7 @@ Entry URL: http://localhost:5000/test
 ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
 
 ```
-python3 ace.py --recipe 2
+python3 ace.py --recipe recipe_2
 ```
 
 Entry URL: http://localhost:5000/test.zip
@@ -93,10 +93,22 @@ Entry URL: http://localhost:5000/test.zip
 MSHTA -> Powershell:MessageBox
 
 ```
-python3 ace.py --recipe 3
+python3 ace.py --recipe recipe_3
 ```
 
 Entry URL: http://localhost:5000/test.hta
+
+
+### Recipe 4
+
+OneNote -> Bat -> 
+
+```
+python3 ace.py --recipe recipe_4
+```
+
+Entry URL: http://localhost:5000/test.one
+
 
 
 ## Notes
