@@ -49,7 +49,7 @@ def viewRoutePlain(route):
 # View for downloadable (binary) files/route
 def viewRouteDownload(route):
     def view_func():
-        # TODO necessary?
+        # TODO necessary to convert?
         data = route.data
         if isinstance(data, str):
             data = bytes(data, 'utf-8')
@@ -57,14 +57,15 @@ def viewRouteDownload(route):
         if route.downloadMime is not None:
             ret = send_file(
                 io.BytesIO(data),
-                attachment_filename=route.downloadName,
+                as_attachment=True,
+                download_name=route.downloadName,
                 mimetype=route.downloadMime
             )
             return ret
         else:
             ret = send_file(
                 io.BytesIO(data),
-                attachment_filename=route.downloadName,
+                download_name=route.downloadName,
             )
             return ret
     return view_func
