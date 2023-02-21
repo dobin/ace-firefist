@@ -30,10 +30,10 @@ def recipe_3():
     ps1msgbox: AceStr = makePowershellEncodedCommand(ps1msgbox)
 
     cmd: AceStr = AceStr("powershell.exe -EncodedCommand {}".format(ps1msgbox))
-    mshta: AceStr = makeMshtaJscriptExec(cmd)
-    mshtaFile: AceFile = makeAceFile("test.hta", mshta)
+    hta: AceStr = makeMshtaJscriptExec(cmd)
+    htaFile: AceFile = makeAceFile("test.hta", hta)
 
-    containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
+    containerServe: AceRoute = AceRoute('/test.hta', hta, download=True, downloadName='test.hta')
     serve(containerServe)
 ```
 
@@ -181,12 +181,12 @@ More examples are in `recipes/`.
 
 ### URL Routes
 
-Serve any data at a URL with `AceRoute()`. 
+Serve any data (usually created by a maker) at a URL with `AceRoute()`. 
 Use `serve()` to start a webserver serving them.
 
 ```py
 thething: AceStr = ...
-thingFile: AceRoute = AceRoute('/thething', thething)
+thingFile: AceRoute = AceRoute('/the.thing', thething)
 serve([ thingFile ])
 ```
 
@@ -229,7 +229,7 @@ def makeTheThing(stuff: AceStr) -> AceBytes:
 
 Result:
 ```
-INFO: --[ x: makeTheThing(x) -> y
+INFO: --[ x: makeTheThing(y) -> x
 ```
 
 Ace data structures: 
@@ -244,7 +244,7 @@ class AceFile():
         self.data = data
 ```
 
-### Templates
+### Make Templates
 
 Use templates whenever possible when using text files.
 The templates are one of the main assets of an ace. Each

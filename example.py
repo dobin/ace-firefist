@@ -4,7 +4,7 @@ from make.iso.iso import makeIso
 from make.powershell.powershell import *
 from make.zip.zip import makeZip
 from make.vbs.vbs import *
-from make.mshta.mshta import *
+from make.hta.hta import *
 from make.onenote.onenote import *
 from make.bat.bat import *
 
@@ -17,11 +17,11 @@ def recepi():
     # MSHTA -> Powershell:MessageBox
     routes = []
 
-    ps1msgbox: AceStr = makePowershellMessageBox()
-    ps1msgbox: AceStr = makePowershellEncodedCommand(ps1msgbox)
+    ps1msgbox: AceStr = makePsScriptMessagebox()
+    ps1msgbox: AceStr = makePsEncodedCommand(ps1msgbox)
     cmd: AceStr = AceStr("powershell.exe -EncodedCommand {}".format(ps1msgbox))
-    mshta: AceStr = makeMshtaJscriptExec(cmd)
-    containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
+    hta: AceStr = makeHtaFromCmdByJscriptWscriptShell(cmd)
+    containerServe: AceRoute = AceRoute('/test.hta', hta, download=True, downloadName='test.hta')
     routes.append(containerServe)
     serve(routes)
 

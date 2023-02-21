@@ -4,7 +4,7 @@ from make.iso.iso import makeIso
 from make.powershell.powershell import *
 from make.zip.zip import makeZip
 from make.vbs.vbs import *
-from make.mshta.mshta import *
+from make.hta.hta import *
 from make.onenote.onenote import *
 from make.bat.bat import *
 
@@ -18,16 +18,16 @@ def recipe_4():
     routes = []
 
     # PS-A
-    ps1msgbox: AceStr = makePowershellMessageBox()
-    ps1msgbox = makePowershellCommand(ps1msgbox)
-    cmdline = AceStr("powershell -c \"{}\"".format(ps1msgbox))
+    psScript: AceStr = makePsScriptMessagebox()
+    psCommand: AceStr = makePsCommandFromPsScript(psScript)
+    cmd = AceStr("powershell -c \"{}\"".format(psCommand))
 
     # BAT
-    bat = makeBatFtpExec(cmdline)
+    bat = makeBatFromCmdByFtp(cmd)
     # batFile: AceFile = makeAceFile("test.bat", bat)  # for debugging
 
     # OneNote
-    onenote = makeOnenoteBat(bat)
+    onenote = makeOnenoteFromBat(bat)
     #onenoteFile: AceFile = makeAceFile("test.one", onenote)  # for debugging
 
     # Serve

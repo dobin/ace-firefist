@@ -4,7 +4,7 @@ from make.iso.iso import makeIso
 from make.powershell.powershell import *
 from make.zip.zip import makeZip
 from make.vbs.vbs import *
-from make.mshta.mshta import *
+from make.hta.hta import *
 from make.onenote.onenote import *
 from make.bat.bat import *
 
@@ -13,21 +13,24 @@ from model import AceFile, AceRoute
 from web import serve
 
 
+
+
 def recipe_3():
     # MSHTA -> Powershell:MessageBox
     routes = []
 
     # PS-A
-    ps1msgbox: AceStr = makePowershellMessageBox()
-    ps1msgbox: AceStr = makePowershellEncodedCommand(ps1msgbox)
+    psScript: AceStr = makePsScriptMessagebox()
+    psCommand: AceStr = makePsEncodedCommand(psScript)
 
     # MSHTA
-    cmd: AceStr = AceStr("powershell.exe -EncodedCommand {}".format(ps1msgbox))
-    mshta: AceStr = makeMshtaJscriptExec(cmd)
+    #cmd: AceStr = AceStr("powershell.exe -EncodedCommand {}".format(psCommand))
+    cmd: AceStr = makeCmdFromPsCommand(psCommand, encoded=True, fullpath=False)
 
-    mshtaFile: AceFile = makeAceFile("test.hta", mshta)
+    hta: AceStr = makeHtaFromCmdByJscriptWscriptShell(cmd)
+    htaFile: AceFile = makeAceFile("test.hta", hta)  # not really needed
 
-    containerServe: AceRoute = AceRoute('/test.hta', mshta, download=True, downloadName='test.hta')
+    containerServe: AceRoute = AceRoute('/test.hta', hta, download=True, downloadName='test.hta')
     routes.append(containerServe)
 
     # start

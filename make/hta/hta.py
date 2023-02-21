@@ -9,9 +9,9 @@ from helpers import getTemplate
 
 
 @DataTracker
-def makeMshtaJscriptExec(commandline: str) -> AceStr:
+def makeHtaFromCmdByJscriptWscriptShell(commandline: str) -> AceStr:
     templateFile = 'hta-jscript-exec.hta'
-    template = getTemplate('make/mshta/', templateFile)
+    template = getTemplate('make/hta/', templateFile)
     commandline = commandline.replace('\r', '')
     commandline = commandline.replace('\n', '')
     renderedHtml = template.render(

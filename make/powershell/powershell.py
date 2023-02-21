@@ -14,13 +14,29 @@ from helpers import getTemplate
 
 
 @DataTracker
+def makeCmdFromPsCommand(
+    psCommand: str, encoded: bool, fullpath: bool, obfuscate: bool = False
+):
+    file = "powershell.exe"
+    if fullpath:
+        file = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+
+    args = "-Command {}".format(psCommand)
+    if encoded:
+        args = "-EncodedCommand {}".format(psCommand)
+    
+    cmd = "{} {}".format(file, args)
+    return AceStr(cmd)
+
+
+@DataTracker
 def makePowershellDownloadAndExecuteBinary(url: str, path: str) -> AceStr:
     templateFile = 'download_exec_file.ps1'
     return AceStr('')
 
 
 @DataTracker
-def makePowershellDownloadAndExecuteMemPs1(url: str) -> AceStr:
+def makePsScriptFromPsCommandByDownloadMem(url: str) -> AceStr:
     templateFile = 'download_exec_ps_enc_mem.ps1'
     template = getTemplate('make/powershell/', templateFile)
     script = template.render(
@@ -30,7 +46,7 @@ def makePowershellDownloadAndExecuteMemPs1(url: str) -> AceStr:
 
 
 @DataTracker
-def makePowershellMessageBox() -> AceStr: 
+def makePsScriptMessagebox() -> AceStr: 
     templateFile = 'messagebox.ps1'
     template = getTemplate('make/powershell/', templateFile)
     script = template.render()
@@ -38,14 +54,14 @@ def makePowershellMessageBox() -> AceStr:
 
 
 @DataTracker
-def makePowershellCommand(input: str) -> AceStr:
+def makePsCommandFromPsScript(input: str) -> AceStr:
     """For use with 'PowerShell.exe -Command {}'"""
     ret = toPowershellLine(input)
     return AceStr(ret)
 
 
 @DataTracker
-def makePowershellEncodedCommand(input: str) -> AceStr:
+def makePsEncodedCommand(input: str) -> AceStr:
     """For use with 'PowerShell.exe -EncodedCommand {}'"""
     text = toPowershellLine(input)
     # https://stackoverflow.com/questions/71642299/how-to-use-python-to-represent-the-powershell-tobase64string-function

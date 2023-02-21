@@ -12,7 +12,7 @@ FTP_MAX_LINE_LENGTH = 230
 
 
 @DataTracker
-def makeBatFtpExec(command: AceStr, file: str="%lOcAlApPdATA%\Temp\conf.log") -> AceStr:
+def makeBatFromCmdByFtp(command: AceStr, file: str="%lOcAlApPdATA%\Temp\conf.log") -> AceStr:
     if len(command) > FTP_MAX_LINE_LENGTH:
         logging.warn("makeBatFtpExec: command len {} is longer than FTP max of about {}, this will not work".format( 
             len(command), FTP_MAX_LINE_LENGTH))

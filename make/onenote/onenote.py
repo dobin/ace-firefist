@@ -10,7 +10,7 @@ from model import *
 logger = logging.getLogger()
 
 @DataTracker
-def makeOnenoteBat(input: AceStr) -> AceBytes:
+def makeOnenoteFromBat(input: AceStr) -> AceBytes:
     template = 'make/onenote/Test-bat-800.one'
     placeholderLen = 700  # even tho we stored 800 spaces, it only works with a bit less
     placeholder = b" " * placeholderLen
@@ -35,7 +35,7 @@ def main():
     parser.add_argument('--data', help='')
     args = parser.parse_args()
 
-    lnkData = makeOnenoteBat(
+    lnkData = makeOnenoteFromBat(
         args.data,
     )
 

