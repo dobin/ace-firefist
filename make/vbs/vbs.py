@@ -12,16 +12,18 @@ logger = logging.getLogger('basic_logger')
 
 
 @DataTracker
-def makeVbsFromCmdByWscript(commandline: str, disableQuoting=False) -> AceStr:
+def makeVbsFromCmdByWscript(cmdline: str, disableQuoting=False) -> AceStr:
     templateFile = 'exec-enc-powershell.vbs'
     template = getTemplate('make/vbs/', templateFile)
-    commandline = commandline.replace('\r', '')
-    commandline = commandline.replace('\n', '')
-    if '"' in commandline and not disableQuoting:
-        logger.warn("Note: Replacing all \" with \"\" in input")
+
+    cmdline = cmdline.replace('\r', '')
+    cmdline = cmdline.replace('\n', '')
+    if '"' in cmdline and not disableQuoting:
+        logger.warn("Note: Replacing {} \" with \"\" in input".format(cmdline.count('"')))
         # double commandline quotes
-        commandline = commandline.replace('"', '""')
-    renderedHtml = template.render(
-        data=commandline
+        cmdline = cmdline.replace('"', '""')
+
+    rendered = template.render(
+        cmdline=cmdline
     )
-    return AceStr(renderedHtml)
+    return AceStr(rendered)
