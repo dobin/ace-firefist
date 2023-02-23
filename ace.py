@@ -40,7 +40,6 @@ def contentFilterTest():
                     recipeInfos.append(recipeInfo)
 
 
-    print(recipeInfos)
     serve(allRoutes, recipeInfos)
         
 
