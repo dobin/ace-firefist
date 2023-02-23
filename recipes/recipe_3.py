@@ -1,3 +1,5 @@
+from typing import List
+
 from make.htmlsmuggling.htmlsmuggling import makeHtmlSmuggling
 from make.lnk.lnk import makeLnk
 from make.iso.iso import makeIso
@@ -14,8 +16,7 @@ from web import serve
 
 
 
-
-def recipe_3():
+def recipe_3() -> List[AceRoute]:
     # MSHTA -> Powershell:MessageBox
     routes = []
 
@@ -34,7 +35,7 @@ def recipe_3():
     routes.append(containerServe)
 
     # start
-    serve(routes)
+    return(routes)
 
 
 

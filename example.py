@@ -13,7 +13,7 @@ from model import AceFile, AceRoute
 from web import serve
 
 
-def recepi():
+def recipe():
     # MSHTA -> Powershell:MessageBox
     routes = []
 
@@ -27,4 +27,4 @@ def recepi():
 
 
 if __name__ == "__main__":
-    recepi()
+    recipe()

@@ -1,3 +1,5 @@
+from typing import List
+
 from make.htmlsmuggling.htmlsmuggling import makeHtmlSmuggling
 from make.lnk.lnk import makeLnk
 from make.iso.iso import makeIso
@@ -13,7 +15,7 @@ from model import AceFile, AceRoute
 from web import serve
 
 
-def recipe_1():
+def recipe_1() -> List[AceRoute]:
     # HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 
     # DLL
@@ -46,4 +48,4 @@ def recipe_1():
         containerFile,
     )
     serveHtml: AceRoute = AceRoute('/test', html)
-    serve([serveHtml])
+    return([serveHtml])

@@ -9,11 +9,11 @@ import log
 from model import *
 
 
-def serve(routes: List[AceRoute]):
+def serve(routes: List[AceRoute], recipeInfos: List[RecipeInfo]=[]):
     """Start a webserver which serves the `routes`, and additional files like index.html and out/"""
     app = Flask(__name__)
 
-    app.add_url_rule('/', 'index', viewIndex(routes))
+    app.add_url_rule('/', 'index', viewIndex(routes, recipeInfos))
     app.add_url_rule('/out/<filename>', 'out', view_out)
 
     print("")
@@ -72,14 +72,15 @@ def viewRouteDownload(route):
 
 
 # View for the index.html and all its information
-def viewIndex(routes):
+def viewIndex(routes, recipeInfos):
     def view_func():
         files = sorted(glob.glob("out/out_*.*"))
         return render_template(
             'index.html', 
             files=files,
             routes=routes,
-            log=log.GlobalLog.getvalue())
+            log=log.GlobalLog.getvalue(),
+            recipeInfos=recipeInfos)
 
     return view_func
 

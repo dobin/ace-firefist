@@ -1,0 +1,5 @@
+---
+  name: "Recipe 3"
+  description: 
+  chain: "MSHTA -> Powershell:MessageBox"
+  

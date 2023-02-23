@@ -1,3 +1,5 @@
+from typing import List
+
 from make.htmlsmuggling.htmlsmuggling import makeHtmlSmuggling
 from make.lnk.lnk import makeLnk
 from make.iso.iso import makeIso
@@ -13,7 +15,7 @@ from model import AceFile, AceRoute
 from web import serve
 
 
-def recipe_4():
+def recipe_4() -> List[AceRoute]:
     # OneNote -> Bat -> ftp.exe -> PowerShell:MessageBox
     routes = []
 
@@ -33,6 +35,6 @@ def recipe_4():
     # Serve
     containerServe: AceRoute = AceRoute('/test.one', onenote, download=True, downloadName='test.one')
     routes.append(containerServe)
-    serve(routes)
+    return(routes)
 
 

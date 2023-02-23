@@ -6,6 +6,14 @@ import inspect
 logger = logging.getLogger('basic_logger')
 
 
+class RecipeInfo():
+    def __init__(self, name, description, chain, routes=[]):
+        self.name = name
+        self.description = description
+        self.chain = chain
+        self.routes = routes
+
+
 class AceStr(str):
     def __new__(cls, value):
         obj = str.__new__(cls, value)

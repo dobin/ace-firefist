@@ -1,4 +1,45 @@
+<html>
+<body>
+
+
+</body>
+
+</html>
+
+<style>
+    .mono {
+      font-family: monospace;
+    }
+</style>
+
 <h1>ACE - Fire Fist</h1>
+
+{% if recipeInfos|length > 0 %}
+
+Recipes: <br>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Chain</th>        
+        <th>URLs</th>
+    </tr>
+    {% for recipe in recipeInfos %}
+    <tr>
+        <td>{{recipe.name}}</td>
+        <td>{{recipe.description}}</td>
+        <td class="mono">{{recipe.chain}}</td>
+        <td class="mono">
+            {% for route in recipe.routes %}
+            <a href="{{route.url}}">{{route.url}}</a><br>
+            {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+{% endif %}
+
 
 Routes: 
 

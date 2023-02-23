@@ -1,3 +1,4 @@
+from typing import List
 import logging
 import requests as req
 from jinja2 import Template
@@ -9,6 +10,24 @@ from model import *
 import config
 
 logger = logging.getLogger('basic_logger')
+
+
+
+def getRecipeInfo(file: str, routes: List[AceRoute]):
+    p = Path(file)
+    if not p.is_file():
+        # dont care
+        return None
+
+    with open(file) as f:
+        yamlData = yaml.safe_load(f)
+
+    return RecipeInfo(
+        yamlData['name'],
+        yamlData['description'],
+        yamlData['chain'],
+        routes)
+    
 
 
 def yamlHelp(file):
