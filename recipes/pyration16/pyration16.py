@@ -25,7 +25,7 @@ def pyration16(baseUrl) -> List[AceRoute]:
     routes.append(serveHtml)
 
     ## Payload: assist.rar: PW "P@2022": ???
-    evilExeFile: AceFile = makeAceFile('xxx.exe', evilexe)
+    evilExeFile: AceFile = makeAceFile('CortanaAssistance.exe', evilexe)
     evilexeRar: AceBytes = makeRar([evilExeFile], password='P@2022')
     serveHtml: AceRoute = AceRoute('/pyration16/assist.rar', evilexeRar)
     routes.append(serveHtml)
