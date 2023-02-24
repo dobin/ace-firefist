@@ -5,12 +5,18 @@ from jinja2 import Template
 from pathlib import Path
 import yaml
 import os
+from base64 import b64encode
 
 from model import *
 import config
 
 logger = logging.getLogger('basic_logger')
 
+
+
+def base64encode(input: AceBytes) -> AceStr:
+    data = b64encode(input).decode()
+    return AceStr(data)
 
 
 def getRecipeInfo(file: str, routes: List[AceRoute]):
