@@ -78,12 +78,12 @@ def main():
     setupLogging()
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--recipe', type=str, help='', required=True)
-    parser.add_argument('--scan', type=str, help='')
-    parser.add_argument('--listenip', type=str, help='')
-    parser.add_argument('--listenport', type=int, help='')
-    parser.add_argument('--templateinfo', action='store_true', help='')
-    parser.add_argument('--externalurl', type=str, help='')
+    parser.add_argument('--recipe', type=str, required=True, help='Which recipe to use ("all" for all)')
+    parser.add_argument('--scan', type=str, help='Scan AceFiles with avred-server')
+    parser.add_argument('--listenip', type=str, help='IP to listen on')
+    parser.add_argument('--listenport', type=int, help='Port to listen on')
+    parser.add_argument('--templateinfo', action='store_true', help='Show information about used templates')
+    parser.add_argument('--externalurl', type=str, help='External URL of the server (if behind reverse proxy)')
     args = parser.parse_args()
 
     if args.scan:
