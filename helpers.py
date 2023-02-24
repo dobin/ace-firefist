@@ -74,6 +74,13 @@ def getTemplate(directory: str, name: str) -> Template:
 
 
 @DataTracker
+def renderTemplate(directory: str, name: str, **kwargs):
+    template = getTemplate(directory, name)
+    rendered = template.render(kwargs)
+    return AceStr(rendered)
+
+
+@DataTracker
 def readFileContent(filename) -> AceBytes:
     f = open(filename, 'rb')
     data = f.read()

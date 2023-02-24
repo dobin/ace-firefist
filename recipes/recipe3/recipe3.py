@@ -15,7 +15,7 @@ from model import AceFile, AceRoute
 from web import serve
 
 
-def recipe3() -> List[AceRoute]:
+def recipe3(baseUrl) -> List[AceRoute]:
     # MSHTA -> Powershell:MessageBox
     routes = []
 

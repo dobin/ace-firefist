@@ -15,7 +15,7 @@ from model import AceFile, AceRoute
 from web import serve
 
 
-def recipe1() -> List[AceRoute]:
+def recipe1(baseUrl) -> List[AceRoute]:
     # HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 
     # DLL

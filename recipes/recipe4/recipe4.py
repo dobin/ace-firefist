@@ -15,7 +15,7 @@ from model import AceFile, AceRoute
 from web import serve
 
 
-def recipe4() -> List[AceRoute]:
+def recipe4(baseUrl) -> List[AceRoute]:
     # OneNote -> Bat -> ftp.exe -> PowerShell:MessageBox
     routes = []
 

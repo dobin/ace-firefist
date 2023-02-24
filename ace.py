@@ -13,7 +13,7 @@ from web import serve
 from helpers import *
 
 
-def contentFilterTest():
+def contentFilterTest(baseUrl):
     allRoutes: List[AceRoute] = []
     recipeInfos: List[RecipeInfo] = []
 
@@ -29,7 +29,7 @@ def contentFilterTest():
                 print("Unknown recipe: {}".format(module_name))
             else:
                 logger.info("-[ Make recipe: {}".format(recipe))
-                routes = recipeMethod()
+                routes = recipeMethod(baseUrl)
                 allRoutes = allRoutes + routes
 
                 # open its yaml
@@ -41,7 +41,7 @@ def contentFilterTest():
     serve(allRoutes, recipeInfos)
         
 
-def startRecipe(recipeName):
+def startRecipe(recipeName, baseUrl):
     # From ChatGPT
     recipeMethod = None 
     recipes = getRecipes()
@@ -54,7 +54,7 @@ def startRecipe(recipeName):
     if recipeMethod is None:
         print("Unknown recipe: {}".format(recipeName))
     else:
-        routes = recipeMethod()
+        routes = recipeMethod(baseUrl)
         if len(routes) > 0:
             serve(routes)
 
@@ -80,6 +80,7 @@ def main():
     parser.add_argument('--listenip', type=str, help='')
     parser.add_argument('--listenport', type=int, help='')
     parser.add_argument('--templateinfo', action='store_true', help='')
+    parser.add_argument('--externalurl', type=str, help='')
     args = parser.parse_args()
 
     if args.scan:
@@ -91,10 +92,15 @@ def main():
     if args.templateinfo:
         enableTemplateInfo()
 
-    if args.recipe == "all":
-        contentFilterTest()
+    if args.externalurl:
+        baseUrl = args.externalurl
     else:
-        startRecipe(args.recipe)
+        baseUrl = "http://{}:{}".format(config.LISTEN_IP, config.LISTEN_PORT)
+    logger.info("Using baseUrl: {}".format(baseUrl))
+    if args.recipe == "all":
+        contentFilterTest(baseUrl)
+    else:
+        startRecipe(args.recipe, baseUrl)
 
 
 if __name__ == "__main__":

