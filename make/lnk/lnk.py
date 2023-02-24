@@ -13,14 +13,16 @@ from model import *
 
 
 @DataTracker
-def makeLnk(name: str, target: str, arguments: str, window_mode='Minimized') -> AceBytes:
+def makeLnk(name: str, target: str, arguments: str, window_mode='Minimized', iconPath="", iconIndex=0) -> AceBytes:
     """Make a .lnk file with `name` pointing to `target` having `arguments` as arguments"""
     lnk = lib.pylnk3.helpers.for_file(
         target, 
         lnk_name=name, 
         arguments=arguments, 
         window_mode=window_mode,
-        is_file=True)
+        is_file=True,
+        icon_file=iconPath,
+        icon_index=int(iconIndex))
     lnkFileData = io.BytesIO()
     lnk.write(lnkFileData)
     return AceBytes(lnkFileData.getvalue())

