@@ -20,11 +20,9 @@ def contentFilterTest(baseUrl):
     recipes = getRecipes()
     for recipe in recipes:
         module_name = recipe[:-3]  # remove the '.py' extension
-        module = importlib.import_module('.' + module_name, package='recipes')
-        
+        module = importlib.import_module('.' + module_name, package='recipes.' + module_name)
         if hasattr(module, module_name):
             recipeMethod = getattr(module, module_name)
-
             if recipeMethod is None:
                 print("Unknown recipe: {}".format(module_name))
             else:

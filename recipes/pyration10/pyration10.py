@@ -73,6 +73,6 @@ def pyration10(baseUrl) -> List[AceRoute]:
         ],
     )
     containerFile: AceFile = makeAceFile('documents.zip', container)
-    serveHtml: AceRoute = AceRoute('/pyration-documents.zip', container, download=True, downloadName='documents.zip')
+    serveHtml: AceRoute = AceRoute('/pyration10/pyration10-documents.zip', container, download=True, downloadName='documents.zip')
     routes.append(serveHtml)
     return(routes)

