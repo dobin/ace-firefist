@@ -124,6 +124,14 @@ python3 ace.py --recipe recipe_4
 Entry URL: http://localhost:5000/test.one
 
 
+
+## Install
+
+```
+$ pip install -r requirements.txt
+$ sudo apt install rar
+```
+
 ## Standalone example
 
 See `example.py` for a standalone script recipe. 

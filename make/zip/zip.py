@@ -24,7 +24,6 @@ def makeZip(files: List[AceFile]) -> AceBytes:
 
 
 def main():
-    # python3 -m make.iso.iso --iso-name new.iso --file_name test.txt --file_data 'testing'
     parser = argparse.ArgumentParser()
     parser.add_argument('--zip_name', help='')
     parser.add_argument('--file_name', help='')
