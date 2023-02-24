@@ -28,10 +28,15 @@ def serve(routes: List[AceRoute], recipeInfos: List[RecipeInfo]=[]):
         else:
             print("  {}           Donload: {} {}".format(route.url, route.download, route.downloadName))
 
-        if route.download:
-            app.add_url_rule(route.url, route.url, viewRouteDownload(route))
-        else:
-            app.add_url_rule(route.url, route.url, viewRoutePlain(route))
+        try:
+            if route.download:
+                app.add_url_rule(route.url, route.url, viewRouteDownload(route))
+            else:
+                app.add_url_rule(route.url, route.url, viewRoutePlain(route))
+        except AssertionError:
+            print("Double URL, dropped: {}".format(route.url))
+            route.url = route.url + " (doubled, dropped)"
+
 
     print("")
     app.run(

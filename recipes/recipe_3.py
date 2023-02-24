@@ -26,7 +26,7 @@ def recipe_3() -> List[AceRoute]:
 
     # MSHTA
     #cmd: AceStr = AceStr("powershell.exe -EncodedCommand {}".format(psCommand))
-    cmd: AceStr = makeCmdFromPsCommand(psCommand, encoded=True, fullpath=False)
+    cmd: AceStr = makeCmdFromPsCommand(psCommand, isEncoded=True, fullpath=False)
 
     hta: AceStr = makeHtaFromCmdByJscriptWscriptShell(cmd)
     htaFile: AceFile = makeAceFile("test.hta", hta)  # not really needed

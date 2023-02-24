@@ -15,16 +15,18 @@ from helpers import getTemplate
 
 @DataTracker
 def makeCmdFromPsCommand(
-    psCommand: str, encoded: bool, fullpath: bool, obfuscate: bool = False
+    psCommand: str, isEncoded: bool, fullpath: bool = True, obfuscate: bool = False
 ):
-    file = "powershell.exe"
     if fullpath:
         file = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    else:
+        file = "powershell.exe"
 
-    args = "-Command {}".format(psCommand)
-    if encoded:
+    if isEncoded:
         args = "-EncodedCommand {}".format(psCommand)
-    
+    else:
+        args = "-Command {}".format(psCommand)
+
     cmd = "{} {}".format(file, args)
     return AceStr(cmd)
 
