@@ -67,7 +67,7 @@ class Logger(object):
 
 class Archive(object):
 
-  def __init__(self,archive_fullpath,base_path,rarbin = ("/usr/bin/rar","/usr/local/bin/rar")):
+  def __init__(self,archive_fullpath,base_path,rarbin = ("/usr/bin/rar","/usr/local/bin/rar", "/opt/homebrew/bin/rar")):
     self.archive_fullpath = archive_fullpath
     self.base_path = base_path
     self.rarbin = findfile(rarbin)
