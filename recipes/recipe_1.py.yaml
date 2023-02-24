@@ -2,4 +2,5 @@
   name: Recipe 1
   description: 
   chain: "HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )"
-  
+  date: 20230223
+  author: dobin

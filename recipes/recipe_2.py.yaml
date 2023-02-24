@@ -2,4 +2,5 @@
   name: Recipe 2
   description: 
   chain: "ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox"
-  
+  date: 20230223
+  author: dobin

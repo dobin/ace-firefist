@@ -2,4 +2,5 @@
   name: "Recipe 3"
   description: 
   chain: "MSHTA -> Powershell:MessageBox"
-  
+  date: 20230223
+  author: dobin
