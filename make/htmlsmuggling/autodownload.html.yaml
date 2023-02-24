@@ -4,6 +4,6 @@
   date: 20220220
   description: "Using HTML link as download source. Will download on open."
   howtouse: "Data is the file to be downloaded. Try keep it small, like <10mb."
-  input: "A file"
+  input: "A file base64 encoded"
   restrictions: ""
   invalid: [ "" ]
