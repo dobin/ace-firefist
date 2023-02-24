@@ -1,0 +1,5 @@
+---
+  title: "PY#RATION 1.0 Stage 2 batch file"
+  notes:
+    - Uncommented loop (line 35, 36)
+    - Removed persistence mechanism (line 47)
