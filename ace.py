@@ -17,11 +17,9 @@ def contentFilterTest():
     allRoutes: List[AceRoute] = []
     recipeInfos: List[RecipeInfo] = []
 
-    plugin_files = [f for f in os.listdir('recipes') if f.endswith('.py')]
-    for plugin_file in plugin_files:
-        if plugin_file == '__init__.py': 
-            continue
-        module_name = plugin_file[:-3]  # remove the '.py' extension
+    recipes = getRecipes()
+    for recipe in recipes:
+        module_name = recipe[:-3]  # remove the '.py' extension
         module = importlib.import_module('.' + module_name, package='recipes')
         
         if hasattr(module, module_name):
@@ -30,12 +28,12 @@ def contentFilterTest():
             if recipeMethod is None:
                 print("Unknown recipe: {}".format(module_name))
             else:
-                logger.info("-[ Make recipe: {}".format(plugin_file))
+                logger.info("-[ Make recipe: {}".format(recipe))
                 routes = recipeMethod()
                 allRoutes = allRoutes + routes
 
                 # open its yaml
-                recipeInfo = getRecipeInfo("recipes" + "/" + plugin_file + ".yaml", routes)
+                recipeInfo = getRecipeInfo("recipes" + "/" + recipe + ".yaml", routes)
                 if recipeInfo is not None:
                     recipeInfos.append(recipeInfo)
 
@@ -46,13 +44,10 @@ def contentFilterTest():
 def startRecipe(recipeName):
     # From ChatGPT
     recipeMethod = None 
-    plugin_files = [f for f in os.listdir('recipes') if f.endswith('.py')]
-    for plugin_file in plugin_files:
-        if plugin_file == '__init__.py': 
-            continue
-        module_name = plugin_file[:-3]  # remove the '.py' extension
-        module = importlib.import_module('.' + module_name, package='recipes')
-        
+    recipes = getRecipes()
+    for recipe in recipes:
+        module_name = recipe[:-3]  # remove the '.py' extension
+        module = importlib.import_module('.' + module_name, package='recipes.' + module_name)
         if hasattr(module, recipeName):
             recipeMethod = getattr(module, recipeName)
 
@@ -60,7 +55,19 @@ def startRecipe(recipeName):
         print("Unknown recipe: {}".format(recipeName))
     else:
         routes = recipeMethod()
-        serve(routes)
+        if len(routes) > 0:
+            serve(routes)
+
+
+def getRecipes():
+    res = []
+    for d in os.listdir('recipes'):
+        plugin_files = [f for f in os.listdir('recipes/' + d) if f.endswith('.py')]
+        for plugin_file in plugin_files:
+            if plugin_file == '__init__.py': 
+                continue
+            res.append(plugin_file)
+    return res
 
 
 def main():
@@ -88,7 +95,6 @@ def main():
         contentFilterTest()
     else:
         startRecipe(args.recipe)
-
 
 
 if __name__ == "__main__":

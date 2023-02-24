@@ -125,6 +125,7 @@ def setListenPort(port):
 def enableTemplateInfo():
     config.SHOW_TEMPLATE_INFO = True
 
+
 class AceFile():
     def __init__(self, name: str, data: bytes):
         self.name = name

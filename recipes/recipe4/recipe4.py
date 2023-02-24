@@ -15,28 +15,26 @@ from model import AceFile, AceRoute
 from web import serve
 
 
-
-def recipe_3() -> List[AceRoute]:
-    # MSHTA -> Powershell:MessageBox
+def recipe4() -> List[AceRoute]:
+    # OneNote -> Bat -> ftp.exe -> PowerShell:MessageBox
     routes = []
 
     # PS-A
     psScript: AceStr = makePsScriptMessagebox()
-    psCommand: AceStr = makePsEncodedCommand(psScript)
+    psCommand: AceStr = makePsCommandFromPsScript(psScript)
+    cmd = AceStr("powershell -c \"{}\"".format(psCommand))
 
-    # MSHTA
-    #cmd: AceStr = AceStr("powershell.exe -EncodedCommand {}".format(psCommand))
-    cmd: AceStr = makeCmdFromPsCommand(psCommand, isEncoded=True, fullpath=False)
+    # BAT
+    # bat = makeBatFromCmdByFtp(cmd)
+    # batFile: AceFile = makeAceFile("test.bat", bat)  # for debugging
 
-    hta: AceStr = makeHtaFromCmdByJscriptWscriptShell(cmd)
-    htaFile: AceFile = makeAceFile("test.hta", hta)  # not really needed
+    # OneNote
+    onenote = makeOnenoteFromBat(cmd)
+    #onenoteFile: AceFile = makeAceFile("test.one", onenote)  # for debugging
 
-    containerServe: AceRoute = AceRoute('/test.hta', hta, download=True, downloadName='test.hta')
+    # Serve
+    containerServe: AceRoute = AceRoute('/test.one', onenote, download=True, downloadName='test.one')
     routes.append(containerServe)
-
-    # start
     return(routes)
-
-
 
 

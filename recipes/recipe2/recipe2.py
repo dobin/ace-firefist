@@ -15,7 +15,7 @@ from model import AceFile, AceRoute
 from web import serve
 
 
-def recipe_2() -> List[AceRoute]:
+def recipe2() -> List[AceRoute]:
     # ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
     routes = []
 
