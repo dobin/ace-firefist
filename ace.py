@@ -52,7 +52,10 @@ def startRecipe(recipeName, baseUrl):
             recipeMethod = getattr(module, recipeName)
 
     if recipeMethod is None:
-        print("Unknown recipe: {}".format(recipeName))
+        logging.error("Unknown recipe: {}".format(recipeName))
+        logging.error("  Make sure it exists in recipes/")
+        logging.error("  Make sure it follows naming standard:")
+        logging.error("     recipes/<new>/<new>.py::func <new>()")
     else:
         routes = recipeMethod(baseUrl)
         if len(routes) > 0:
