@@ -1,0 +1,8 @@
+---
+  title: "Example MSI package executing a cmdline"
+  author: "Dobin"
+  date: 20220226
+  description: "Based on evil-rick.xml WiX template, by 0xRick"
+  howtouse: "Replace A*512 with your cmdline, filled with whitespace."
+  input: "cmdline. It will be inside a XML tag."
+  invalid: [ ]
