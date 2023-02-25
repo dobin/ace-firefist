@@ -1,3 +1,4 @@
 __pycache__/
 todo.txt
 out/*
+docs/*.txt
