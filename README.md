@@ -132,6 +132,14 @@ $ pip install -r requirements.txt
 $ sudo apt install rar
 ```
 
+If you dont trust my binaries in `payloads/`:
+```
+$ sudo apt install mingw-w64
+$ cd native
+$ make
+```
+
+
 ## Standalone example
 
 See `example.py` for a standalone script recipe. 
