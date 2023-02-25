@@ -1,0 +1,9 @@
+---
+  name: "Raspberry Robin"
+  description: 
+  chain: LNK -> BAT -> MSIEXEC -> odbcconf:rundll32:dll
+  date: 20230225
+  author: dobin
+  reference: https://redcanary.com/blog/raspberry-robin/
+  binaries:
+  modify_filesystem:
