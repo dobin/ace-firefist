@@ -75,4 +75,9 @@ def pyration10(baseUrl) -> List[AceRoute]:
     containerFile: AceFile = makeAceFile('documents.zip', container)
     serveHtml: AceRoute = AceRoute('/pyration10/pyration10-documents.zip', container, download=True, downloadName='documents.zip')
     routes.append(serveHtml)
+
+    cleanupbat: AceBytes = readFileContent('recipes/pyration10/cleanup.bat')
+    serveHtml: AceRoute = AceRoute('/pyration10/cleanup.bat', cleanupbat, download=True, downloadName="cleanup-pyration10.bat")
+    routes.append(serveHtml)
+
     return(routes)
