@@ -29,10 +29,13 @@ def getRecipeInfo(file: str, routes: List[AceRoute]):
         yamlData = yaml.safe_load(f)
 
     return RecipeInfo(
-        yamlData['name'],
-        yamlData['description'],
-        yamlData['chain'],
-        routes)
+        name=yamlData['name'],
+        description=yamlData['description'],
+        chain=yamlData['chain'],
+        reference=yamlData['reference'],
+        binaries=yamlData['binaries'],
+        modify_filesystem=yamlData['modify_filesystem'],
+        routes=routes)
     
 
 

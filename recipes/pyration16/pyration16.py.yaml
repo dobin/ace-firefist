@@ -1,7 +1,7 @@
 ---
-  name: "PY#RATION 1.0"
+  name: "PY#RATION 1.6"
   description: 
-  chain: Implement Version 1.0 of PY#RATION
+  chain: Implement Version 1.6 of PY#RATION
   date: 20230223
   author: dobin
   reference: https://www.securonix.com/blog/security-advisory-python-based-pyration-attack-campaign/

@@ -4,3 +4,6 @@
   chain: "ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox"
   date: 20230223
   author: dobin
+  reference:
+  binaries:
+  modify_filesystem:

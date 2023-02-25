@@ -4,3 +4,6 @@
   chain: "HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )"
   date: 20230223
   author: dobin
+  reference:
+  binaries:
+  modify_filesystem:

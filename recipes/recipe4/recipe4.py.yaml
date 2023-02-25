@@ -4,3 +4,6 @@
   chain: "OneNote -> Bat -> ftp.exe -> PowerShell:MessageBox"
   date: 20230223
   author: dobin
+  reference:
+  binaries:
+  modify_filesystem:

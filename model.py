@@ -7,11 +7,14 @@ logger = logging.getLogger('basic_logger')
 
 
 class RecipeInfo():
-    def __init__(self, name, description, chain, routes=[]):
+    def __init__(self, name, description, chain, reference, binaries, modify_filesystem, routes=[]):
         self.name = name
         self.description = description
         self.chain = chain
         self.routes = routes
+        self.reference = reference
+        self.binaries = binaries
+        self.modify_filesystem = modify_filesystem
 
 
 class AceStr(str):

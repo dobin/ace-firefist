@@ -31,7 +31,7 @@ def contentFilterTest(baseUrl):
                 allRoutes = allRoutes + routes
 
                 # open its yaml
-                recipeInfo = getRecipeInfo("recipes" + "/" + recipe + ".yaml", routes)
+                recipeInfo = getRecipeInfo("recipes/" + module_name + "/" + recipe + ".yaml", routes)
                 if recipeInfo is not None:
                     recipeInfos.append(recipeInfo)
 

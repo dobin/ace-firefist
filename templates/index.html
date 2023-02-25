@@ -14,23 +14,26 @@
 
 {% if recipeInfos|length > 0 %}
 
-Recipes: <br>
-<table border="1">
+<table>
     <tr>
         <th>Name</th>
-        <th>Description</th>
         <th>Chain</th>        
         <th>URLs</th>
+        <th>Reference</th>
     </tr>
     {% for recipe in recipeInfos %}
     <tr>
         <td>{{recipe.name}}</td>
-        <td>{{recipe.description}}</td>
         <td class="mono">{{recipe.chain}}</td>
         <td class="mono">
             {% for route in recipe.routes %}
             <a href="{{route.url}}">{{route.url}}</a><br>
             {% endfor %}
+        </td>
+        <td>
+            {% if recipe.reference != None %}
+                <a href="{{recipe.reference}}">Link</a>
+            {% endif %}
         </td>
     </tr>
     {% endfor %}
