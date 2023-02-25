@@ -1,0 +1,4 @@
+---
+  title: "PY#RATION 1.6 Stage 1 batch file"
+  notes:
+    - "Added 4 double quotes \"\"\"\" around Wscript on line 2, or it wouldnt work". Like stage1 of pyration 1.0
