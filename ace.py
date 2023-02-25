@@ -36,19 +36,25 @@ def contentFilterTest(baseUrl):
                 if recipeInfo is not None:
                     recipeInfos.append(recipeInfo)
 
-
     serve(allRoutes, recipeInfos)
         
 
 def startRecipe(recipeName, baseUrl):
-    # From ChatGPT
-    recipeMethod = None 
+    recipeMethod = None
+    recipeInfos = []
+
     recipes = getRecipes()
     for recipe in recipes:
         module_name = recipe[:-3]  # remove the '.py' extension
         module = importlib.import_module('.' + module_name, package='recipes.' + module_name)
         if hasattr(module, recipeName):
             recipeMethod = getattr(module, recipeName)
+
+            # open its yaml
+            path = os.path.join("recipes", module_name, recipe + '.yaml')
+            recipeInfo = getRecipeInfo(path, [])
+            if recipeInfo is not None:
+                recipeInfos.append(recipeInfo)
 
     if recipeMethod is None:
         logging.error("Unknown recipe: {}".format(recipeName))
@@ -58,7 +64,7 @@ def startRecipe(recipeName, baseUrl):
     else:
         routes = recipeMethod(baseUrl)
         if len(routes) > 0:
-            serve(routes)
+            serve(routes, recipeInfos)
 
 
 def getRecipes():

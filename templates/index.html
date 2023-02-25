@@ -12,8 +12,29 @@
 
 <h1>ACE - Fire Fist</h1>
 
-{% if recipeInfos|length > 0 %}
+{% if recipeInfos|length == 1 %}
+{% for recipe in recipeInfos %}
+<ul>
+    <li>Name: {{recipe.name}}</li>
+    <li>Description: {{recipe.description}}</li>
+    <li class="mono">Chain: {{recipe.chain}}</li>
+{% if recipe.reference != None %}
+    <li>Reference: <a href="{{recipe.reference}}"}>Link</a></li>
+{% endif %}
 
+{% if recipe.binaries != None %}
+    <li>Has binaries: {{recipe.binaries}}</li>
+{% endif %}
+
+{% if recipe.modify_filesystem != None %}
+    <li>Modifies filesystem: {{recipe.modify_filesystem}}</li>
+{% endif %}
+
+</ul>
+{% endfor %}
+{% endif %}
+
+{% if recipeInfos|length > 1 %}
 <table>
     <tr>
         <th>Name</th>
