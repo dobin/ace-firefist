@@ -16,12 +16,12 @@ def makeRar(files: List[AceFile], password=None) -> AceBytes:
         logger.error("No files given for rar")
 
     with tempfile.TemporaryDirectory() as directory:
-        outFile = directory + "/" + "archive.rar"
+        outFile = os.path.join(directory, "archive.rar")
         fsFiles = []
 
         # create all AceFiles
         for aceFile in files:
-            file = directory + "/" + aceFile.name
+            file = os.path.join(directory, aceFile.name)
             with open(file, "wb") as f:
                 f.write(aceFile.data)
                 fsFiles.append(file)

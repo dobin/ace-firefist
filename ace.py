@@ -31,7 +31,8 @@ def contentFilterTest(baseUrl):
                 allRoutes = allRoutes + routes
 
                 # open its yaml
-                recipeInfo = getRecipeInfo("recipes/" + module_name + "/" + recipe + ".yaml", routes)
+                path = os.path.join("recipes", module_name, recipe + '.yaml')
+                recipeInfo = getRecipeInfo(path, routes)
                 if recipeInfo is not None:
                     recipeInfos.append(recipeInfo)
 
@@ -63,7 +64,7 @@ def startRecipe(recipeName, baseUrl):
 def getRecipes():
     res = []
     for d in os.listdir('recipes'):
-        plugin_files = [f for f in os.listdir('recipes/' + d) if f.endswith('.py')]
+        plugin_files = [f for f in os.listdir(os.path.join('recipes', d)) if f.endswith('.py')]
         for plugin_file in plugin_files:
             if plugin_file == '__init__.py': 
                 continue
