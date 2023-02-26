@@ -1,0 +1,40 @@
+This is a fork of lib-rar-python written by miebach, with more options when archiving
+
+This package asissts using the command line version of rar on linux
+
+Install this module:
+
+    sudo pip install librar-0.0.x.tar.gz 
+
+(replace x with your version)
+
+You also need rar, on ubuntu:
+
+    sudo aptitude install rar
+
+Usage example
+
+  #!/usr/bin/python
+  from librar import archive
+  
+  base="/home/me" # all files in archive will be relative to this path
+  a = archive.Archive("/tmp/testarchive1.rar",base) # archive will be created in /tmp
+  a.add_file("/home/me/testfile") # testfile will be added to archive
+  a.set_password("awesomesauce") # set password to the archive
+  a.set_compression_level(0) # change compression level to Store
+  a.set_recovery_record(5) # set recovery record to 5%
+  a.set_volume_size("50k") # split archive based on volume size 50 kilobytes
+  
+  # create archive:
+  a.run() 
+  
+
+You can also add directories:
+
+  a.add_dir("/home/me/dir1") # directory and everythin below it will be added to archive
+  
+You can use add_dir and add_file multiple times and also combine them.
+
+To exclude directories or files:
+  
+  a.exclude("/home/me/dir1/tmp") # directory and everythin below it (?) will be excluded
