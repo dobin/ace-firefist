@@ -130,6 +130,7 @@ Get inspiration from recipes from folder `recipes/`
 The folder `make/` contains directories of python code which
 create certain things, be it ZIP files, Onenote phishing file or
 powershell loaders. These makers implement Techniques from TTP.
+See [How To Use](docs/howtouse.md) on how to develop them.
 
 Structure:
 * make/thing/thing.py: makeTheThing(stuff: AceBytes) -> AceStr
@@ -139,5 +140,5 @@ Structure:
 
 ## Libraries
 
-* libs/pylnk3: pylnk3-dev, as it has an important bugfix. No deps. GPL3
-
+* libs/pylnk3: pylnk3-dev, as it has an important bugfix. No deps. GPL3.
+* libs/librar: librar, with patched for python3 and some smaller things. No deps. No License.
