@@ -1,6 +1,6 @@
 # ACE Fire Fist 
 
-Attack Chain Emulator. Like pwntools, but for initial execution. 
+Attack Chain Emulator. Like pwntools, but for initial execution. Like AtomicRedTeam, but the components are freely combinable. 
 
 It can generate artefacts to implement Techniques in recipes. 
 
@@ -29,7 +29,7 @@ These can also be used to test your CSIRT / Forensic investigation process.
 If you want to write code by yourself, be it Recipes or Makers: 
 * [How To Use](docs/howtouse.md)
 
-For more details about the recipes, see: 
+For an overview and more details about the recipes, see:
 * [Recipe Overview](docs/recipe-overview.md)
 
 
@@ -94,51 +94,6 @@ Video:
 ```
 <tbd>
 ```
-
-## Recipes
-
-### Recipe 1
-
-HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
-
-```
-python3 ace.py --recipe recipe_1
-```
-
-Entry URL: http://localhost:5000/test
-
-
-### Recipe 2
-
-ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
-
-```
-python3 ace.py --recipe recipe_2
-```
-
-Entry URL: http://localhost:5000/test.zip
-
-
-### Recipe 3
-
-MSHTA -> Powershell:MessageBox
-
-```
-python3 ace.py --recipe recipe_3
-```
-
-Entry URL: http://localhost:5000/test.hta
-
-
-### Recipe 4
-
-OneNote -> Bat -> Powershell:Messagebox
-
-```
-python3 ace.py --recipe recipe_4
-```
-
-Entry URL: http://localhost:5000/test.one
 
 
 ## Install
