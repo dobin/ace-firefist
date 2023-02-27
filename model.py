@@ -6,6 +6,7 @@ import inspect
 logger = logging.getLogger('basic_logger')
 
 
+
 class RecipeInfo():
     def __init__(self, name, description, chain, reference, binaries, modify_filesystem, routes=[]):
         self.name = name
@@ -20,55 +21,85 @@ class RecipeInfo():
 class AceStr(str):
     def __new__(cls, value):
         obj = str.__new__(cls, value)
-        obj.index = config.COUNTER
+        obj.index = GetCounter()
         return obj
 
 
 class AceBytes(bytes):
     def __new__(cls, value):    
         obj = bytes.__new__(cls, value)
-        obj.index = config.COUNTER
+        obj.index = GetCounter()
         return obj
+    
+
+
+class AceFile():
+    def __init__(self, name: str, data: bytes):
+        self.name = name
+        self.data = data
+        self.index = GetCounter()
+
+
+
+def GetCounter():
+    c = config.COUNTER
+    config.COUNTER += 1
+    return c
 
 
 def prePrint(arg):
     s = []
-    if isinstance(arg, (AceBytes, AceStr)):
+
+    argType = str(type(arg))
+
+    if 'AceBytes' in argType or 'AceStr' in argType or 'AceFile' in argType:
         s.append(str(arg.index))
-    elif isinstance(arg, AceFile):
-        s.append(str(arg.data.index))
-    elif isinstance(arg, list):
-        for a in arg:
-            t = type(a)  # no inheritance, take type instead of isinstance()
-            if t == 'AceBytes' or t == 'AceStr':
-                s.append(str(t.data.index))
-    #else:
-    #    s += ', '
+    elif 'list' in argType:
+        for item in arg:
+            t = str(type(item))  # no inheritance, take type instead of isinstance()
+            if 'AceBytes' in t or 'AceStr' in t:
+                s.append(str(item.index))
     return ', '.join(s)
 
 
 def DataTracker(func):
     def wrapper(*args, **kwargs):
-        config.COUNTER += 1
-
-        ret = func(*args, **kwargs)
-
-        # What follows: Try to print ACE information of args+ret
-        # This is SLOW
         s = ''
+
+        makerCounter = config.MAKER_COUNTER
+        config.MAKER_COUNTER += 1
+
+        # An Indent based on call stack would be useful
+        indent = ""
+        for n in (1, 3, 5, 7, 9, 11):  # skip wrappers
+            parentName = inspect.stack()[n].function
+            if parentName.startswith('make'):
+                indent += "  "
+            else:
+                break
         for arg in args:
             s += prePrint(arg)
         for _, arg in kwargs.items():
             s += prePrint(arg)
-        if isinstance(ret, (AceBytes, AceStr)):
-            logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, ret.index))
-        elif isinstance(ret, AceFile):
-            logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, ret.data.index))
-        elif isinstance(ret, list) and all(isinstance(e, AceFile) for e in ret):  # necessary?
-            for file in ret:
-                logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, file.data.index))
+        logger.info("--[ {}: {} {}({}) ".format(config.COUNTER, indent, func.__name__, s))
+        config.makerCallstack[makerCounter] = "--[ {}: {} {}({})".format(config.COUNTER, indent, func.__name__, s)
+
+        ret = func(*args, **kwargs)
+
+        # What follows: Try to print ACE information of args+ret
+
+        retType = str(type(ret))
+        if 'AceBytes' in retType or 'AceStr' in retType or 'AceFile' in retType:
+            index = ret.index
         else:
-            logger.info("--[ {}: {}".format(config.COUNTER, func.__name__))
+            index = GetCounter()
+
+        logger.info("--[ {}: {} -> {}".format(config.COUNTER, indent, index))
+        config.makerCallstack[makerCounter] += " -> {}".format(index)
+
+        #elif isinstance(ret, list) and all(isinstance(e, AceFile) for e in ret):  # necessary?
+        #    for file in ret:
+        #        logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, file.index))
 
         # Dump content to files
         if not config.ENABLE_SAVING:
@@ -77,25 +108,27 @@ def DataTracker(func):
         filename = None
         filedata = None
 
-        if isinstance(ret, AceBytes):
-            filename = "out/out_{}_{}.bin".format(config.COUNTER, func.__name__)
+        if 'AceBytes' in retType:
+            filename = "out/out_{}_{}.bin".format(index, func.__name__)
             filedata = ret
-        elif isinstance(ret, AceStr):
-            filename = "out/out_{}_{}.txt".format(config.COUNTER, func.__name__)
+        elif 'AceStr' in retType:
+            filename = "out/out_{}_{}.txt".format(index, func.__name__)
             filedata = bytes(ret, 'utf-8')
-        elif isinstance(ret, (bytes, bytearray)):
-            filename = "out/out_{}_{}.bin".format(config.COUNTER, func.__name__)
+        
+        elif 'bytes' in retType or 'bytesarray' in retType:
+            filename = "out/out_{}_{}.bin".format(index, func.__name__)
             filedata = ret
-        elif isinstance(ret, str):
-            filename = "out/out_{}_{}.txt".format(config.COUNTER, func.__name__)
+        elif 'str' in retType:
+            filename = "out/out_{}_{}.txt".format(index, func.__name__)
             filedata = bytes(ret, 'utf-8')
-        elif isinstance(ret, AceFile):
-            filename = "out/out_{}_file_{}".format(config.COUNTER, ret.name)
+        
+        elif 'AceFile' in retType:
+            filename = "out/out_{}_file_{}".format(index, ret.name)
             filedata = ret.data
             if isinstance(filedata, str):
                 filedata = bytes(filedata, 'utf-8')
         else:
-            print("Wrong return type: {}".format(type(ret)))
+            logger.warn("Wrong return type: {}".format(retType))
             return ret
         
         f = open(filename, 'wb')
@@ -129,9 +162,3 @@ def setListenPort(port):
     config.LISTEN_PORT = port
 def enableTemplateInfo():
     config.SHOW_TEMPLATE_INFO = True
-
-
-class AceFile():
-    def __init__(self, name: str, data: bytes):
-        self.name = name
-        self.data = data

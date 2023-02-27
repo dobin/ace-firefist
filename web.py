@@ -80,11 +80,13 @@ def viewRouteDownload(route):
 def viewIndex(routes, recipeInfos):
     def view_func():
         files = sorted(glob.glob("out/out_*.*"))
+        #log = log.GlobalLog.getvalue()
+        log = '\n'.join(config.makerCallstack.values())
         return render_template(
             'index.html', 
             files=files,
             routes=routes,
-            log=log.GlobalLog.getvalue(),
+            log=log,
             recipeInfos=recipeInfos)
 
     return view_func

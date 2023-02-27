@@ -12,7 +12,7 @@ from make.powershell.powershell import *
 
 
 @DataTracker
-def makeCmdToDllWithOdbc(dllPath: str):
+def makeCmdToDllWithOdbc(dllPath: str) -> AceStr:
     '''Returns a cmd to odbc.exe which loads DLL from dllPath'''
     templateFile = 'odbcconf-loaddll.cmd'
     template = getTemplate('make/cmd/', templateFile)
@@ -23,7 +23,7 @@ def makeCmdToDllWithOdbc(dllPath: str):
 
 
 @DataTracker
-def makeCmdFileDownloadWithCurl(url: str, destinationFile: str = None):
+def makeCmdFileDownloadWithCurl(url: str, destinationFile: str = None) -> AceStr:
     '''Return a cmd to curl downloading url into destinationFile'''
     #  -k, --insecure           Allow insecure server connections
     if destinationFile is None:
@@ -33,17 +33,17 @@ def makeCmdFileDownloadWithCurl(url: str, destinationFile: str = None):
     return AceStr(s)
 
 
-def makeCmdline(cmds: List[str]):
+def makeCmdline(cmds: List[str]) -> AceStr:
     '''Returns a cmd to cmd.exe with args "/c cmd[0] & cmd[0] & ..."'''
     s = "cmd /c"
     s += "&".join(cmds)
-    return s
+    return AceStr(s)
 
 
 @DataTracker
 def makeCmdFromPsCommand(
     psCommand: str, encode: bool, fullpath: bool = True, obfuscate: bool = False
-):
+) -> AceStr:
     '''Returns a cmd to powershell.exe with args "-Command/-EncodedCommand psCommand"'''
     if fullpath:
         file = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
@@ -63,7 +63,8 @@ def makeCmdFromPsCommand(
 @DataTracker
 def makeCmdFromPsScript(
     psScript: str, encode: bool, fullpath: bool = True, obfuscate: bool = False
-):
+) -> AceStr:
     '''Returns a cmd to powershell.exe with args "-Command/-EncodedCommand psScript"'''
     psCommand = makePsCommandFromPsScript(psScript)
-    return AceStr(makeCmdFromPsCommand(psCommand, encode, fullpath, obfuscate))
+    cmd = makeCmdFromPsCommand(psCommand, encode, fullpath, obfuscate)
+    return cmd
