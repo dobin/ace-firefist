@@ -9,7 +9,7 @@ from helpers import getTemplate
 
 
 @DataTracker
-def makeHtaFromCmdByJscriptWscriptShell(commandline: str) -> AceStr:
+def makeHtaFromCmdByJscriptWscript(commandline: str) -> AceStr:
     templateFile = 'hta-jscript-exec.hta'
     template = getTemplate('make/hta/', templateFile)
     commandline = commandline.replace('\r', '')

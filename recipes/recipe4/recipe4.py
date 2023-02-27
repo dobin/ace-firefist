@@ -9,6 +9,7 @@ from make.vbs.vbs import *
 from make.hta.hta import *
 from make.onenote.onenote import *
 from make.bat.bat import *
+from make.cmd.cmd import *
 
 from helpers import readFileContent, saveAceFile, makeAceFile
 from model import AceFile, AceRoute
@@ -19,17 +20,14 @@ def recipe4(baseUrl) -> List[AceRoute]:
     # OneNote -> Bat -> ftp.exe -> PowerShell:MessageBox
     routes = []
 
-    # PS-A
+    # PS: MessageBox
     psScript: AceStr = makePsScriptMessagebox()
-    psCommand: AceStr = makePsCommandFromPsScript(psScript)
-    cmd = AceStr("powershell -c \"{}\"".format(psCommand))
-
-    # BAT
-    # bat = makeBatFromCmdByFtp(cmd)
+    cmd: AceStr = makeCmdFromPsScript(psScript, encode=True, fullpath=False)
+    bat = makeBatFromCmds([cmd])
     # batFile: AceFile = makeAceFile("test.bat", bat)  # for debugging
 
     # OneNote
-    onenote = makeOnenoteFromBat(cmd)
+    onenote = makeOnenoteFromBat(bat)
     #onenoteFile: AceFile = makeAceFile("test.one", onenote)  # for debugging
 
     # Serve

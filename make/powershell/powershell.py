@@ -14,24 +14,6 @@ from helpers import getTemplate
 
 
 @DataTracker
-def makeCmdFromPsCommand(
-    psCommand: str, isEncoded: bool, fullpath: bool = True, obfuscate: bool = False
-):
-    if fullpath:
-        file = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    else:
-        file = "powershell.exe"
-
-    if isEncoded:
-        args = "-EncodedCommand {}".format(psCommand)
-    else:
-        args = "-Command {}".format(psCommand)
-
-    cmd = "{} {}".format(file, args)
-    return AceStr(cmd)
-
-
-@DataTracker
 def makePowershellDownloadAndExecuteBinary(url: str, path: str) -> AceStr:
     templateFile = 'download_exec_file.ps1'
     return AceStr('')
@@ -64,7 +46,7 @@ def makePsCommandFromPsScript(input: str) -> AceStr:
 
 @DataTracker
 def makePsEncodedCommand(input: str) -> AceStr:
-    """For use with 'PowerShell.exe -EncodedCommand {}'"""
+    '''For use with "PowerShell.exe -EncodedCommand {}"'''
     text = toPowershellLine(input)
     # https://stackoverflow.com/questions/71642299/how-to-use-python-to-represent-the-powershell-tobase64string-function
     text = bytearray(text, 'utf-16-le')
@@ -79,7 +61,9 @@ def toPowershellLine(input: AceStr) -> AceStr:
     for line in lines:
         line = line.strip()
         if not line.endswith(';'):
-            logging.warn("Powershell script without ';' at end of line: {}".format(line))
+            logger.warn("Powershell script without ';' at end of line: {}.".format(line))
+            logger.warn("  Adding the ';'")
+            line += '; '
 
     # remove all newlines
     input = input.replace('\r\n', '')

@@ -20,7 +20,7 @@ def recipe():
     ps1msgbox: AceStr = makePsScriptMessagebox()
     ps1msgbox: AceStr = makePsEncodedCommand(ps1msgbox)
     cmd: AceStr = AceStr("powershell.exe -EncodedCommand {}".format(ps1msgbox))
-    hta: AceStr = makeHtaFromCmdByJscriptWscriptShell(cmd)
+    hta: AceStr = makeHtaFromCmdByJscriptWscript(cmd)
     containerServe: AceRoute = AceRoute('/test.hta', hta, download=True, downloadName='test.hta')
     routes.append(containerServe)
     serve(routes)

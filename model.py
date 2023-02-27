@@ -38,8 +38,10 @@ def prePrint(arg):
     elif isinstance(arg, AceFile):
         s.append(str(arg.data.index))
     elif isinstance(arg, list):
-        for file in arg:
-            s.append(str(file.data.index))
+        for a in arg:
+            t = type(a)  # no inheritance, take type instead of isinstance()
+            if t == 'AceBytes' or t == 'AceStr':
+                s.append(str(t.data.index))
     #else:
     #    s += ', '
     return ', '.join(s)

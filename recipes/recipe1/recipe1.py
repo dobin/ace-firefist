@@ -24,7 +24,7 @@ def recipe1(baseUrl) -> List[AceRoute]:
 
     # LNK to powershell.exe to execute DLL
     psMsgbox: AceStr = makePsScriptMessagebox()
-    psData: AceStr = makePsEncodedCommand(input=psMsgbox)
+    psData: AceStr = makePsEncodedCommand(psMsgbox)
     lnkData: AceBytes = makeLnk(
         name = "clickme.lnk",
         target = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",

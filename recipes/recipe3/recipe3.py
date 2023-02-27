@@ -9,6 +9,7 @@ from make.vbs.vbs import *
 from make.hta.hta import *
 from make.onenote.onenote import *
 from make.bat.bat import *
+from make.cmd.cmd import *
 
 from helpers import readFileContent, saveAceFile, makeAceFile
 from model import AceFile, AceRoute
@@ -19,23 +20,16 @@ def recipe3(baseUrl) -> List[AceRoute]:
     # MSHTA -> Powershell:MessageBox
     routes = []
 
-    # PS-A
+    # PS: MessageBox
     psScript: AceStr = makePsScriptMessagebox()
-    psCommand: AceStr = makePsEncodedCommand(psScript)
+    cmd: AceStr = makeCmdFromPsScript(psScript, encode=True, fullpath=False)
 
     # MSHTA
-    #cmd: AceStr = AceStr("powershell.exe -EncodedCommand {}".format(psCommand))
-    cmd: AceStr = makeCmdFromPsCommand(psCommand, isEncoded=True, fullpath=False)
-
-    hta: AceStr = makeHtaFromCmdByJscriptWscriptShell(cmd)
+    hta: AceStr = makeHtaFromCmdByJscriptWscript(cmd)
     htaFile: AceFile = makeAceFile("test.hta", hta)  # not really needed
-
     containerServe: AceRoute = AceRoute('/test.hta', hta, download=True, downloadName='test.hta')
     routes.append(containerServe)
 
     # start
     return(routes)
-
-
-
 
