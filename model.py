@@ -6,7 +6,6 @@ import inspect
 logger = logging.getLogger('basic_logger')
 
 
-
 class RecipeInfo():
     def __init__(self, name, description, chain, reference, binaries, modify_filesystem, routes=[]):
         self.name = name
@@ -32,13 +31,11 @@ class AceBytes(bytes):
         return obj
     
 
-
 class AceFile():
     def __init__(self, name: str, data: bytes):
         self.name = name
         self.data = data
         self.index = GetCounter()
-
 
 
 def GetCounter():
@@ -47,29 +44,62 @@ def GetCounter():
     return c
 
 
-def prePrint(arg):
-    s = []
-
+def parseFuncAceArgs(arg):
+    s = [] # array of arguments
     argType = str(type(arg))
-
+    # Stuff which has .index
     if 'AceBytes' in argType or 'AceStr' in argType or 'AceFile' in argType:
         s.append(str(arg.index))
+    # lists of data which may have .index
     elif 'list' in argType:
         for item in arg:
-            t = str(type(item))  # no inheritance, take type instead of isinstance()
-            if 'AceBytes' in t or 'AceStr' in t:
+            t = str(type(item))
+            if 'AceBytes' in t or 'AceStr' in t or 'AceFile' in t:
                 s.append(str(item.index))
     return ', '.join(s)
 
 
+def dumpDataToFile(index, funcName, ret, retType):
+    filename = None
+    filedata = None
+
+    if 'AceBytes' in retType:
+        filename = "out/out_{}_{}.bin".format(index, funcName)
+        filedata = ret
+    elif 'AceStr' in retType:
+        filename = "out/out_{}_{}.txt".format(index, funcName)
+        filedata = bytes(ret, 'utf-8')
+    
+    elif 'bytes' in retType or 'bytesarray' in retType:
+        filename = "out/out_{}_{}.bin".format(index, funcName)
+        filedata = ret
+    elif 'str' in retType:
+        filename = "out/out_{}_{}.txt".format(index, funcName)
+        filedata = bytes(ret, 'utf-8')
+    
+    elif 'AceFile' in retType:
+        filename = "out/out_{}_file_{}".format(index, ret.name)
+        filedata = ret.data
+        if isinstance(filedata, str):
+            filedata = bytes(filedata, 'utf-8')
+    else:
+        logger.warn("Wrong return type: {}".format(retType))
+        return ret
+    
+    f = open(filename, 'wb')
+    f.write(filedata)
+    f.close()
+
 def DataTracker(func):
+    """Print Ace data structures on annotated functions"""
+
     def wrapper(*args, **kwargs):
         s = ''
-
         makerCounter = config.MAKER_COUNTER
         config.MAKER_COUNTER += 1
 
         # An Indent based on call stack would be useful
+        # Check if parents are already a make(er)
         indent = ""
         for n in (1, 3, 5, 7, 9, 11):  # skip wrappers
             parentName = inspect.stack()[n].function
@@ -77,63 +107,37 @@ def DataTracker(func):
                 indent += "  "
             else:
                 break
+
+        # get arguments of the function
         for arg in args:
-            s += prePrint(arg)
+            s += parseFuncAceArgs(arg)
         for _, arg in kwargs.items():
-            s += prePrint(arg)
+            s += parseFuncAceArgs(arg)
+        
+        # output the data
         logger.info("--[ {}: {} {}({}) ".format(config.COUNTER, indent, func.__name__, s))
         config.makerCallstack[makerCounter] = "--[ {}: {} {}({})".format(config.COUNTER, indent, func.__name__, s)
 
+        # call the actual function
         ret = func(*args, **kwargs)
 
         # What follows: Try to print ACE information of args+ret
-
         retType = str(type(ret))
+        # If data is indexed, use that. 
+        # If not, generate a new index
         if 'AceBytes' in retType or 'AceStr' in retType or 'AceFile' in retType:
             index = ret.index
         else:
             index = GetCounter()
 
+        # output the results
         logger.info("--[ {}: {} -> {}".format(config.COUNTER, indent, index))
         config.makerCallstack[makerCounter] += " -> {}".format(index)
-
-        #elif isinstance(ret, list) and all(isinstance(e, AceFile) for e in ret):  # necessary?
-        #    for file in ret:
-        #        logger.info("--[ {}: {}({}) -> {}".format(config.COUNTER, func.__name__, s, file.index))
 
         # Dump content to files
         if not config.ENABLE_SAVING:
             return ret
-        
-        filename = None
-        filedata = None
-
-        if 'AceBytes' in retType:
-            filename = "out/out_{}_{}.bin".format(index, func.__name__)
-            filedata = ret
-        elif 'AceStr' in retType:
-            filename = "out/out_{}_{}.txt".format(index, func.__name__)
-            filedata = bytes(ret, 'utf-8')
-        
-        elif 'bytes' in retType or 'bytesarray' in retType:
-            filename = "out/out_{}_{}.bin".format(index, func.__name__)
-            filedata = ret
-        elif 'str' in retType:
-            filename = "out/out_{}_{}.txt".format(index, func.__name__)
-            filedata = bytes(ret, 'utf-8')
-        
-        elif 'AceFile' in retType:
-            filename = "out/out_{}_file_{}".format(index, ret.name)
-            filedata = ret.data
-            if isinstance(filedata, str):
-                filedata = bytes(filedata, 'utf-8')
-        else:
-            logger.warn("Wrong return type: {}".format(retType))
-            return ret
-        
-        f = open(filename, 'wb')
-        f.write(filedata)
-        f.close()
+        dumpDataToFile(index, func.__name__, ret, retType)
 
         return ret
     return wrapper
