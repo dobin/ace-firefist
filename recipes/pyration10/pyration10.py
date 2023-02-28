@@ -37,7 +37,7 @@ def pyration10(baseUrl) -> List[AceRoute]:
     routes.append(serveHtml)
 
     # Stage 2: BAT
-    rendered = renderTemplate('recipes/pyration10/', 'stage2.bat',
+    rendered = renderTemplate('recipes/pyration10/stage2.bat',
         assistUrl=baseUrl + '/pyration10/assist.rar',
         setupUrl=baseUrl + '/pyration10/setup.rar',
         certUrl=baseUrl + '/pyration10/unrar.cert',
@@ -46,7 +46,7 @@ def pyration10(baseUrl) -> List[AceRoute]:
     routes.append(serveHtml)
 
     # Stage 1: BAT
-    rendered = renderTemplate('recipes/pyration10/', 'stage1.bat',
+    rendered = renderTemplate('recipes/pyration10/stage1.bat',
         batUrl=baseUrl + '/pyration10/c.txt',
         picUrl=baseUrl + '/pyration10/front.jpg',
     )

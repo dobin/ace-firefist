@@ -64,21 +64,17 @@ def yamlHelp(file):
             logger.info("    {}: {}".format(key, yamlData[key]))
 
 
-def getTemplate(directory: str, name: str) -> Template:
-    path = os.path.join(directory, name)
-
+def getTemplate(path: str) -> Template:
     with open(path) as f:
         template = Template(f.read())
-
     if config.SHOW_TEMPLATE_INFO:
         yamlHelp(path)
-
     return template
 
 
 @DataTracker
-def renderTemplate(directory: str, name: str, **kwargs):
-    template = getTemplate(directory, name)
+def renderTemplate(path, **kwargs):
+    template = getTemplate(path)
     rendered = template.render(kwargs)
     return AceStr(rendered)
 

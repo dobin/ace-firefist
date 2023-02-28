@@ -21,8 +21,7 @@ def makePowershellDownloadAndExecuteBinary(url: str, path: str) -> AceStr:
 
 @DataTracker
 def makePsScriptFromPsCommandByDownloadMem(url: str) -> AceStr:
-    templateFile = 'download_exec_ps_enc_mem.ps1'
-    template = getTemplate('make/powershell/', templateFile)
+    template = getTemplate('make/powershell/download_exec_ps_enc_mem.ps1')
     script = template.render(
         url=url
     )
@@ -31,8 +30,7 @@ def makePsScriptFromPsCommandByDownloadMem(url: str) -> AceStr:
 
 @DataTracker
 def makePsScriptMessagebox() -> AceStr: 
-    templateFile = 'messagebox.ps1'
-    template = getTemplate('make/powershell/', templateFile)
+    template = getTemplate('make/powershell/messagebox.ps1')
     script = template.render()
     return AceStr(script)
 

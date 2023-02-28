@@ -18,8 +18,7 @@ def makeBatFromCmdByFtp(command: AceStr, file: str="%lOcAlApPdATA%\Temp\conf.log
         logging.warn("makeBatFtpExec: command len {} is longer than FTP max of about {}, this will not work".format( 
             len(command), FTP_MAX_LINE_LENGTH))
 
-    templateFile = 'ftp-exec.bat'
-    template = getTemplate('make/bat/', templateFile)
+    template = getTemplate('make/bat/ftp-exec.bat')
     script = template.render(
         command=command,
         file=file,

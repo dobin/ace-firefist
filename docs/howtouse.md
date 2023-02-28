@@ -130,8 +130,7 @@ Example: `make/thing/thing.py`:
 ```py
 @DataTracker
 def makeTheThing(stuff: AceStr) -> AceBytes:
-    templateFile = 'thing-template.txt'
-    template = getTemplate('make/thing/', templateFile)
+    template = getTemplate('make/thing/thing-template.txt)
     rendered = template.render(
         stuff=stuff,
     )

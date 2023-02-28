@@ -13,8 +13,7 @@ logger = logging.getLogger('basic_logger')
 
 @DataTracker
 def makeVbsFromCmdByWscript(cmdline: str, disableQuoting=False) -> AceStr:
-    templateFile = 'exec-enc-powershell.vbs'
-    template = getTemplate('make/vbs/', templateFile)
+    template = getTemplate('make/vbs/exec-enc-powershell.vbs')
 
     cmdline = cmdline.replace('\r', '')
     cmdline = cmdline.replace('\n', '')

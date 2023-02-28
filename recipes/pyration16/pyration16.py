@@ -39,7 +39,7 @@ def pyration16(baseUrl) -> List[AceRoute]:
     serveHtml: AceRoute = AceRoute('/pyration16/install/log/', pic)
     routes.append(serveHtml)
     # Stage 2: BAT
-    rendered = renderTemplate('recipes/pyration16/', 'stage2.bat',
+    rendered = renderTemplate('recipes/pyration16/stage2.bat',
         logUrl=baseUrl + '/pyration16/install/log/',
         rarUrl=baseUrl + '/pyration16/unrar.txt',
         assistUrl=baseUrl + '/pyration16/assist.rar',
@@ -50,7 +50,7 @@ def pyration16(baseUrl) -> List[AceRoute]:
     routes.append(serveHtml)
 
     # Stage 1: BAT
-    rendered = renderTemplate('recipes/pyration16/', 'stage1.bat',
+    rendered = renderTemplate('recipes/pyration16/stage1.bat',
         batUrl=baseUrl + '/pyration16/login?_stage=c',
         picUrl=baseUrl + '/pyration16/fox_details.txt',
     )

@@ -14,8 +14,7 @@ from make.powershell.powershell import *
 @DataTracker
 def makeCmdToDllWithOdbc(dllPath: str) -> AceStr:
     '''Returns a cmd to odbc.exe which loads DLL from dllPath'''
-    templateFile = 'odbcconf-loaddll.cmd'
-    template = getTemplate('make/cmd/', templateFile)
+    template = getTemplate('make/cmd/odbcconf-loaddll.cmd')
     script = template.render(
         dllPath=dllPath
     )

@@ -2,6 +2,8 @@ import logging
 import config
 from pathlib import Path
 import inspect 
+from typing import List
+import os
 
 logger = logging.getLogger('basic_logger')
 
@@ -44,20 +46,6 @@ def GetCounter():
     return c
 
 
-def parseFuncAceArgs(arg):
-    s = [] # array of arguments
-    argType = str(type(arg))
-    # Stuff which has .index
-    if 'AceBytes' in argType or 'AceStr' in argType or 'AceFile' in argType:
-        s.append(str(arg.index))
-    # lists of data which may have .index
-    elif 'list' in argType:
-        for item in arg:
-            t = str(type(item))
-            if 'AceBytes' in t or 'AceStr' in t or 'AceFile' in t:
-                s.append(str(item.index))
-    return ', '.join(s)
-
 
 def dumpDataToFile(index, funcName, ret, retType):
     filename = None
@@ -90,11 +78,27 @@ def dumpDataToFile(index, funcName, ret, retType):
     f.write(filedata)
     f.close()
 
+
+def parseFuncAceArgs(arg) -> List[str]:
+    s = [] # array of arguments
+    argType = str(type(arg))
+
+    # Stuff which has .index
+    if 'AceBytes' in argType or 'AceStr' in argType or 'AceFile' in argType:
+        s.append(str(arg.index))
+    # lists of data which may have .index
+    elif 'list' in argType:
+        for item in arg:
+            t = str(type(item))
+            if 'AceBytes' in t or 'AceStr' in t or 'AceFile' in t:
+                s.append(str(item.index))
+    return s
+
+
 def DataTracker(func):
-    """Print Ace data structures on annotated functions"""
+    """Decorator to log Ace data structures on annotated functions"""
 
     def wrapper(*args, **kwargs):
-        s = ''
         makerCounter = config.MAKER_COUNTER
         config.MAKER_COUNTER += 1
 
@@ -108,11 +112,20 @@ def DataTracker(func):
             else:
                 break
 
-        # get arguments of the function
-        for arg in args:
-            s += parseFuncAceArgs(arg)
-        for _, arg in kwargs.items():
-            s += parseFuncAceArgs(arg)
+        allArgs = []
+        s = ''        
+        # check function name special cases
+        funcName = str(func)
+        if 'readFileContent' in funcName or 'renderTemplate' in funcName:
+            s = os.path.basename(str(args[0]))
+        else:
+            # get arguments of the function
+            for arg in args:
+                allArgs += parseFuncAceArgs(arg)
+            for _, arg in kwargs.items():
+                allArgs += parseFuncAceArgs(arg)
+            print(str(allArgs))
+            s = ', '.join(allArgs)
         
         # output the data
         logger.info("--[ {}: {} {}({}) ".format(config.COUNTER, indent, func.__name__, s))
