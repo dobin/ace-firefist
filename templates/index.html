@@ -65,11 +65,31 @@
 
 Routes: 
 
-<ul>
+<table>
+    <tr>
+        <th>URL</th>
+        <th>info</th>
+        <th>Download as</th>        
+    </tr>
     {% for route in routes %}
-    <li><a href="{{route.url}}">{{route.url}}</a></li>
+    <tr>
+        <td><a href="{{route.url}}">{{route.url}}</a></td>
+        <td>{{route.info}}</td>
+        <td>
+            {% if route.download == True and route.downloadName == '' %}
+            Yes
+            {% else %}
+            {{route.downloadName}}
+            {% endif %}
+
+            {% if route.downloadMime != None %}
+            , {{route.downloadMime}}
+            {% endif %}
+        </td>
+    </tr>
     {% endfor %}
-</ul>
+</table>
+<br>
 
 Log:
 
