@@ -84,9 +84,10 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--recipe', type=str, required=True, help='Which recipe to use ("all" for all)')
+    parser.add_argument('--listenip', type=str, required=True, help='IP to listen on')
+
     parser.add_argument('--scan', type=str, help='Scan AceFiles with avred-server')
-    parser.add_argument('--listenip', type=str, help='IP to listen on')
-    parser.add_argument('--listenport', type=int, help='Port to listen on')
+    parser.add_argument('--listenport', type=int, help='Port to listen on', default=5000)
     parser.add_argument('--templateinfo', action='store_true', help='Show information about used templates')
     parser.add_argument('--externalurl', type=str, help='External URL of the server (if behind reverse proxy)')
     args = parser.parse_args()
@@ -103,6 +104,12 @@ def main():
     if args.externalurl:
         baseUrl = args.externalurl
     else:
+        if config.LISTEN_IP == "0.0.0.0":
+            logging.error("Cant use 0.0.0.0 as listen IP. Please specify a IP.")
+            logging.error("Use \"--externalurl http://evil\" to specfiy the URL as seen by the client, if necessary")
+            return
+
+        logging.info("Use \"--externalurl http://evil\" to specfiy the URL as seen by the client, if necessary")
         baseUrl = "http://{}:{}".format(config.LISTEN_IP, config.LISTEN_PORT)
     logger.info("Using baseUrl: {}".format(baseUrl))
     if args.recipe == "all":
