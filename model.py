@@ -117,14 +117,16 @@ def DataTracker(func):
         # check function name special cases
         funcName = str(func)
         if 'readFileContent' in funcName or 'renderTemplate' in funcName:
-            s = os.path.basename(str(args[0]))
-        else:
-            # get arguments of the function
-            for arg in args:
-                allArgs += parseFuncAceArgs(arg)
-            for _, arg in kwargs.items():
-                allArgs += parseFuncAceArgs(arg)
-            s = ', '.join(allArgs)
+            allArgs.append(os.path.basename(str(args[0])))
+        elif 'makeAceRoute' in funcName:
+            allArgs.append(str(args[0]))
+        
+        # get arguments of the function
+        for arg in args:
+            allArgs += parseFuncAceArgs(arg)
+        for _, arg in kwargs.items():
+            allArgs += parseFuncAceArgs(arg)
+        s += ', '.join(allArgs)
         
         # output the data
         logger.info("--[ {}: {} {}({}) ".format(config.COUNTER, indent, func.__name__, s))
@@ -164,6 +166,11 @@ class AceRoute():
         self.downloadName = downloadName
         self.downloadMime = downloadMime
 
+
+@DataTracker
+def makeAceRoute(url: str, data: bytes, info: str = '', download: bool=False, downloadName: str='', downloadMime: str=None):
+    aceRoute = AceRoute(url, data, info, download, downloadName, downloadMime)
+    return aceRoute
 
 def enableOut():
     config.ENABLE_SAVING = True

@@ -51,7 +51,7 @@ Use `serve()` to start a webserver serving them.
 
 ```py
 thething: AceStr = ...
-thingFile: AceRoute = AceRoute('/the.thing', thething)
+thingFile: AceRoute = makeAceRoute('/the.thing', thething)
 serve([ thingFile ])
 ```
 

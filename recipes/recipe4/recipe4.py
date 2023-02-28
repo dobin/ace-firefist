@@ -12,7 +12,7 @@ from make.bat.bat import *
 from make.cmd.cmd import *
 
 from helpers import readFileContent, saveAceFile, makeAceFile
-from model import AceFile, AceRoute
+from model import *
 from web import serve
 
 
@@ -31,7 +31,7 @@ def recipe4(baseUrl) -> List[AceRoute]:
     #onenoteFile: AceFile = makeAceFile("test.one", onenote)  # for debugging
 
     # Serve
-    containerServe: AceRoute = AceRoute('/test.one', onenote, download=True, downloadName='test.one')
+    containerServe: AceRoute = makeAceRoute('/test.one', onenote, download=True, downloadName='test.one')
     routes.append(containerServe)
     return(routes)
 

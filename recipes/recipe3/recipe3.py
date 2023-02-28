@@ -12,7 +12,7 @@ from make.bat.bat import *
 from make.cmd.cmd import *
 
 from helpers import readFileContent, saveAceFile, makeAceFile
-from model import AceFile, AceRoute
+from model import *
 from web import serve
 
 
@@ -27,7 +27,7 @@ def recipe3(baseUrl) -> List[AceRoute]:
     # MSHTA
     hta: AceStr = makeHtaFromCmdByJscriptWscript(cmd)
     htaFile: AceFile = makeAceFile("test.hta", hta)  # not really needed
-    containerServe: AceRoute = AceRoute('/test.hta', hta, download=True, downloadName='test.hta')
+    containerServe: AceRoute = makeAceRoute('/test.hta', hta, download=True, downloadName='test.hta')
     routes.append(containerServe)
 
     # start

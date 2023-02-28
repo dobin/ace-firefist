@@ -11,7 +11,7 @@ from make.onenote.onenote import *
 from make.bat.bat import *
 
 from helpers import readFileContent, saveAceFile, makeAceFile
-from model import AceFile, AceRoute
+from model import *
 from web import serve
 
 
@@ -41,5 +41,5 @@ def recipe1(baseUrl) -> List[AceRoute]:
 
     # HTML to serve ISO
     html: AceStr = makeHtmlSmuggling(containerFile)
-    serveHtml: AceRoute = AceRoute('/test', html)
+    serveHtml: AceRoute = makeAceRoute('/test', html)
     return([serveHtml])

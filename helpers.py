@@ -13,7 +13,7 @@ import config
 logger = logging.getLogger('basic_logger')
 
 
-
+@DataTracker
 def base64encode(input: AceBytes) -> AceStr:
     data = b64encode(input).decode()
     return AceStr(data)

