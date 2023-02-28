@@ -124,7 +124,6 @@ def DataTracker(func):
                 allArgs += parseFuncAceArgs(arg)
             for _, arg in kwargs.items():
                 allArgs += parseFuncAceArgs(arg)
-            print(str(allArgs))
             s = ', '.join(allArgs)
         
         # output the data
@@ -157,9 +156,10 @@ def DataTracker(func):
 
 
 class AceRoute():
-    def __init__(self, url: str, data: bytes, download: bool=False, downloadName: str='', downloadMime: str=None):
+    def __init__(self, url: str, data: bytes, info: str = '', download: bool=False, downloadName: str='', downloadMime: str=None):
         self.url = url
         self.data = data
+        self.info = info
         self.download = download
         self.downloadName = downloadName
         self.downloadMime = downloadMime
