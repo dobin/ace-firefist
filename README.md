@@ -22,6 +22,9 @@ Additionally, the following Threat Actor's are available:
 * Raspberry Robin
 
 These can also be used to test your CSIRT / Forensic investigation process. 
+These are based on real threat actors. 
+All malicious code has been removed, all source code reviewed and tested.
+All binaries are compiled, or the recipe will be marked with `binaries`.
 
 
 ## Further Documentation
@@ -30,7 +33,7 @@ If you want to write code by yourself, be it Recipes or Makers:
 * [How To Use](docs/howtouse.md)
 
 For an overview and more details about the recipes, see:
-* [Recipe Overview](docs/recipe-overview.md)
+* [Recipe Overview](doc/recipe-overview.md)
 
 
 ## Example recipe: MSTHA with powershell code
@@ -125,7 +128,7 @@ Get inspiration from recipes from folder `recipes/`
 * `payload/`: files used as payloads (not served via web)
 
 
-## Make
+## Makers
 
 The folder `make/` contains directories of python code which
 create certain things, be it ZIP files, Onenote phishing file or
