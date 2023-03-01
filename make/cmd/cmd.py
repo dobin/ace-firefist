@@ -10,13 +10,23 @@ from model import *
 from helpers import getTemplate
 from make.powershell.powershell import *
 
-
 @DataTracker
 def makeCmdToDllWithOdbc(dllPath: str) -> AceStr:
-    '''Returns a cmd to odbc.exe which loads DLL from dllPath'''
+    '''Returns a cmd to odbc.exe which loads DLL from dllPath (no args, use DLL_PROCESS_ATTACH)'''
     template = getTemplate('make/cmd/odbcconf-loaddll.cmd')
     script = template.render(
         dllPath=dllPath
+    )
+    return AceStr(script)
+
+
+@DataTracker
+def makeCmdToDllWithRundll(dllPath: str, args='') -> AceStr:
+    '''Returns a cmd to rundll32.exe which loads DLL from dllPath (with args)'''
+    template = getTemplate('make/cmd/rundll32-loaddll.cmd')
+    script = template.render(
+        dllPath=dllPath,
+        args=args
     )
     return AceStr(script)
 
