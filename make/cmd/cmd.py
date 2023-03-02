@@ -10,6 +10,13 @@ from model import *
 from helpers import getTemplate
 from make.powershell.powershell import *
 
+
+@DataTracker
+def makeCmdAddReg(keyName, valueName, value, type) -> AceStr:
+    s = "reg add \"{}\" /v \"{}\" /t {} /d \"{}\"".format(keyName, valueName, type, value)
+    return AceStr(s)
+
+
 @DataTracker
 def makeCmdToDllWithOdbc(dllPath: str) -> AceStr:
     '''Returns a cmd to odbc.exe which loads DLL from dllPath (no args, use DLL_PROCESS_ATTACH)'''

