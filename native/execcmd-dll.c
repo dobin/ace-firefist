@@ -15,6 +15,13 @@ extern __declspec(dllexport) void makeMessageBox(void)
 }
  
 
+extern __declspec(dllexport) void DllRegisterServer(void)
+{
+    OutputDebugString("ExportedFunction: DllRegisterServer");
+    MessageBox(NULL, "Exported Function DllRegisterServer() called", "EvilDll", MB_OK);
+}
+ 
+ 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
 {
     switch (fdwReason)
