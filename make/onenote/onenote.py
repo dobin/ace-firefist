@@ -24,6 +24,8 @@ def makeOnenoteFromBat(input: AceStr) -> AceBytes:
     data = file.read()
     file.close()
 
+    if not 'placeHolder' in data:
+        logging.error("Could not find placeHolder in template")
     # replace the placeholder in our bat file
     data = data.replace(placeholder, exchangeBytes)
     return AceBytes(data)
