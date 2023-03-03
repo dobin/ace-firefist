@@ -9,19 +9,10 @@ from model import *
 from helpers import getTemplate
 
 
-# Notes:
-# Use "powershell.exe -noexit" for testing
-
-
 @DataTracker
-def makePowershellDownloadAndExecuteBinary(url: str, path: str) -> AceStr:
-    templateFile = 'download_exec_file.ps1'
-    return AceStr('')
-
-
-@DataTracker
-def makePsScriptToPsCommandByDownloadInMem(url: str) -> AceStr:
-    template = getTemplate('make/powershell/download_exec_ps_mem.ps1')
+def makePsScriptToPsCommandByDownloadCmd(url: str) -> AceStr:
+    """Return a PsScript which downloads and executes a PsCommand with 'powershell -c'"""
+    template = getTemplate('make/powershell/download_exec_pscmd_ps.ps1')
     script = template.render(
         url=url
     )
@@ -29,8 +20,9 @@ def makePsScriptToPsCommandByDownloadInMem(url: str) -> AceStr:
 
 
 @DataTracker
-def makePsScriptToCmdByDownloadIe(url: str) -> AceStr:
-    template = getTemplate('make/powershell/download_exec_cmd_ie.ps1')
+def makePsScriptToPsCommandByDownloadIe(url: str) -> AceStr:
+    """Return a PsScript which downloads and executes PsCommand with 'Invoke-Expression'"""
+    template = getTemplate('make/powershell/download_exec_pscmd_ie.ps1')
     script = template.render(
         url=url
     )
@@ -39,6 +31,7 @@ def makePsScriptToCmdByDownloadIe(url: str) -> AceStr:
 
 @DataTracker
 def makePsScriptToCmdByDownloadCmd(url: str) -> AceStr:
+    """Return a PsScript which downloads and executes Cmdline with 'cmd /c'"""
     template = getTemplate('make/powershell/download_exec_cmd_cmd.ps1')
     script = template.render(
         url=url
@@ -47,7 +40,8 @@ def makePsScriptToCmdByDownloadCmd(url: str) -> AceStr:
 
 
 @DataTracker
-def makePsScriptMessagebox() -> AceStr: 
+def makePsScriptMessagebox() -> AceStr:
+    """Return a PsScript which simply outputs a popup"""
     template = getTemplate('make/powershell/messagebox.ps1')
     script = template.render()
     return AceStr(script)
@@ -55,14 +49,14 @@ def makePsScriptMessagebox() -> AceStr:
 
 @DataTracker
 def makePsCommandFromPsScript(input: str) -> AceStr:
-    """For use with 'PowerShell.exe -Command {}'"""
+    """Make input compatible with 'PowerShell.exe -Command {}'"""
     ret = toPowershellLine(input)
     return AceStr(ret)
 
 
 @DataTracker
 def makePsEncodedCommand(input: str) -> AceStr:
-    '''For use with "PowerShell.exe -EncodedCommand {}"'''
+    '''Make input compatible with "PowerShell.exe -EncodedCommand {}"'''
     text = toPowershellLine(input)
     # https://stackoverflow.com/questions/71642299/how-to-use-python-to-represent-the-powershell-tobase64string-function
     text = bytearray(text, 'utf-16-le')
@@ -78,8 +72,8 @@ def toPowershellLine(input: AceStr) -> AceStr:
         line = line.strip()
         if not line.endswith(';'):
             logger.warn("Powershell script without ';' at end of line: {}.".format(line))
-            logger.warn("  Adding the ';'")
-            line += '; '
+            #logger.warn("  Adding the ';'")
+            #line += '; '
 
     # remove all newlines
     input = input.replace('\r\n', '')

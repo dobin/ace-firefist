@@ -1,8 +1,7 @@
 ---
-  title: "Test Powershell code which shows a dialog box"
+  title: "Powershell: Dialogbox"
   author: "Dobin"
-  date: 20220218
-  description: "Powershell code which shows a dialog box, for testing purposes"
-  howtouse: "Powershell -c \"\""
-  input: "None"
-  invalid: [ '' ]
+  description: "Powershell script which shows a dialog box. For testing purposes."
+  howtouse: ""
+  type: "psScript"
+  input: "-"

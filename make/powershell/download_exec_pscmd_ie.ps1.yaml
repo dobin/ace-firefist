@@ -1,0 +1,7 @@
+---
+  title: "Powershell: download & execute psCommand with Invoke-Expression"
+  author: "Dobin"
+  description: "Downloads the psCommand from 'url' and exec its content with 'Invoke-Expression'"
+  howtouse: "The input psCommands needs to be escaped, as e.g. '$c' will be evaluated!"
+  type: "psCommand"
+  input: "psCommand"

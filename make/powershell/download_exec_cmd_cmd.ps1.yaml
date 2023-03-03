@@ -1,0 +1,7 @@
+---
+  title: "Powershell: download & execute cmdLine with 'cmd /c'"
+  author: "Dobin"
+  description: "Downloads the cmdLine from 'url' and exec its content with 'cmd /c'"
+  howtouse: "Make sure no \" are in the input, or escape them properly"
+  type: "psCommand"
+  input: "cmdLine"

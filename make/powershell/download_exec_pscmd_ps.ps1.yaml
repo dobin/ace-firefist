@@ -1,0 +1,7 @@
+---
+  title: "Powershell: download & execute psCommand with 'powershell -c'"
+  author: "Dobin"
+  description: "Downloads the psCommand from 'url' and exec its content with 'powershell -c'"
+  howtouse: "Make sure no \" are in the input, or escape them properly"
+  type: "psCommand"
+  input: "psCommand"

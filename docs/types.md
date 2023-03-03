@@ -1,9 +1,9 @@
 # Types
 
-* powershell
-* encodedPowershell
-* powershell-command
-* command-line
-* batch-file
-* cmdline
+* psScript
+* psCommand
+* psEncodedComand
+
 * cmd
+* cmdLine
+* bat

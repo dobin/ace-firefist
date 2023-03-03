@@ -20,11 +20,19 @@ Additionally, the following Threat Actor's are available:
 * PY#RATION 1.0
 * PY#RATION 1.6
 * Raspberry Robin
+* Ursnif
 
 These can also be used to test your CSIRT / Forensic investigation process. 
 These are based on real threat actors. 
 All malicious code has been removed, all source code reviewed and tested.
 All binaries are compiled, or the recipe will be marked with `binaries`.
+
+Notes: 
+* Disable AV if you want to follow the whole chain (EDR only)
+* Use it in a VM
+* Most Threat Actor payloads dont have proxy support. Use a direct connection
+* Use `cleanup.bat` to remove all artefacts
+* For recipes get tagges `binaries = True` if they have binaries without source (e.g. copied rundll32.exe)
 
 
 ## Further Documentation

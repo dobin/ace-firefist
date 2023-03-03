@@ -1,0 +1,9 @@
+---
+  name: "Raspberry Robin"
+  description: "Ursnif (Gozi, ISFB) incident from August 2022 analysis by thedfirreport"
+  chain: "ISO -> lnk -> bat -> wscript -> rundll32 -> download:cmd -> MSHTA -> reg:activex -> reg:powershell -> download:cmd -> download-bits:ps -> ps -> MessageBox"
+  date: 20230302
+  author: dobin
+  reference: https://thedfirreport.com/2023/01/09/unwrapping-ursnifs-gifts/
+  binaries: True
+  modify_filesystem: True
