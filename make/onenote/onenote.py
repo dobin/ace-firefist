@@ -6,28 +6,29 @@ import logging
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from model import *
+from helpers import *
 
 logger = logging.getLogger()
+
 
 @DataTracker
 def makeOnenoteFromBat(input: AceStr) -> AceBytes:
     template = 'make/onenote/Test-bat-800.one'
-    placeholderLen = 700  # even tho we stored 800 spaces, it only works with a bit less
+    placeholderLen = 700  # even tho we stored 800 spaces, it only works with a bit less 
+
+    if len(input) > placeholderLen:
+        raise Exception("  Input larger than {} bytes, template too small".format(placeholderLen))
+
     placeholder = b" " * placeholderLen
     exchange = input + " " * (placeholderLen - len(input))
     exchangeBytes = bytes(exchange, 'ascii')
-    if len(placeholder) != len(exchangeBytes):
-        raise Exception("makeOnenoteBat: len not equal, something went wrong: {} {}".format(len(placeholder), len(exchangeBytes)))
-
-    # open original onenote
+ 
     file = open(template, 'rb')
     data = file.read()
     file.close()
 
-    if not 'placeHolder' in data:
-       raise Exception("Could not find placeHolder in template")
-    # replace the placeholder in our bat file
-    data = data.replace(placeholder, exchangeBytes)
+    data = replacer(data, placeholder, exchangeBytes)
+
     return AceBytes(data)
 
 

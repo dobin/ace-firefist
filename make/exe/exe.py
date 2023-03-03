@@ -19,8 +19,10 @@ def makePeExecCmd(input, asDll) -> AceBytes:
         template = 'payloads/execc2cmd.dll'
     else:
         template = 'payloads/execc2cmd.exe'
-
     placeholderLen = 800
+    if len(input) > placeholderLen:
+        raise Exception("  Input larger than {} bytes, template too small".format(placeholderLen))
+
     placeholder = b" " * placeholderLen
     exchange = input + " " * (placeholderLen - len(input))
 
@@ -39,6 +41,9 @@ def makePeExecCmdC2(host, port, url, asDll) -> AceBytes:
     else:
         template = 'payloads/execc2cmd.exe'
     placeholderLen = 55
+
+    if len(host) > placeholderLen or len(port) > placeholderLen or len(url) > placeholderLen:
+        raise Exception("  Input larger than {} bytes, template too small".format(placeholderLen))
     
     # char host[]  = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"; // len: 55
     pHost = b"B" * placeholderLen
