@@ -13,7 +13,7 @@ from model import *
 
 
 @DataTracker
-def makeLnk(name: str, target: str, arguments: str, window_mode='Minimized', iconPath="", iconIndex=0) -> AceBytes:
+def makeLnk(name: str, target: str, arguments: str = '', window_mode='Minimized', iconPath="", iconIndex=0) -> AceBytes:
     """Make a .lnk file with `name` pointing to `target` having `arguments` as arguments"""
     lnk = lib.pylnk3.helpers.for_file(
         target, 
