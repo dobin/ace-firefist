@@ -13,7 +13,7 @@ from lib.librar import archive
 @DataTracker
 def makeRar(files: List[AceFile], password=None) -> AceBytes:
     if len(files) == 0:
-        logger.error("No files given for rar")
+        raise Exception("No files given for rar")
 
     with tempfile.TemporaryDirectory() as directory:
         outFile = os.path.join(directory, "archive.rar")

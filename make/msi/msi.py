@@ -23,9 +23,9 @@ def makeMsiFromCmd(input: AceStr) -> AceBytes:
     exchange = input + (" " * (placeholderLen - len(input)))
     exchangeBytes = bytes(exchange, 'ascii')
     if len(input) > placeholderLen:
-        logger.error("  Input larger than {} bytes, template too small".format(placeholderLen))
+        raise Exception("  Input larger than {} bytes, template too small".format(placeholderLen))
     if len(placeholder) != len(exchangeBytes):
-        logging.error("makeOnenoteBat: len not equal, something went wrong: {} {}".format(len(placeholder), len(exchangeBytes)))
+        raise Exception("makeOnenoteBat: len not equal, something went wrong: {} {}".format(len(placeholder), len(exchangeBytes)))
 
     file = open(template, 'rb')
     data = file.read()

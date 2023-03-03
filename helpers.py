@@ -135,9 +135,10 @@ def scanAv(aceFile: AceFile) -> bool:
 
 def replacer(data: bytes, placeholder: bytes, exchange: bytes) -> bytes:
     if len(placeholder) != len(exchange):
-        logging.error("makeDllExecC2cmd: len not equal, something went wrong: {} {}".format(len(placeholder), len(exchangeBytes)))
+        raise Exception("makeDllExecC2cmd: len not equal, something went wrong: {} {}".format(
+            len(placeholder), len(exchange)))
     if not placeholder in data:
-        logging.error("Could not find placeHolder in template")
+        raise Exception("Could not find placeHolder in template")
 
     data = data.replace(placeholder, exchange)
     return data

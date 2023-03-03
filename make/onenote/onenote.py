@@ -17,7 +17,7 @@ def makeOnenoteFromBat(input: AceStr) -> AceBytes:
     exchange = input + " " * (placeholderLen - len(input))
     exchangeBytes = bytes(exchange, 'ascii')
     if len(placeholder) != len(exchangeBytes):
-        logging.error("makeOnenoteBat: len not equal, something went wrong: {} {}".format(len(placeholder), len(exchangeBytes)))
+        raise Exception("makeOnenoteBat: len not equal, something went wrong: {} {}".format(len(placeholder), len(exchangeBytes)))
 
     # open original onenote
     file = open(template, 'rb')
@@ -25,7 +25,7 @@ def makeOnenoteFromBat(input: AceStr) -> AceBytes:
     file.close()
 
     if not 'placeHolder' in data:
-        logging.error("Could not find placeHolder in template")
+       raise Exception("Could not find placeHolder in template")
     # replace the placeholder in our bat file
     data = data.replace(placeholder, exchangeBytes)
     return AceBytes(data)
