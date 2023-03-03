@@ -8,12 +8,14 @@
 #include "helper.c"
 #include "http.c"
 
+
 extern __declspec(dllexport) void makeMessageBox(void)
 {
     OutputDebugString("ExportedFunction: makeMessageBox");
     MessageBox(NULL, "Exported Function makeMessageBox() called", "EvilDll", MB_OK);
     loop();
 }
+
 
 extern __declspec(dllexport) void DllRegisterServer(void)
 {

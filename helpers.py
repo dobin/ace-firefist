@@ -131,3 +131,13 @@ def scanAv(aceFile: AceFile) -> bool:
 
     logger.info("---[ Generating AceFile {}, detected: {}".format(filename, ret_value))
     return ret_value
+
+
+def replacer(data: bytes, placeholder: bytes, exchange: bytes) -> bytes:
+    if len(placeholder) != len(exchange):
+        logging.error("makeDllExecC2cmd: len not equal, something went wrong: {} {}".format(len(placeholder), len(exchangeBytes)))
+    if not placeholder in data:
+        logging.error("Could not find placeHolder in template")
+
+    data = data.replace(placeholder, exchange)
+    return data

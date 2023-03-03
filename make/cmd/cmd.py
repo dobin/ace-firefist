@@ -13,7 +13,7 @@ from make.powershell.powershell import *
 
 @DataTracker
 def makeCmdAddReg(keyName, valueName, value, type) -> AceStr:
-    s = "reg add \"{}\" /v \"{}\" /t {} /d \"{}\"".format(keyName, valueName, type, value)
+    s = "reg add \"{}\" /v \"{}\" /t {} /f /d \"{}\"".format(keyName, valueName, type, value)
     return AceStr(s)
 
 

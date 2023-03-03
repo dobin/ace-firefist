@@ -8,7 +8,9 @@
 #include "helper.c"
 #include "http.c"
 
+
 int WINAPI wWinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd)
 {
    loop();
+   return 0;
 }

