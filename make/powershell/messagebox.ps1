@@ -1,4 +1,3 @@
 Add-Type -AssemblyName PresentationCore,PresentationFramework; 
-$msgBody = 'This is a simple message with just the default OK button';
+$msgBody = 'PowerShell Script Message Box';
 [System.Windows.MessageBox]::Show($msgBody);
-Start-Sleep -Seconds 10;

@@ -25,7 +25,7 @@ def recipe2(baseUrl) -> List[AceRoute]:
     routes.append(psFile)
 
     # PS Download & Execute
-    psCommand: AceStr = makePsScriptFromPsCommandByDownloadMem(
+    psCommand: AceStr = makePsScriptToPsCommandByDownloadInMem(
         url=baseUrl+'/ps-msgbox',
     )
     psEncodedCommand: AceStr = makePsEncodedCommand(psCommand)
