@@ -52,21 +52,21 @@ def dumpDataToFile(index, funcName, ret, retType):
     filedata = None
 
     if 'AceBytes' in retType:
-        filename = "out/out_{}_{}.bin".format(index, funcName)
+        filename = "out/out_{:02d}_{}.bin".format(index, funcName)
         filedata = ret
     elif 'AceStr' in retType:
-        filename = "out/out_{}_{}.txt".format(index, funcName)
+        filename = "out/out_{:02d}_{}.txt".format(index, funcName)
         filedata = bytes(ret, 'utf-8')
     
     elif 'bytes' in retType or 'bytesarray' in retType:
-        filename = "out/out_{}_{}.bin".format(index, funcName)
+        filename = "out/out_{:02d}_{}.bin".format(index, funcName)
         filedata = ret
     elif 'str' in retType:
-        filename = "out/out_{}_{}.txt".format(index, funcName)
+        filename = "out/out_{:02d}_{}.txt".format(index, funcName)
         filedata = bytes(ret, 'utf-8')
     
     elif 'AceFile' in retType:
-        filename = "out/out_{}_file_{}".format(index, ret.name)
+        filename = "out/out_{:02d}_file_{}".format(index, ret.name)
         filedata = ret.data
         if isinstance(filedata, str):
             filedata = bytes(filedata, 'utf-8')
@@ -130,7 +130,7 @@ def DataTracker(func):
         
         # output the data
         logger.info("--[ {}: {} {}({}) ".format(config.COUNTER, indent, func.__name__, s))
-        config.makerCallstack[makerCounter] = "--[ {}: {} {}({})".format(config.COUNTER, indent, func.__name__, s)
+        config.makerCallstack[makerCounter] = "--[ {:02d}: {} {}({})".format(config.COUNTER, indent, func.__name__, s)
 
         # call the actual function
         ret = func(*args, **kwargs)
