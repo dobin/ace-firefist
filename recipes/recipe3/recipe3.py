@@ -29,7 +29,5 @@ def recipe3(baseUrl) -> List[AceRoute]:
     htaFile: AceFile = makeAceFile("test.hta", hta)  # not really needed
     containerServe: AceRoute = makeAceRoute('/test.hta', hta, download=True, downloadName='test.hta')
     routes.append(containerServe)
-
-    # start
     return(routes)
 

