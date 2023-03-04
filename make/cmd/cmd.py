@@ -10,7 +10,7 @@ from make.powershell.powershell import *
 
 
 @DataTracker
-def makeCmdAddReg(keyName, valueName, value, type) -> AceStr:
+def makeCmdAddReg(keyName: str, valueName: str, value: AceStr, type: str) -> AceStr:
     """Returns a cmd which will add a registry key"""
     s = "reg add \"{}\" /v \"{}\" /t {} /f /d \"{}\"".format(keyName, valueName, type, value)
     return AceStr(s)
