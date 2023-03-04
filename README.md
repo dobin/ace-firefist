@@ -41,7 +41,7 @@ If you want to write code by yourself, be it Recipes or Makers:
 * [How To Use](docs/howtouse.md)
 
 For an overview and more details about the recipes, see:
-* [Recipe Overview](doc/recipes.md)
+* [Recipe Overview](docs/recipes.md)
 
 
 ## Example recipe: MSTHA with powershell code

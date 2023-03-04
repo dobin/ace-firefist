@@ -46,7 +46,7 @@ def buildMd(yamls):
     sb.AddNl('')
 
     for yaml in yamls:
-        sb.AddNl("# {}".format(yaml['name']))
+        sb.AddNl("## {}".format(yaml['name']))
         sb.AddNl('')
         sb.AddNl("* {}".format(yaml['chain']))
         if yaml['description'] is not None:
