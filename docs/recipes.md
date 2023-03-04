@@ -14,7 +14,7 @@ python3 ace.py --recipe pyration10
 Entry path: /pyration10/pyration10-documents.zip
 
 
-## Raspberry Robin
+## Ursnif
 
 * ISO -> lnk -> bat -> wscript -> rundll32 -> download:cmd -> MSHTA -> reg:activex -> reg:powershell -> download:cmd -> download-bits:ps -> ps -> MessageBox
 * Ursnif (Gozi, ISFB) incident from August 2022 analysis by thedfirreport

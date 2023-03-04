@@ -56,7 +56,6 @@ def ursnif(baseUrl) -> List[AceRoute]:
 
     # Stage 4: MSHTA.exe: exec reg "ActiveDevice"
     mshtaCmd: AceStr = readFileContentStr('recipes/ursnif/mshta.cmd')
-    mshtaCmd = AceStr(mshtaCmd)
 
     # Several cmdlines as input for the C2 payload DLL
     bat: AceStr = makeBatFromCmds([
