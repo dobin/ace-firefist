@@ -1,8 +1,9 @@
 # ACE Fire Fist 
 
-Attack Chain Emulator. Like pwntools, but for initial execution. Like AtomicRedTeam, but the components are freely combinable. 
+Attack Chain Emulator. Like pwntools, but for initial access and executino. Like AtomicRedTeam, but the components can be freely combined. 
 
-It can generate artefacts to implement Techniques in recipes. 
+It can generate artefacts to implement techniques in recipes. 
+Recipes use Makers, which can be freely combined to perform complex multi-stage attack chains.
 
 Makers:
 * makePowershell*
@@ -14,40 +15,42 @@ Makers:
 * makeVbs
 * makeHta
 
-These can be freely combined to perform complex multi-stage attack chains. This can be used for PurpleTeaming, EDR Usecase verifications. PoC's and RedTeam attacks development.
-
-Additionally, the following Threat Actor's are available: 
+Additionally, the following threat actors recipes are available: 
 * PY#RATION 1.0
 * PY#RATION 1.6
 * Raspberry Robin
 * Ursnif
 
-These can also be used to test your CSIRT / Forensic investigation process. 
-These are based on real threat actors. 
-All malicious code has been removed, all source code reviewed and tested.
-All binaries are compiled, or the recipe will be marked with `binaries`.
+This can be used for PurpleTeaming, EDR Usecase verifications. PoC's and RedTeam attacks development.
+These can also be used to test your CSIRT or forensic investigation process (CSIRT). 
+Recipes are based on real attacks of known threat actors. 
 
-Notes: 
-* Disable AV if you want to follow the whole chain (EDR only)
+All malicious code has been removed, all source code reviewed and tested.
+All binaries can be recompiled (or the recipe will be marked with `binaries`).
+
+Usage notes: 
+* Disable AV if you want to execute the whole chain (only active EDR)
 * Use it in a VM
-* Most Threat Actor payloads dont have proxy support. Use a direct connection
-* Use `cleanup.bat` to remove all artefacts
-* For recipes get tagges `binaries = True` if they have binaries without source (e.g. copied rundll32.exe)
+* Most Threat Actor payloads dont have proxy support. A direct connection is prefered
+* Use `cleanup.bat` to remove all artefacts on disk
+* Recipes are tagged `binaries = [Files]` if they have binaries without source available (e.g. copied rundll32.exe)
 
 
 ## Further Documentation
 
 If you want to write code by yourself, be it Recipes or Makers: 
-* [How To Use](docs/howtouse.md)
+* [How To Use](docs/howtouse.md) ACE for development
 
-Makers overview, the API: 
-* [Makers](docs/makers/)
+Makers overview: 
+* [Makers](docs/makers/) list and API
 
 For an overview and more details about the recipes, see:
 * [Recipe Overview](docs/recipes.md)
 
 
-## Example recipe: MSTHA with powershell code
+## Example 
+
+A recipe with uses MSTHA to execute powershell code.
 
 This recipe 
 generates a HTA file based on a template which executes powershell code (displaying a messge box),
@@ -72,17 +75,22 @@ While the packing flows forward, to see what the victim
 is executing, look at it from bottom upwards:
 * Access a URL `/test.hta` with the `test.hta` file and download it
 * Execute the `test.hta` file by double clicking it
-* The HTA file executes powershell code by invoking `powershell -encodedcommand ...`, which shows a message box
+* The HTA file executes powershell code by invoking `powershell -encodedCommand ...`, which shows a message box
 
 
 Generate the artefacts and start the web server:
 ```sh
 $ rm out/*; python3 ace.py --recipe recipe_3
-INFO: --[ 1: makePowershellMessageBox() -> 1
-INFO: --[ 2: makePowershellEncodedCommand(1) -> 2
-INFO: --[ 3: makeMshtaJscriptExec(2) -> 3
-INFO: ---[ Generating AceFile test.hta, detected: False
-INFO: --[ 4: makeAceFile(3) -> 3
+--[ 00:  makePsScriptMessagebox() -> 1
+--[ 00:    renderTemplate(messagebox.ps1) -> 0
+--[ 02:  makeCmdFromPsScript(1) -> 4
+--[ 02:    makePsCommandFromPsScript(1) -> 2
+--[ 03:    makeCmdFromPsCommand(2) -> 4
+--[ 03:      makePsEncodedCommand(2) -> 3
+--[ 05:  makeHtaFromCmdByJscriptWscript(4) -> 6
+--[ 05:    renderTemplate(hta-jscript-exec.hta) -> 5
+--[ 07:  makeAceFile(6) -> 7
+--[ 08:  makeAceRoute(/test.hta, 6)
 
 Routes:
   /                       Recipe overview
@@ -98,10 +106,15 @@ Go to `http://localhost:5000` for a overview page with all above information. Op
 Generated files:
 ```
 $ ls -1 out/
-out_1_makePowershellMessageBox.txt
-out_2_makePowershellEncodedCommand.txt
-out_3_makeMshtaJscriptExec.txt
-out_4_file_test.hta
+out_00_renderTemplate.txt
+out_01_makePsScriptMessagebox.txt
+out_02_makePsCommandFromPsScript.txt
+out_03_makePsEncodedCommand.txt
+out_04_makeCmdFromPsCommand.txt
+out_04_makeCmdFromPsScript.txt
+out_05_renderTemplate.txt
+out_06_makeHtaFromCmdByJscriptWscript.txt
+out_07_file_test.hta
 ```
 
 Video: 
