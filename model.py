@@ -137,8 +137,12 @@ def DataTracker(func):
         # call the actual function
         ret = func(*args, **kwargs)
 
+
         # What follows: Try to print ACE information of args+ret
         retType = str(type(ret))
+        # dont show ret for AceRoute (no further processing possible)
+        if 'AceRoute' in retType:
+            return ret
         # If data is indexed, use that. 
         # If not, generate a new index
         if 'AceBytes' in retType or 'AceStr' in retType or 'AceFile' in retType:
