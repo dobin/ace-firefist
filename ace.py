@@ -11,6 +11,7 @@ from recipes import *
 from log import setupLogging
 from web import serve
 from helpers import *
+from utilities import *
 
 
 def contentFilterTest(baseUrl):

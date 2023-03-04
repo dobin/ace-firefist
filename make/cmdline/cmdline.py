@@ -5,7 +5,7 @@ import logging
 from typing import List
 
 from model import *
-from helpers import getTemplate
+from helpers import *
 
 FTP_MAX_LINE_LENGTH = 230
 
@@ -17,8 +17,8 @@ def makeCmdlineToCmdlineWithFtp(cmd: AceStr, file: str="%lOcAlApPdATA%\Temp\conf
         raise Exception("makeBatFtpExec: command len {} is longer than FTP max of about {}, this will not work".format( 
             len(cmd), FTP_MAX_LINE_LENGTH))
 
-    template = getTemplate('make/cmdline/ftp-exec.bat')
-    script = template.render(
+    script = renderTemplate(
+        'make/cmdline/ftp-exec.bat',
         command=cmd,
         file=file,
     )

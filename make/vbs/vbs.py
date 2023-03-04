@@ -4,7 +4,7 @@ from jinja2 import Template
 import logging
 
 from model import *
-from helpers import getTemplate
+from helpers import *
 
 logger = logging.getLogger('basic_logger')
 
@@ -12,8 +12,6 @@ logger = logging.getLogger('basic_logger')
 @DataTracker
 def makeVbsFromCmdByWscript(cmdline: str, disableQuoting=False) -> AceStr:
     """Return VBS file executing cmdline (with Wscript.Shell)"""
-    template = getTemplate('make/vbs/wscriptshell-cmdline.vbs')
-
     cmdline = cmdline.replace('\r', '')
     cmdline = cmdline.replace('\n', '')
     if '"' in cmdline and not disableQuoting:
@@ -21,7 +19,8 @@ def makeVbsFromCmdByWscript(cmdline: str, disableQuoting=False) -> AceStr:
         # double commandline quotes
         cmdline = cmdline.replace('"', '""')
 
-    rendered = template.render(
+    vbs = renderTemplate(
+        'make/vbs/wscriptshell-cmdline.vbs',
         cmdline=cmdline
     )
-    return AceStr(rendered)
+    return AceStr(vbs)

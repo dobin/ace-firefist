@@ -5,7 +5,7 @@ import logging
 from typing import List
 
 from model import *
-from helpers import getTemplate
+from helpers import *
 from make.powershell.powershell import *
 
 
@@ -19,8 +19,8 @@ def makeCmdAddReg(keyName, valueName, value, type) -> AceStr:
 @DataTracker
 def makeCmdToDllWithOdbc(dllPath: str) -> AceStr:
     '''Returns a cmd to odbc.exe which loads DLL from dllPath (no args, use DLL_PROCESS_ATTACH)'''
-    template = getTemplate('make/cmd/odbcconf-loaddll.cmd')
-    script = template.render(
+    script = renderTemplate(
+        'make/cmd/odbcconf-loaddll.cmd',
         dllPath=dllPath
     )
     return AceStr(script)
@@ -29,8 +29,8 @@ def makeCmdToDllWithOdbc(dllPath: str) -> AceStr:
 @DataTracker
 def makeCmdToDllWithRundll(dllPath: str, args='') -> AceStr:
     '''Returns a cmd to rundll32.exe which loads DLL from dllPath (with args)'''
-    template = getTemplate('make/cmd/rundll32-loaddll.cmd')
-    script = template.render(
+    script = renderTemplate(
+        'make/cmd/rundll32-loaddll.cmd',
         dllPath=dllPath,
         args=args
     )

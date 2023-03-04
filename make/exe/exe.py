@@ -42,7 +42,7 @@ def makePeExecCmdC2(host: str, port: str, url: str, asDll: bool) -> AceBytes:
         template = 'payloads/execc2cmd.exe'
     placeholderLen = 55
 
-    if len(host) > placeholderLen or len(port) > placeholderLen or len(url) > placeholderLen:
+    if len(host) > placeholderLen or len(url) > placeholderLen:
         raise Exception("  Input larger than {} bytes, template too small".format(placeholderLen))
     
     # char host[]  = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"; // len: 55

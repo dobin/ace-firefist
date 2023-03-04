@@ -6,14 +6,14 @@ import logging
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from model import *
-from helpers import getTemplate
+from helpers import *
 
 
 @DataTracker
 def makePsScriptToPsCommandByDownloadCmd(url: str) -> AceStr:
     """Return a PsScript which downloads and executes a PsCommand with 'powershell -c'"""
-    template = getTemplate('make/powershell/download_exec_pscmd_ps.ps1')
-    script = template.render(
+    script = renderTemplate(
+        'make/powershell/download_exec_pscmd_ps.ps1',
         url=url
     )
     return AceStr(script)
@@ -22,8 +22,8 @@ def makePsScriptToPsCommandByDownloadCmd(url: str) -> AceStr:
 @DataTracker
 def makePsScriptToPsCommandByDownloadIe(url: str) -> AceStr:
     """Return a PsScript which downloads and executes PsCommand with 'Invoke-Expression'"""
-    template = getTemplate('make/powershell/download_exec_pscmd_ie.ps1')
-    script = template.render(
+    script = renderTemplate(
+        'make/powershell/download_exec_pscmd_ie.ps1',
         url=url
     )
     return AceStr(script)
@@ -32,8 +32,8 @@ def makePsScriptToPsCommandByDownloadIe(url: str) -> AceStr:
 @DataTracker
 def makePsScriptToCmdByDownloadCmd(url: str) -> AceStr:
     """Return a PsScript which downloads and executes Cmdline with 'cmd /c'"""
-    template = getTemplate('make/powershell/download_exec_cmd_cmd.ps1')
-    script = template.render(
+    script = renderTemplate(
+        'make/powershell/download_exec_cmd_cmd.ps1',
         url=url
     )
     return AceStr(script)
@@ -42,8 +42,7 @@ def makePsScriptToCmdByDownloadCmd(url: str) -> AceStr:
 @DataTracker
 def makePsScriptMessagebox() -> AceStr:
     """Return a PsScript which simply outputs a popup"""
-    template = getTemplate('make/powershell/messagebox.ps1')
-    script = template.render()
+    script = renderTemplate('make/powershell/messagebox.ps1')
     return AceStr(script)
 
 

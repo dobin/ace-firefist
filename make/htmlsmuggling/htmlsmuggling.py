@@ -9,23 +9,23 @@ import sys
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from model import *
-from helpers import getTemplate
+from helpers import *
 
 
 @DataTracker
 def makeHtmlSmuggling(file: AceFile) -> AceStr:
-    """Return a HTML which will automatically download file"""
-    template = getTemplate('make/htmlsmuggling/autodownload.html')
-    
+    """Return a HTML which will automatically download file"""    
     # Arguments for the template:
     # - data: is file base64 encoded
     # - filename: the filename
     data = b64encode(file.data).decode()
-    renderedHtml = template.render(
+
+    html = renderTemplate(
+        'make/htmlsmuggling/autodownload.html',
         data=data,
         filename=file.name,
     )
-    return AceStr(renderedHtml)
+    return AceStr(html)
 
 
 def main():
