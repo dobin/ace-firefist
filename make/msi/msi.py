@@ -3,8 +3,6 @@ import io
 import os, sys
 import logging
 
-# necessary to make it possible to execute this file from this directory
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from model import *
 from helpers import *
 
@@ -13,7 +11,6 @@ logger = logging.getLogger()
 # install wix from https://github.com/wixtoolset/wix3
 # candle.exe evil-rick.xml
 # light.exe -out evil-rick.msi evil-rick.wixobj
-# 
 
 
 @DataTracker

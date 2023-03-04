@@ -6,8 +6,6 @@ from typing import List
 import argparse
 import struct 
 
-# necessary to make it possible to execute this file from this directory
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from model import *
 from helpers import *
 from make.powershell.powershell import *

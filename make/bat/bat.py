@@ -4,8 +4,6 @@ from jinja2 import Template
 import logging
 from typing import List
 
-# necessary to make it possible to execute this file from this directory
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from model import *
 from helpers import getTemplate
 
