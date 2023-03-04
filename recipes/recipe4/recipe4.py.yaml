@@ -1,9 +1,10 @@
 ---
   name: "Recipe 4"
-  description: 
+  description: Test Recipe 4
   chain: "OneNote -> Bat -> ftp.exe -> PowerShell:MessageBox"
   date: 20230223
   author: dobin
   reference:
   binaries:
   modify_filesystem:
+  entryurl: "/test.one"

@@ -5,5 +5,8 @@
   date: 20230302
   author: dobin
   reference: https://thedfirreport.com/2023/01/09/unwrapping-ursnifs-gifts/
-  binaries: True
-  modify_filesystem: True
+  binaries:
+  - "rundll32.exe (123.com)"
+  modify_filesystem: 
+  - "HKCU\\Software\\AppDataLow\\Software\\Microsoft\\472A62F9-FA62-1196-3C6B-CED530CFE2D9"
+  entryurl: 

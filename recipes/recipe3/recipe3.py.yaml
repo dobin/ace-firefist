@@ -1,9 +1,10 @@
 ---
   name: "Recipe 3"
-  description: 
+  description: Test Recipe 3
   chain: "MSHTA -> Powershell:MessageBox"
   date: 20230223
   author: dobin
   reference:
   binaries:
   modify_filesystem:
+  entryurl: "/test.hta"

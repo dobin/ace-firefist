@@ -39,6 +39,17 @@ def getRecipeInfo(file: str, routes: List[AceRoute]):
     
 
 
+def getRecipePyFiles():
+    res = []
+    for d in os.listdir('recipes'):
+        plugin_files = [f for f in os.listdir(os.path.join('recipes', d)) if f.endswith('.py')]
+        for plugin_file in plugin_files:
+            if plugin_file == '__init__.py': 
+                continue
+            res.append(plugin_file)
+    return res
+
+
 def yamlHelp(file):
     file = file + ".yaml"
 

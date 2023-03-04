@@ -41,7 +41,7 @@ If you want to write code by yourself, be it Recipes or Makers:
 * [How To Use](docs/howtouse.md)
 
 For an overview and more details about the recipes, see:
-* [Recipe Overview](doc/recipe-overview.md)
+* [Recipe Overview](doc/recipes.md)
 
 
 ## Example recipe: MSTHA with powershell code
@@ -153,3 +153,21 @@ Structure:
 
 * libs/pylnk3: pylnk3-dev, as it has an important bugfix. No deps. GPL3.
 * libs/librar: librar, with patched for python3 and some smaller things. No deps. No License.
+
+
+## Generate Docs
+
+For makers: [pdoc3](https://pdoc3.github.io/pdoc/)
+```
+$ cd ace-firefist/
+$ bash makedoc.sh
+```
+
+For recipes: 
+
+
+## Other related projects
+
+* Atomic Redteaming: 
+* Caldery: 
+* Scyth: 

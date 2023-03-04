@@ -17,7 +17,7 @@ def contentFilterTest(baseUrl):
     allRoutes: List[AceRoute] = []
     recipeInfos: List[RecipeInfo] = []
 
-    recipes = getRecipes()
+    recipes = getRecipePyFiles()
     for recipe in recipes:
         module_name = recipe[:-3]  # remove the '.py' extension
         module = importlib.import_module('.' + module_name, package='recipes.' + module_name)
@@ -43,7 +43,7 @@ def startRecipe(recipeName, baseUrl):
     recipeMethod = None
     recipeInfos = []
 
-    recipes = getRecipes()
+    recipes = getRecipePyFiles()
     for recipe in recipes:
         module_name = recipe[:-3]  # remove the '.py' extension
         module = importlib.import_module('.' + module_name, package='recipes.' + module_name)
@@ -65,17 +65,6 @@ def startRecipe(recipeName, baseUrl):
         routes = recipeMethod(baseUrl)
         if len(routes) > 0:
             serve(routes, recipeInfos)
-
-
-def getRecipes():
-    res = []
-    for d in os.listdir('recipes'):
-        plugin_files = [f for f in os.listdir(os.path.join('recipes', d)) if f.endswith('.py')]
-        for plugin_file in plugin_files:
-            if plugin_file == '__init__.py': 
-                continue
-            res.append(plugin_file)
-    return res
 
 
 def main():

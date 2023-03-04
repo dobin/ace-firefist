@@ -4,6 +4,7 @@ from pathlib import Path
 import inspect 
 from typing import List
 import os
+from functools import lru_cache, reduce, partial, wraps
 
 logger = logging.getLogger('basic_logger')
 
@@ -98,6 +99,7 @@ def parseFuncAceArgs(arg) -> List[str]:
 def DataTracker(func):
     """Decorator to log Ace data structures on annotated functions"""
 
+    @wraps(func)  # for pdoc3
     def wrapper(*args, **kwargs):
         makerCounter = config.MAKER_COUNTER
         config.MAKER_COUNTER += 1

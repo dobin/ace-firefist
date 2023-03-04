@@ -1,9 +1,10 @@
 ---
   name: Recipe 2
-  description: 
+  description: Test Recipe 2
   chain: "ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox"
   date: 20230223
   author: dobin
   reference:
   binaries:
   modify_filesystem:
+  entryurl: "/test.zip"

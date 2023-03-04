@@ -7,3 +7,4 @@
   reference: https://redcanary.com/blog/raspberry-robin/
   binaries:
   modify_filesystem:
+  entryurl: "/raspberryrobin.iso"

@@ -2,14 +2,6 @@
 
 Location: `make/<plugin>/<plugin>.py`
 
-## Imports
-
-* Make sure you import the `../../` parent path for imports
-```python
-# necessary to make it possible to execute this file from this directory
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from model import AceFile, PluginDecorator
-```
 
 ## Main function
 
