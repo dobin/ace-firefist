@@ -12,15 +12,16 @@ logger = logging.getLogger()
 
 
 @DataTracker
-def makeOnenoteFromBat(input: AceStr) -> AceBytes:
+def makeOnenoteFromBat(bat: AceStr) -> AceBytes:
+    """Return a OneNote file with a embedded bat file with content bat"""
     template = 'make/onenote/Test-bat-800.one'
     placeholderLen = 700  # even tho we stored 800 spaces, it only works with a bit less 
 
-    if len(input) > placeholderLen:
+    if len(bat) > placeholderLen:
         raise Exception("  Input larger than {} bytes, template too small".format(placeholderLen))
 
     placeholder = b" " * placeholderLen
-    exchange = input + " " * (placeholderLen - len(input))
+    exchange = bat + " " * (placeholderLen - len(bat))
     exchangeBytes = bytes(exchange, 'ascii')
  
     file = open(template, 'rb')

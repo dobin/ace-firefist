@@ -11,6 +11,7 @@ from model import *
 
 @DataTracker
 def makeIso(files: List[AceFile]) -> AceBytes:
+    """Return a ISO with files"""
     # https://clalancette.github.io/pycdlib/example-creating-joliet-iso.html
     iso = pycdlib.PyCdlib()
     iso.new(joliet=3)

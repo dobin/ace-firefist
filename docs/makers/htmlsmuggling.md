@@ -10,4 +10,4 @@ Functions
 
     
 `makeHtmlSmuggling(file: model.AceFile) ‑> model.AceStr`
-:   Make a HTML site from template from which the file can be downloaded
+:   Return a HTML which will automatically download file

@@ -40,6 +40,9 @@ Notes:
 If you want to write code by yourself, be it Recipes or Makers: 
 * [How To Use](docs/howtouse.md)
 
+Makers overview, the API: 
+* [Makers](docs/makers/)
+
 For an overview and more details about the recipes, see:
 * [Recipe Overview](docs/recipes.md)
 

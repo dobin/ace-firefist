@@ -5,5 +5,5 @@ Functions
 ---------
 
     
-`makeHtaFromCmdByJscriptWscript(commandline: str) ‑> model.AceStr`
-:
+`makeHtaFromCmdByJscriptWscript(cmdline: str) ‑> model.AceStr`
+:   Returns a HTA file which will execute cmdline

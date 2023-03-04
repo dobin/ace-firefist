@@ -5,5 +5,5 @@ Functions
 ---------
 
     
-`makeMsiFromCmd(input: model.AceStr) ‑> model.AceBytes`
-:
+`makeMsiFromCmd(cmd: model.AceStr) ‑> model.AceBytes`
+:   Return a MSI which executes cmd

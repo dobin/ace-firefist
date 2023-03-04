@@ -6,7 +6,7 @@ Functions
 
     
 `makeCmdAddReg(keyName, valueName, value, type) ‑> model.AceStr`
-:   
+:   Returns a cmd which will add a registry key
 
     
 `makeCmdFileDownloadWithCurl(url: str, destinationFile: str = None) ‑> model.AceStr`
@@ -27,7 +27,3 @@ Functions
     
 `makeCmdToDllWithRundll(dllPath: str, args='') ‑> model.AceStr`
 :   Returns a cmd to rundll32.exe which loads DLL from dllPath (with args)
-
-    
-`makeCmdline(cmds: List[str]) ‑> model.AceStr`
-:   Returns a cmd to cmd.exe with args "/c cmd[0] & cmd[0] & ..."

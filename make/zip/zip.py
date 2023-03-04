@@ -12,6 +12,7 @@ from model import *
 
 @DataTracker
 def makeZip(files: List[AceFile]) -> AceBytes:
+    """Return a ZIP file containting files"""
     zipData = io.BytesIO()
 
     with zipfile.ZipFile(zipData, "a",

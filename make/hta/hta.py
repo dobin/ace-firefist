@@ -7,11 +7,12 @@ from helpers import getTemplate
 
 
 @DataTracker
-def makeHtaFromCmdByJscriptWscript(commandline: str) -> AceStr:
+def makeHtaFromCmdByJscriptWscript(cmdline: str) -> AceStr:
+    """Returns a HTA file which will execute cmdline"""
     template = getTemplate('make/hta/hta-jscript-exec.hta')
-    commandline = commandline.replace('\r', '')
-    commandline = commandline.replace('\n', '')
+    cmdline = cmdline.replace('\r', '')
+    cmdline = cmdline.replace('\n', '')
     renderedHtml = template.render(
-        data=commandline
+        data=cmdline
     )
     return AceStr(renderedHtml)

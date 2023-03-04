@@ -11,6 +11,7 @@ from make.powershell.powershell import *
 
 @DataTracker
 def makeCmdAddReg(keyName, valueName, value, type) -> AceStr:
+    """Returns a cmd which will add a registry key"""
     s = "reg add \"{}\" /v \"{}\" /t {} /f /d \"{}\"".format(keyName, valueName, type, value)
     return AceStr(s)
 
@@ -44,13 +45,6 @@ def makeCmdFileDownloadWithCurl(url: str, destinationFile: str = None) -> AceStr
         s = "curl -k \"{}\"".format(url)
     else:
         s = "curl -k \"{}\" -o \"{}\"".format(url, destinationFile)
-    return AceStr(s)
-
-
-def makeCmdline(cmds: List[str]) -> AceStr:
-    '''Returns a cmd to cmd.exe with args "/c cmd[0] & cmd[0] & ..."'''
-    s = "cmd /c"
-    s += "&".join(cmds)
     return AceStr(s)
 
 

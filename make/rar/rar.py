@@ -12,6 +12,7 @@ from lib.librar import archive
 
 @DataTracker
 def makeRar(files: List[AceFile], password=None) -> AceBytes:
+    """Return a rar file containing files"""
     if len(files) == 0:
         raise Exception("No files given for rar")
 

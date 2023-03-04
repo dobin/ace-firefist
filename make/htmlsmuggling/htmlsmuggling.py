@@ -14,7 +14,7 @@ from helpers import getTemplate
 
 @DataTracker
 def makeHtmlSmuggling(file: AceFile) -> AceStr:
-    """Make a HTML site from template from which the file can be downloaded"""
+    """Return a HTML which will automatically download file"""
     template = getTemplate('make/htmlsmuggling/autodownload.html')
     
     # Arguments for the template:
