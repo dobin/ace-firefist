@@ -18,6 +18,8 @@ def contentFilterTest(baseUrl):
     allRoutes: List[AceRoute] = []
     recipeInfos: List[RecipeInfo] = []
 
+    logging.info("All recipes (content-filter test)")
+
     recipes = getRecipePyFiles()
     for recipe in recipes:
         module_name = recipe[:-3]  # remove the '.py' extension
@@ -27,7 +29,7 @@ def contentFilterTest(baseUrl):
             if recipeMethod is None:
                 print("Unknown recipe: {}".format(module_name))
             else:
-                logger.info("-[ Make recipe: {}".format(recipe))
+                logging.info("-[ Make recipe: {}".format(recipe))
                 routes = recipeMethod(baseUrl)
                 allRoutes = allRoutes + routes
 
@@ -43,6 +45,8 @@ def contentFilterTest(baseUrl):
 def startRecipe(recipeName, baseUrl):
     recipeMethod = None
     recipeInfos = []
+
+    logging.info("Creating recipe: {}".format(recipeName))
 
     recipes = getRecipePyFiles()
     for recipe in recipes:
@@ -71,6 +75,9 @@ def startRecipe(recipeName, baseUrl):
 def main():
     enableOut()
     setupLogging()
+
+    print("ACE FireFist - Attack Chain Emulator")
+    print("  github.comm/dobin/ace-firefist")
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--recipe', type=str, required=True, help='Which recipe to use ("all" for all)')
@@ -101,7 +108,7 @@ def main():
 
         logging.info("Use \"--externalurl http://evil\" to specfiy the URL as seen by the client, if necessary")
         baseUrl = "http://{}:{}".format(config.LISTEN_IP, config.LISTEN_PORT)
-    logger.info("Using baseUrl: {}".format(baseUrl))
+    logging.info("Using baseUrl: {}".format(baseUrl))
     if args.recipe == "all":
         contentFilterTest(baseUrl)
     else:

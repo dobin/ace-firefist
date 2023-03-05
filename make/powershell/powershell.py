@@ -70,8 +70,8 @@ def toPowershellLine(input: AceStr) -> AceStr:
     for line in lines:
         line = line.strip()
         if not line.endswith(';'):
-            logger.warn("Powershell script without ';' at end of line: {}.".format(line))
-            #logger.warn("  Adding the ';'")
+            logging.warn("Powershell script without ';' at end of line: {}.".format(line))
+            #logging.warn("  Adding the ';'")
             #line += '; '
 
     # remove all newlines

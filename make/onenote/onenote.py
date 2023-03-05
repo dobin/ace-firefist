@@ -8,7 +8,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from model import *
 from helpers import *
 
-logger = logging.getLogger()
 
 
 @DataTracker

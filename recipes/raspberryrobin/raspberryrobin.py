@@ -32,7 +32,7 @@ def raspberryrobin(baseUrl) -> List[AceRoute]:
             dllPath='%tmp%\\evil.dll'
         ),
     )
-    logger.info("Stage 2 cmdline: " + cmd)
+
     msi = makeMsiFromCmd(cmd)
     msiFile = AceFile("evil.msi", msi)
 

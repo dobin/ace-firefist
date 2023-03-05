@@ -6,8 +6,6 @@ from typing import List
 import os
 from functools import lru_cache, reduce, partial, wraps
 
-logger = logging.getLogger('basic_logger')
-
 
 class RecipeInfo():
     def __init__(self, name, description, chain, reference, binaries, modify_filesystem, routes=[]):
@@ -72,7 +70,7 @@ def dumpDataToFile(index, funcName, ret, retType):
         if isinstance(filedata, str):
             filedata = bytes(filedata, 'utf-8')
     else:
-        logger.warn("Wrong return type: {}".format(retType))
+        logging.warn("Wrong return type: {}".format(retType))
         return ret
     
     f = open(filename, 'wb')
@@ -133,7 +131,7 @@ def DataTracker(func):
         s += ', '.join(allArgs)
         
         # output the data
-        logger.info("--[ {}: {} {}({}) ".format(config.COUNTER, indent, func.__name__, s))
+        logging.info("--[ {:02d}: {} {}({}) ".format(config.COUNTER, indent, func.__name__, s))
         config.makerCallstack[makerCounter] = "--[ {:02d}: {} {}({})".format(config.COUNTER, indent, func.__name__, s)
 
         # call the actual function
@@ -152,7 +150,7 @@ def DataTracker(func):
             index = GetCounter()
 
         # output the results
-        logger.info("--[ {}: {} -> {}".format(config.COUNTER, indent, index))
+        #logging.info("--[ {}: {} -> {}".format(config.COUNTER, indent, index))
         config.makerCallstack[makerCounter] += " -> {}".format(index)
 
         # Dump content to files

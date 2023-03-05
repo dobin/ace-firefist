@@ -60,11 +60,11 @@ def yamlHelp(file):
     #for exception in exceptions: 
     #print("Exceptions: " + str(exceptions))
 
-    logger.info("--( Template {}:".format(file))
+    logging.info("--( Template {}:".format(file))
     entries = [ 'title', 'description', 'howtouse', 'input', 'invalid' ]
     for key in entries:
         if key in yamlData:
-            logger.info("    {}: {}".format(key, yamlData[key]))
+            logging.info("    {}: {}".format(key, yamlData[key]))
 
 
 
@@ -94,7 +94,7 @@ def scanAv(aceFile: AceFile) -> bool:
     
     ret_value = jsonRes['detected']
 
-    logger.info("---[ Generating AceFile {}, detected: {}".format(filename, ret_value))
+    logging.info("---[ Generating AceFile {}, detected: {}".format(filename, ret_value))
     return ret_value
 
 

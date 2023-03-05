@@ -6,8 +6,6 @@ import logging
 from model import *
 from helpers import *
 
-logger = logging.getLogger('basic_logger')
-
 
 @DataTracker
 def makeVbsFromCmdByWscript(cmdline: str, disableQuoting=False) -> AceStr:
@@ -15,7 +13,7 @@ def makeVbsFromCmdByWscript(cmdline: str, disableQuoting=False) -> AceStr:
     cmdline = cmdline.replace('\r', '')
     cmdline = cmdline.replace('\n', '')
     if '"' in cmdline and not disableQuoting:
-        logger.warn("Note: Replacing {} \" with \"\" in input".format(cmdline.count('"')))
+        logging.warn("Note: Replacing {} \" with \"\" in input".format(cmdline.count('"')))
         # double commandline quotes
         cmdline = cmdline.replace('"', '""')
 

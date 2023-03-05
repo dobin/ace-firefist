@@ -6,7 +6,6 @@ import logging
 from model import *
 from helpers import *
 
-logger = logging.getLogger()
 
 # install wix from https://github.com/wixtoolset/wix3
 # candle.exe evil-rick.xml

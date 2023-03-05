@@ -6,8 +6,6 @@ from model import *
 import config
 from utilities import *
 
-logger = logging.getLogger('basic_logger')
-
 
 @DataTracker
 def base64encode(input: AceBytes) -> AceStr:
