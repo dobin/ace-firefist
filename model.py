@@ -122,6 +122,8 @@ def DataTracker(func):
             allArgs.append(os.path.basename(str(args[0])))
         elif 'makeAceRoute' in funcName:
             allArgs.append(str(args[0]))
+        elif 'makeAceFile' in funcName:
+            allArgs.append(str(args[0]))
         
         # get arguments of the function
         for arg in args:
@@ -136,7 +138,6 @@ def DataTracker(func):
 
         # call the actual function
         ret = func(*args, **kwargs)
-
 
         # What follows: Try to print ACE information of args+ret
         retType = str(type(ret))
