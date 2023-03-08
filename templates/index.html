@@ -39,7 +39,7 @@
     <tr>
         <th>Name</th>
         <th>Chain</th>        
-        <th>URLs</th>
+        <th>Entry URL</th>
         <th>Reference</th>
     </tr>
     {% for recipe in recipeInfos %}
@@ -48,7 +48,9 @@
         <td class="mono">{{recipe.chain}}</td>
         <td class="mono">
             {% for route in recipe.routes %}
-            <a href="{{route.url}}">{{route.url}}</a><br>
+                {% if route.isEntry %}
+                    <a href="{{route.url}}">{{route.url}}</a><br>
+                {% endif %}
             {% endfor %}
         </td>
         <td>

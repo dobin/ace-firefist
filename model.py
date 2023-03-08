@@ -163,18 +163,19 @@ def DataTracker(func):
 
 
 class AceRoute():
-    def __init__(self, url: str, data: bytes, info: str = '', download: bool=False, downloadName: str='', downloadMime: str=None):
+    def __init__(self, url: str, data: bytes, info: str = '', isEntry=False, download: bool=False, downloadName: str='', downloadMime: str=None):
         self.url = url
         self.data = data
         self.info = info
         self.download = download
         self.downloadName = downloadName
         self.downloadMime = downloadMime
+        self.isEntry = isEntry
 
 
 @DataTracker
-def makeAceRoute(url: str, data: bytes, info: str = '', download: bool=False, downloadName: str='', downloadMime: str=None):
-    aceRoute = AceRoute(url, data, info, download, downloadName, downloadMime)
+def makeAceRoute(url: str, data: bytes, info: str = '', isEntry=False, download: bool=False, downloadName: str='', downloadMime: str=None):
+    aceRoute = AceRoute(url, data, info, isEntry, download, downloadName, downloadMime)
     return aceRoute
 
 def enableOut():

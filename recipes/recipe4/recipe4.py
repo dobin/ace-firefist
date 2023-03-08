@@ -31,6 +31,10 @@ def recipe4(baseUrl) -> List[AceRoute]:
     #onenoteFile: AceFile = makeAceFile("test.one", onenote)  # for debugging
 
     # Serve
-    containerServe: AceRoute = makeAceRoute('/test.one', onenote, download=True, downloadName='test.one')
+    containerServe: AceRoute = makeAceRoute(
+        '/test.one', 
+        onenote, 
+        isEntry=True, 
+        download=True, downloadName='test.one')
     routes.append(containerServe)
     return(routes)

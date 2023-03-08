@@ -109,6 +109,7 @@ def ursnif(baseUrl) -> List[AceRoute]:
     serveHtml: AceRoute = makeAceRoute(
         '/ursnif/3488164.iso', 
         iso,
+        isEntry=True, 
         download=True,
         downloadName="3488164.iso",
         info="Entry")

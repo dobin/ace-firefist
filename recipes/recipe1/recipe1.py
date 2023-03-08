@@ -43,5 +43,5 @@ def recipe1(baseUrl) -> List[AceRoute]:
 
     # HTML to serve ISO
     html: AceStr = makeHtmlSmuggling(containerFile)
-    serveHtml: AceRoute = makeAceRoute('/test', html)
+    serveHtml: AceRoute = makeAceRoute('/test', html, isEntry=True)
     return([serveHtml])

@@ -27,7 +27,11 @@ def recipe3(baseUrl) -> List[AceRoute]:
     # MSHTA
     hta: AceStr = makeHtaFromCmdByJscriptWscript(cmd)
     htaFile: AceFile = makeAceFile("test.hta", hta)  # not really needed
-    containerServe: AceRoute = makeAceRoute('/test.hta', hta, download=True, downloadName='test.hta')
+    containerServe: AceRoute = makeAceRoute(
+        '/test.hta', 
+        hta, 
+        isEntry=True, 
+        download=True, downloadName='test.hta')
     routes.append(containerServe)
     return(routes)
 

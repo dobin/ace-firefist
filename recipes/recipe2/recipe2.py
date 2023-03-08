@@ -39,6 +39,10 @@ def recipe2(baseUrl) -> List[AceRoute]:
     container: AceBytes = makeZip(files = [
         vbsFile,
     ])
-    containerServe: AceRoute = makeAceRoute('/test.zip', container, download=True, downloadName='test.zip')
+    containerServe: AceRoute = makeAceRoute(
+        '/test.zip', 
+        container, 
+        isEntry=True, 
+        download=True, downloadName='test.zip')
     routes.append(containerServe)
     return(routes)

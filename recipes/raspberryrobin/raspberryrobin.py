@@ -58,7 +58,10 @@ def raspberryrobin(baseUrl) -> List[AceRoute]:
     ])
     # containerFile: AceFile = makeAceFile('test.iso', container)
     isoRoute: AceRoute = makeAceRoute(
-        '/raspberryrobin.iso', container, download=True, downloadName='raspberryrobin.iso')
+        '/raspberryrobin.iso', 
+        container, 
+        isEntry=True, 
+        download=True, downloadName='raspberryrobin.iso')
     routes.append(isoRoute)
 
     return routes
