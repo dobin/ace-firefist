@@ -1,12 +1,12 @@
 
-all: testdll testexe execcmd-exe execcmd-dll execcmdc2-exe execcmdc2-dll
+all: messagebox-exe messagebox-dll execcmd-exe execcmd-dll execcmdc2-exe execcmdc2-dll
 
 
 # Msgbox
-testexe:
-	x86_64-w64-mingw32-gcc -o ../payloads/evil.exe test-exe.c
-testdll: 
-	x86_64-w64-mingw32-gcc -shared -o ../payloads/evil.dll test-dll.c
+messagebox-exe:
+	x86_64-w64-mingw32-gcc -o ../payloads/messagebox.exe messagebox-exe.c
+messagebox-dll: 
+	x86_64-w64-mingw32-gcc -shared -o ../payloads/messagebox.dll messagebox-dll.c
 
 # Exec
 execcmd-exe:

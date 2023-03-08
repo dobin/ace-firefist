@@ -18,7 +18,7 @@ def raspberryrobin(baseUrl) -> List[AceRoute]:
     # LNK -> CMD -> BAT -> MSIEXEC:CMD: (downloadDLL -> odbcconf/rundll32:dll)
 
     # DLL: Payload
-    evilDll: AceBytes = readFileContent('payloads/evil.dll')
+    evilDll: AceBytes = readFileContent('payloads/messagebox.dll')
     evilDllroute = makeAceRoute('/evil.dll', evilDll)
     routes.append(evilDllroute)
 

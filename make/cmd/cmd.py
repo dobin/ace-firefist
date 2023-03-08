@@ -30,7 +30,7 @@ def makeCmdToDllWithOdbc(dllPath: str) -> AceStr:
 def makeCmdToDllWithRundll(dllPath: str, args='') -> AceStr:
     '''Returns a cmd to rundll32.exe which loads DLL from dllPath (with args)'''
     script = renderTemplate(
-        'make/cmd/rundll32-loaddll.cmd',
+        'make/cmd/rundll32-dll.cmd',
         dllPath=dllPath,
         args=args
     )
