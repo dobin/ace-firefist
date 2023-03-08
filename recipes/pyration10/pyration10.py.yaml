@@ -1,7 +1,7 @@
 ---
   name: "PY#RATION 1.0"
-  description: 
-  chain: Implement Version 1.0 of PY#RATION
+  description: "Implement Version 1.0 of PY#RATION"
+  chain: "ZIP -> LNK -> CMD -> BAT -> (WSCRIPT -> BAT, WSCRIPT -> BAT -> BAT -> (unrar.exe, EXE)"
   date: 20230223
   author: dobin
   reference: https://www.securonix.com/blog/security-advisory-python-based-pyration-attack-campaign/
