@@ -19,7 +19,7 @@ def pyration16(baseUrl) -> List[AceRoute]:
     routes.append(serveHtml)
 
     ## Payload: 
-    evilexe: AceBytes = readFileContent('payloads/evil.exe')
+    evilexe: AceBytes = readFileContent('payloads/messagebox.exe')
     evilExeFile: AceFile = makeAceFile('CortanaAssistance.exe', evilexe)
     serveHtml: AceRoute = makeAceRoute('/pyration16/CortanaAssistance.txt', evilexe, info="CortanaAssistance.exe")
     routes.append(serveHtml)
