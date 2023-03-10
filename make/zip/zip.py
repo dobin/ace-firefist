@@ -2,8 +2,7 @@ import argparse
 import io
 import os, sys
 from typing import List
-
-import zipfile
+from zipencrypt import ZipFile
 
 # necessary to make it possible to execute this file from this directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -11,15 +10,16 @@ from model import *
 
 
 @DataTracker
-def makeZip(files: List[AceFile]) -> AceBytes:
+def makeZip(files: List[AceFile], password: str=None) -> AceBytes:
     """Return a ZIP file containting files"""
     zipData = io.BytesIO()
 
-    with zipfile.ZipFile(zipData, "a",
-                        zipfile.ZIP_DEFLATED, False) as zip_file:
-        
+    with ZipFile(zipData, "a") as zip_file:
         for file in files:
-            zip_file.writestr(file.name, file.data)
+            if password is None:
+                zip_file.writestr(file.name, file.data)
+            else:
+                zip_file.writestr(file.name, file.data, pwd=password.encode())
 
     return AceBytes(zipData.getvalue())
 

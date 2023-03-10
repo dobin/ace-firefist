@@ -3,3 +3,4 @@ requests
 jinja2
 flask
 pyyaml
+zipencrypt
