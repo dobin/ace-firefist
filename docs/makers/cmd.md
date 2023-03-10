@@ -5,7 +5,7 @@ Functions
 ---------
 
     
-`makeCmdAddReg(keyName, valueName, value, type) ‑> model.AceStr`
+`makeCmdAddReg(keyName: str, valueName: str, value: model.AceStr, type: str) ‑> model.AceStr`
 :   Returns a cmd which will add a registry key
 
     

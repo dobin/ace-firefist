@@ -2,6 +2,7 @@
 
 ## PY#RATION 1.0
 
+* ZIP -> LNK -> CMD -> BAT -> (WSCRIPT -> BAT, WSCRIPT -> BAT -> BAT -> (unrar.exe, EXE)
 * Implement Version 1.0 of PY#RATION
 * [https://www.securonix.com/blog/security-advisory-python-based-pyration-attack-campaign/](https://www.securonix.com/blog/security-advisory-python-based-pyration-attack-campaign/)
 * Contains binaries without source
@@ -31,6 +32,7 @@ Entry path: None
 
 ## PY#RATION 1.6
 
+* ZIP -> LNK -> CMD -> BAT -> (WSCRIPT -> BAT, WSCRIPT -> BAT -> BAT -> (unrar.exe, EXE)
 * Implement Version 1.6 of PY#RATION
 * [https://www.securonix.com/blog/security-advisory-python-based-pyration-attack-campaign/](https://www.securonix.com/blog/security-advisory-python-based-pyration-attack-campaign/)
 * Contains binaries without source
@@ -65,6 +67,20 @@ python3 ace.py --recipe recipe3
 ```
 
 Entry path: /test.hta
+
+
+## Emotet 1
+
+* ZIP -> LNK -> Powershell.exe -> psScript:(Download:DLL, regsvr32.exe:DLL) <- c2:bat
+* Emotet incident from June 2022 analysis by thedfirreport
+* [https://thedfirreport.com/2022/11/28/emotet-strikes-again-lnk-file-leads-to-domain-wide-ransomware/](https://thedfirreport.com/2022/11/28/emotet-strikes-again-lnk-file-leads-to-domain-wide-ransomware/)
+* Modifies filesystem or registry
+
+```
+python3 ace.py --recipe emotet1
+```
+
+Entry path: /emotet1/emotet1.zip
 
 
 ## Recipe 1

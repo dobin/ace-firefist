@@ -9,5 +9,5 @@ Functions
 :   
 
     
-`makeZip(files: List[model.AceFile]) ‑> model.AceBytes`
+`makeZip(files: List[model.AceFile], password: str = None) ‑> model.AceBytes`
 :   Return a ZIP file containting files
