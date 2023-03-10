@@ -9,6 +9,9 @@ from model import *
 from helpers import *
 
 
+POWERSHELL_EXE_PATH = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
+
+
 @DataTracker
 def makePsScriptToPsCommandByDownloadCmd(url: str) -> AceStr:
     """Return a PsScript which downloads and executes a PsCommand with 'powershell -c'"""

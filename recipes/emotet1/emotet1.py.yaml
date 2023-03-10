@@ -1,0 +1,10 @@
+---
+  name: "Emotet 1"
+  description: "Emotet incident from June 2022 analysis by thedfirreport"
+  chain: "ZIP -> LNK -> Powershell.exe -> psScript:(Download:DLL, regsvr32.exe:DLL) <- c2:bat"
+  date: 20230310
+  author: dobin
+  reference: https://thedfirreport.com/2022/11/28/emotet-strikes-again-lnk-file-leads-to-domain-wide-ransomware/
+  binaries: 
+  modify_filesystem: "%TMP%\\..\\nfWFQ\\"
+  entryurl: "/emotet1/emotet1.zip"
