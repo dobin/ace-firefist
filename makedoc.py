@@ -59,6 +59,9 @@ def buildMd(yamls):
         if yaml['modify_filesystem'] is not None:
             sb.AddNl("* Modifies filesystem or registry")
         sb.AddNl('')
+        sb.AddNl("![{}](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/{}.gif?raw=true)".format( 
+            yaml['recipename'],  yaml['recipename']))
+        sb.AddNl('')
         sb.AddNl('```')
         sb.AddNl("python3 ace.py --recipe {}".format(yaml['recipename']))
         sb.AddNl('```')

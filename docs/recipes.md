@@ -8,9 +8,7 @@
 * Contains binaries without source
 * Modifies filesystem or registry
 
-
-![pyration10.gif](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/pyration10.gif?raw=true)
-
+![pyration10](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/pyration10.gif?raw=true)
 
 ```
 python3 ace.py --recipe pyration10
@@ -27,6 +25,8 @@ Entry path: /pyration10/pyration10-documents.zip
 * Contains binaries without source
 * Modifies filesystem or registry
 
+![ursnif](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/ursnif.gif?raw=true)
+
 ```
 python3 ace.py --recipe ursnif
 ```
@@ -42,6 +42,8 @@ Entry path: None
 * Contains binaries without source
 * Modifies filesystem or registry
 
+![pyration16](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/pyration16.gif?raw=true)
+
 ```
 python3 ace.py --recipe pyration16
 ```
@@ -54,6 +56,8 @@ Entry path: /pyration16/pyration16-documents.zip
 * LNK -> BAT -> MSIEXEC -> odbcconf:rundll32:dll
 * [https://redcanary.com/blog/raspberry-robin/](https://redcanary.com/blog/raspberry-robin/)
 
+![raspberryrobin](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/raspberryrobin.gif?raw=true)
+
 ```
 python3 ace.py --recipe raspberryrobin
 ```
@@ -65,6 +69,8 @@ Entry path: /raspberryrobin.iso
 
 * MSHTA -> Powershell:MessageBox
 * Test Recipe 3
+
+![recipe3](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/recipe3.gif?raw=true)
 
 ```
 python3 ace.py --recipe recipe3
@@ -80,6 +86,8 @@ Entry path: /test.hta
 * [https://thedfirreport.com/2022/11/28/emotet-strikes-again-lnk-file-leads-to-domain-wide-ransomware/](https://thedfirreport.com/2022/11/28/emotet-strikes-again-lnk-file-leads-to-domain-wide-ransomware/)
 * Modifies filesystem or registry
 
+![emotet1](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/emotet1.gif?raw=true)
+
 ```
 python3 ace.py --recipe emotet1
 ```
@@ -91,6 +99,8 @@ Entry path: /emotet1/emotet1.zip
 
 * HTML Smuggling -> ISO -> ( LNK -> Powershell:Load&Exec <- DLL )
 * Test Recipe 1
+
+![recipe1](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/recipe1.gif?raw=true)
 
 ```
 python3 ace.py --recipe recipe1
@@ -104,6 +114,8 @@ Entry path: /test
 * OneNote -> Bat -> ftp.exe -> PowerShell:MessageBox
 * Test Recipe 4
 
+![recipe4](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/recipe4.gif?raw=true)
+
 ```
 python3 ace.py --recipe recipe4
 ```
@@ -115,6 +127,8 @@ Entry path: /test.one
 
 * ZIP -> VBS -> Powershell:Download+Exec <- Powershell-Messagebox
 * Test Recipe 2
+
+![recipe2](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/recipe2.gif?raw=true)
 
 ```
 python3 ace.py --recipe recipe2
