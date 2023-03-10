@@ -45,7 +45,6 @@ def GetCounter():
     return c
 
 
-
 def dumpDataToFile(index, funcName, ret, retType):
     filename = None
     filedata = None
@@ -65,7 +64,13 @@ def dumpDataToFile(index, funcName, ret, retType):
         filedata = bytes(ret, 'utf-8')
     
     elif 'AceFile' in retType:
-        filename = "out/out_{:02d}_file_{}".format(index, ret.name)
+        name = ret.name
+
+        # cleanup if there are any baths in it
+        name = name.replace('/', '_')
+        name = name.replace('\\', '_')
+
+        filename = "out/out_{:02d}_file_{}".format(index, name)
         filedata = ret.data
         if isinstance(filedata, str):
             filedata = bytes(filedata, 'utf-8')

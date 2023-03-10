@@ -11,14 +11,34 @@ from model import *
 
 @DataTracker
 def makeIso(files: List[AceFile]) -> AceBytes:
-    """Return a ISO with files"""
+    """Return a ISO with files. These can contain paths with directories like `test/test.txt`"""
     # https://clalancette.github.io/pycdlib/example-creating-joliet-iso.html
     iso = pycdlib.PyCdlib()
     iso.new(joliet=3)
+
+    createdDirectories = {}
     for file in files:
+        # Directory (if any)
+        dn = os.path.dirname(file.name)
+        if dn != '':
+            dirnameJoliet = '/' + dn
+            dirname = '/' + dn.upper()
+
+            if dirname not in createdDirectories:
+                iso.add_directory(
+                    dirname,
+                    joliet_path=dirnameJoliet
+                )
+                createdDirectories[dirname] = True
+
+        # File
         filename = "/{};1".format(file.name.upper())
         filenameJoliet = "/{}".format(file.name)
-        iso.add_fp(io.BytesIO(file.data), len(file.data), filename, joliet_path=filenameJoliet)
+        iso.add_fp(
+            io.BytesIO(file.data), 
+            len(file.data), 
+            filename, 
+            joliet_path=filenameJoliet)
 
     isoFileData = io.BytesIO()    
     iso._write_fp(isoFileData, 32768, None, None)
