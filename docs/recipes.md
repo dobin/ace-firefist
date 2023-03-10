@@ -8,6 +8,10 @@
 * Contains binaries without source
 * Modifies filesystem or registry
 
+
+![pyration10.gif](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/pyration10.gif?raw=true)
+
+
 ```
 python3 ace.py --recipe pyration10
 ```
