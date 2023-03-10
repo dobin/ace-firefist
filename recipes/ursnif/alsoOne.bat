@@ -1,2 +1,2 @@
 set %params%=hello
-canWell.js hello cexe lldnur revreSretsigeRllD
+me\canWell.js hello cexe lldnur revreSretsigeRllD

