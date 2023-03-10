@@ -117,10 +117,9 @@ out_06_makeHtaFromCmdByJscriptWscript.txt
 out_07_file_test.hta
 ```
 
-Video: 
-```
-<tbd>
-```
+Video of Raspberry Robin recipe: 
+
+![raspberryrobin](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/raspberryrobin.gif?raw=true)
 
 
 ## Install
