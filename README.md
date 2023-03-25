@@ -1,21 +1,11 @@
 # ACE Fire Fist 
 
-Attack Chain Emulator. Like pwntools, but for initial access and executino. Like AtomicRedTeam, but the components can be freely combined. 
+Attack Chain Emulator. Like pwntools, but for initial access and execution. Like AtomicRedTeam, but the components can be freely combined. 
 
 It can generate artefacts to implement techniques in recipes. 
 Recipes use Makers, which can be freely combined to perform complex multi-stage attack chains.
 
-Makers:
-* makePowershell*
-* makeBat
-* makeIso
-* makeZip
-* makeLnk
-* makeOnenote
-* makeVbs
-* makeHta
-
-Additionally, the following threat actors recipes are available: 
+The following threat actors recipes are available: 
 * PY#RATION 1.0
 * PY#RATION 1.6
 * Raspberry Robin
@@ -25,10 +15,15 @@ This can be used for PurpleTeaming, EDR Usecase verifications. PoC's and RedTeam
 These can also be used to test your CSIRT or forensic investigation process (CSIRT). 
 Recipes are based on real attacks of known threat actors. 
 
+![raspberryrobin](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/raspberryrobin.gif?raw=true)
+
+
+# Usage Notes
+
 All malicious code has been removed, all source code reviewed and tested.
 All binaries can be recompiled (or the recipe will be marked with `binaries`).
 
-Usage notes: 
+Usage: 
 * Disable AV if you want to execute the whole chain (only active EDR)
 * Use it in a VM
 * Most Threat Actor payloads dont have proxy support. A direct connection is prefered
@@ -48,7 +43,7 @@ For an overview and more details about the recipes, see:
 * [Recipe Overview](docs/recipes.md)
 
 
-## Example 
+## Write a Recipe Example 
 
 A recipe with uses MSTHA to execute powershell code.
 
@@ -119,10 +114,8 @@ out_07_file_test.hta
 
 Video of Raspberry Robin recipe: 
 
-![raspberryrobin](https://github.com/dobin/ace-firefist/blob/main/docs/gifs/raspberryrobin.gif?raw=true)
 
-
-## Install
+## Install ACE
 
 ```
 $ pip install -r requirements.txt
@@ -178,11 +171,9 @@ $ cd ace-firefist/
 $ bash makedoc.sh
 ```
 
-For recipes: 
-
-
 ## Other related projects
 
-* Atomic Redteaming: 
-* Caldery: 
-* Scyth: 
+* Atomic Redteaming
+* Caldery
+* Scyth
+
