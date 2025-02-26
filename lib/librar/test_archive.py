@@ -19,11 +19,8 @@ class TestArchive(unittest.TestCase):
   
   def tearDown(self):
     if self.keep:
-      print "RESULT WAS KEPT: ================================="
-      print
-      print "cd", self.tempdir
-      print
-      print
+      print("RESULT WAS KEPT: =================================")
+      print("cd", self.tempdir)
       return
     file_helper.destroy_dir_recursive(self.tempdir)
      

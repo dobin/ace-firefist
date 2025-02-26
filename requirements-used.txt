@@ -1,0 +1,9 @@
+Flask==3.1.0
+Jinja2==3.1.2
+pycdlib==1.14.0
+PyYAML==6.0.1
+PyYAML==5.4.1
+PyYAML==6.0.2
+Requests==2.32.3
+unittest2==1.1.0
+zipencrypt==0.3.1
